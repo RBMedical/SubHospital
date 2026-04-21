@@ -1,1114 +1,773 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ระบบค้นหาผลการตรวจสุขภาพ</title>
 
-  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
-  crossorigin="anonymous"></script>
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-  integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-  crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.min.js"
-  integrity="sha512-w3u9q/DeneCSwUDjhiMNibTRh/1i/gScBVp2imNVAMCt6cUHIw6xzhzcPFIaL3Q1EbI2l+nu17q2aLJJLo4ZYg=="
-  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap" rel="stylesheet">
 
-
-  <link rel="stylesheet" href="index.css">
-</head>
-
-<body>
   <style>
-    .body {
-      font-family: Sarabun;
-
+    body {
+      font-family: "Noto Sans Thai", sans-serif;
+      font-size: 0.95rem;
+      background: #f7f7f7;
     }
 
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-    }
-    #hidden {
-      display: block;
-      width: 30%;
-      max-height: 500px;
-      top: 100px;
-      left: 100px;
-      border-radius: 10px;
-      box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
-      background-color: khaki;
-}
-
-.modal-waiting {
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding-left: 20px;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0); /* พื้นหลังดำโปร่งใส */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100000; /* ให้ลอยอยู่บนสุด */
-}
-
-
-#hide {
-      display: block;
-      width: 30%;
-    
-      max-height: 500px;
-      top: 100px;
-      left: 100px;
-      border-radius: 10px;
-      box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
-      background-color:aquamarine;
-}
-
-#urinetable, #cbctable {
-    min-width: 500px;
-    max-width: 500px;
-}
-
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
+    .page-wrap {
+      padding-top: 16px;
+      padding-bottom: 24px;
     }
 
-    .b-example-divider {
-      width: 100%;
-      height: 3rem;
-      background-color: rgba(0, 0, 0, .1);
-      border: solid rgba(0, 0, 0, .15);
-      border-width: 1px 0;
-      box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-    }
-
-    .b-example-vr {
-      flex-shrink: 0;
-      width: 1.5rem;
-      height: 100vh;
-    }
-
-    .bi {
-      vertical-align: -.125em;
-      fill: currentColor;
-    }
-
-    .nav-scroller {
-      position: relative;
-      z-index: 2;
-      height: 2.75rem;
-      overflow-y: hidden;
-    }
-
-    .nav-scroller .nav {
+    .result-layout {
       display: flex;
-      flex-wrap: nowrap;
-      padding-bottom: 1rem;
-      margin-top: -1px;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .result-left,
+    .result-right {
+      background: #fff;
+      border: 1px solid #d9dee3;
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    }
+
+    .result-left {
+      width: 50%;
+    }
+
+    .result-right {
+      width: 50%;
+    }
+
+    .line-sep {
+      border-bottom: 1px solid #d6d6d6;
+      margin: 4px 0 10px;
+    }
+
+    .section-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    .table th,
+    .table td {
+      vertical-align: middle;
+    }
+
+    .table-sm-custom td,
+    .table-sm-custom th {
+      padding: .4rem .45rem;
+      font-size: .83rem;
+    }
+
+    .click-link {
+      color: #0d6efd;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .modal-waiting {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.12);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+      padding: 16px;
+    }
+
+    .waiting-card {
+      width: min(400px, 100%);
+      background: rgba(255,255,255,.95);
+      border-radius: 14px;
+      padding: 18px 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.12);
+    }
+
+    .custom-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.35);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2500;
+      padding: 12px;
+    }
+
+    .custom-modal {
+      width: min(900px, 96vw);
+      max-height: 90vh;
+      overflow: auto;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.25);
+    }
+
+    .custom-modal .modal-header,
+    .custom-modal .modal-footer {
+      padding: 12px 16px;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .custom-modal .modal-footer {
+      border-top: 1px solid #e9ecef;
+      border-bottom: 0;
+    }
+
+    .custom-modal .modal-body {
+      padding: 14px 16px;
+    }
+
+    #urinetable,
+    #cbctable {
+      width: 100%;
+      min-width: 520px;
+    }
+
+    .responsive-table-wrap {
       overflow-x: auto;
-      text-align: center;
-      white-space: nowrap;
       -webkit-overflow-scrolling: touch;
     }
 
-    .btn-bd-primary {
-      --bd-violet-bg: #712cf9;
-      --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-
-      --bs-btn-font-weight: 600;
-      --bs-btn-color: var(--bs-white);
-      --bs-btn-bg: var(--bd-violet-bg);
-      --bs-btn-border-color: var(--bd-violet-bg);
-      --bs-btn-hover-color: var(--bs-white);
-      --bs-btn-hover-bg: #6528e0;
-      --bs-btn-hover-border-color: #6528e0;
-      --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-      --bs-btn-active-color: var(--bs-btn-hover-color);
-      --bs-btn-active-bg: #5a23c8;
-      --bs-btn-active-border-color: #5a23c8;
-    }
-
-    .bd-mode-toggle {
-      z-index: 1500;
-    }
-
-    .bd-mode-toggle .dropdown-menu .active .bi {
-      display: block !important;
-    }
-
-    .container-sm {
-      display: flex;
-
-    }
-
-    .container-login {
-      width: 50%;
-      line-height: 6px;
-
-    }
-
-    .container-login-input {
-      width: 50%;
-      margin: 0 auto;
-    }
-
-    .container-data {
-      width: 50%;
-      background-color: rgb(240, 255, 240);
-      font-size: 0.75rem;
-      line-height: 6px;
-      border: 2px solid black;
-      border-radius: 10px;
-
-    }
-
-    .modal-error {
-      display: none;
-      /* ซ่อน modal ไว้ก่อน จนกว่าจะถูกแสดง */
-      position: fixed;
-      /* ทำให้ modal อยู่บนสุดตลอดเวลา */
-      top: 50%;
-      /* จัดให้อยู่กลางหน้าจอ (แนวตั้ง) */
-      left: 50%;
-      /* จัดให้อยู่กลางหน้าจอ (แนวนอน) */
-      transform: translate(-50%, -50%);
-      /* ย้าย modal ให้ตรงกลางพอดี */
-      width: 30%;
-      /* กำหนดความกว้าง */
-      max-width: 800px;
-      /* จำกัดความกว้างสูงสุด */
-      padding: 20px;
-      /* ระยะห่างด้านในของ modal */
-
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      /* เงาของ modal */
-      z-index: 1000;
-      /* ทำให้ modal อยู่เหนือ element อื่นๆ */
-      border-radius: 10px;
-      /* มุมโค้งของ modal */
-      justify-content: center;
-    }
-
-    .line {
-      border-color: black;
-      background-color: rgb(100, 98, 98);
-    }
-
     @media print {
-      .page {
-        margin: 0;
-        border: initial;
-        border-radius: initial;
-        width: initial;
-        min-height: initial;
-        box-shadow: initial;
-        background: initial;
-        page-break-after: always;
-        padding-top: 20%;
+      body {
+        background: #fff;
+        font-size: .8rem;
       }
 
-      .noprint {
-        display: none;
+      .noprint,
+      .custom-overlay,
+      .modal-waiting {
+        display: none !important;
       }
 
-      .container {
-        font-size: 0.75rem;
+      .result-layout {
+        display: block;
       }
 
-      .container-sm {
-        display: flex;
+      .result-left,
+      .result-right {
+        width: 100%;
+        box-shadow: none;
+        border: none;
+        padding: 0;
+      }
+
+      .result-right {
+        margin-top: 14px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        font-size: 0.85rem;
+      }
+
+      .result-layout {
         flex-direction: column;
       }
 
-      .container-login {
+      .result-left,
+      .result-right {
         width: 100%;
       }
 
-      .container-data {
+      .nav.nav-pills {
+        gap: 8px;
+      }
+
+      .nav-item.input-box {
         width: 100%;
-        border-radius: 0px;
-        border: none;
       }
 
-      .container-hidden {
+      .nav-item.input-box input,
+      .nav-item.input-box button {
         width: 100%;
-        border-radius: none;
-
-        border: none;
       }
 
-      .table-hidden {
-        border-radius: none;
-
+      .header-tools {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: stretch !important;
       }
 
+      .header-tools .btn,
+      .header-tools input {
+        width: 100%;
+      }
+
+      .custom-modal {
+        width: 96vw;
+        max-height: 92vh;
+      }
+
+      #urinetable,
+      #cbctable {
+        min-width: 460px;
+      }
     }
 
     @media (max-width: 576px) {
+      body {
+        font-size: 0.8rem;
+      }
 
       .container {
-        font-size: 0.75rem;
+        padding-left: 10px;
+        padding-right: 10px;
       }
 
-      body {
-        font-size: 0.75rem;
-
+      .result-left,
+      .result-right {
+        padding: 10px;
       }
 
-      .col-form-label {
-        font-size: 0.75rem;
+      .table-sm-custom td,
+      .table-sm-custom th {
+        font-size: 0.76rem;
+        padding: .32rem;
       }
 
-      .row {
-        font-size: 0.75rem;
+      #urinetable,
+      #cbctable {
+        min-width: 420px;
       }
-
-      .col-auto {
-        font-size: 0.75rem;
-      }
-
-      .container-sm {
-
-        display: flex;
-        flex-direction: column;
-      }
-
-      .container-login {
-        width: 100%;
-        line-height: 2px;
-
-      }
-
-
-      .container-data {
-        width: 100%;
-        line-height: 2px;
-        font-size: 0.5rem;
-      }
-
-      .nav-item {
-        width: 70%;
-
-      }
-
-      .col-12 {
-        font-size: 1rem;
-      }
-
-      .btn-primary {
-        width: 45%;
-      }
-
-      .container-hidden {
-        font-size: 0.5rem;
-      }
-      .modal{
-        width: 100%;
-    }
-
-    .modalrecieve {
-      display: none;
-      /* ซ่อน modal ไว้ก่อน จนกว่าจะถูกแสดง */
-      position: fixed;
-      /* ทำให้ modal อยู่บนสุดตลอดเวลา */
-      top: 50%;
-      /* จัดให้อยู่กลางหน้าจอ (แนวตั้ง) */
-      left: 50%;
-      /* จัดให้อยู่กลางหน้าจอ (แนวนอน) */
-      transform: translate(-50%, -50%);
-      /* ย้าย modal ให้ตรงกลางพอดี */
-      width: 100%;
-      /* กำหนดความกว้าง */
-      max-width: 1000px;
-      /* จำกัดความกว้างสูงสุด */
-      background-color: rgb(240, 248, 255);
-      /* สีพื้นหลังของ modal */
-      padding: 20px;
-      /* ระยะห่างด้านในของ modal */
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      /* เงาของ modal */
-      z-index: 1000;
-      /* ทำให้ modal อยู่เหนือ element อื่นๆ */
-      border-radius: 10px;
-      /* มุมโค้งของ modal */
-    }
-
-    .table-hidden {
-
-      width: 100%;
-      font-size: 0.75rem;
-
-      line-height: 16px;
-
-    }
-
-    .container-hidden {
-      min-width: 100%;
-      background-color: #FFFFCC;
-      font-size: 0.75rem;
-      line-height: 4px;
-      border: 2px solid black;
-      border-radius: 10px;
-      margin-left: 30px;
-      display: none;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      z-index: 1000;
-    }
-
-    .text-black{
-        color:rgba(0, 0, 0, 0.3);
     }
   </style>
+</head>
 
+<body>
+  <div class="page-wrap">
+    <div class="container">
+      <header class="py-3 mb-3 border-bottom">
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+          <div>
+            <div class="fs-6 fw-semibold">ระบบค้นหาผลการตรวจสุขภาพประจำปีทางอินเตอร์เน็ต</div>
+            <span id="datetime"></span>
+          </div>
 
+          <div class="header-tools d-flex align-items-center gap-2 noprint flex-wrap">
+            <input class="form-control text-center" style="width: 170px;" id="searchKey" placeholder="User ID" />
+            <input class="form-control text-center" style="width: 170px;" id="password" type="password" placeholder="Password" />
+            <button class="btn btn-primary" type="button" onclick="searchRecord()">Search</button>
+            <button type="button" id="printBtn" onclick="printResult()" class="btn btn-secondary" disabled>
+              <i class="fa-solid fa-print"></i>
+            </button>
+            <a href="index.html" class="btn btn-outline-secondary">
+              <i class="fa-solid fa-house"></i>
+            </a>
+          </div>
+        </div>
+      </header>
 
+      <div id="waiting" class="modal-waiting">
+        <div class="waiting-card">
+          <div class="d-flex align-items-center gap-3">
+            <div class="spinner-border text-primary" role="status"></div>
+            <div class="fw-semibold">Data Loading...</div>
+          </div>
+        </div>
+      </div>
 
-
-
-  <h1 class="visually-hidden">Headers examples</h1>
-
-  <div class="container">
-    <header class="justify-content-center py-3 mb-4 border-bottom">
-      <a class="align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-
-        <div class="col-12 fs-6" style="font-family: sarabun;">ระบบค้นหาผลการตรวจสุขภาพประจำปีทางอินเตอร์เน็ต</div>
-        <span id="datetime"></span>
-      </a>
-      <ul class="nav nav-pills justify-content-end noprint">
-
-        <input class="nav-item ms-2 mb-1  text-center" id="searchKey" placeholder="User ID"></input>
-
-        <input class="nav-item  ms-2  mb-1 text-center" id="password" type="password" placeholder="password"></input>
-        <button class="nav-item ms-2 btn btn-primary" type="button" onclick="searchRecord()">search</button>
-        <button type="button" id="printBtn" onclick="printResult()" class="btn btn-secondary ms-1" disabled>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer"
-            viewBox="0 0 16 16">
-            <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1" />
-            <path
-              d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1" />
-          </svg>
-        </button>
-        <a href="index.html" class="btn btn-outline-secondary ms-2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house"
-            viewBox="0 0 16 16">
-            <path
-              d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
-          </svg>
-        </a>
-      </ul>
-    </header>
-    <div id="waiting" class="modal-waiting" style="display: none;">
-        <div class="modal-content" style="min-width: 400px; max-width: 400px; margin-left: 20px; background-color: rgba(0, 0, 0, 0.1); box-shadow: inset 0em em rgba(0, 0, 0, 0), inset 0 .1em 0em rgba(0, 0, 0, 0); border: none;">
-       <div class="row">
-     <div class="col-2">
-     <script src="https://cdn.lordicon.com/lordicon.js"></script>
- <lord-icon
-     src="https://cdn.lordicon.com/kgdqzapd.json"
-     trigger="loop"
-     state="loop-clock"
-     style="width:40px;height:40px">
- </lord-icon>
- </div>
- <div class="col-10">
-       <p class="mt-1" style="color:rgb(16, 8, 49)">Data Loading....</p>
-     </div>
-     </div>
-     </div>
-     </div>
-
-    <div id="result">
-
-
+      <div id="result"></div>
     </div>
-
-    <script>
-        function showWaiting(){
-            $("#waiting").css('display','flex');
-        }
-
-        function hideWaiting(){
-            $("#waiting").css('display','none');
-        }
-      function searchRecord() {
-        document.getElementById('waiting').style.display = 'flex';
-        var searchKey = document.getElementById('searchKey').value.trim();
-        var password = document.getElementById('password').value.trim();
-
-        const urlsheet1 = "https://script.google.com/macros/s/AKfycbxIFqg_sVoBadGiZijEkpghbLBNUiYMO9Zz_5eXxZ_JPSp457PnhJwPCRqTg_Qe8REQPA/exec";
-
-        fetch(urlsheet1)
-          .then(response => response.json())
-          .then(data => {
-            console.log("🔹 Data received from API:", data);
-
-            const resultDiv1 = document.getElementById('result');
-            resultDiv1.innerHTML = ''; // เคลียร์ผลลัพธ์ก่อนแสดงใหม่
-
-            let foundUser = data.find(row =>
-              String(row.username).trim() === searchKey &&
-              String(row.pw).trim() === password
-            );
-
-            if (foundUser) {
-              console.log("✅ User found:", foundUser);
-              resultDiv1.innerHTML = `
-              <div class="container-sm" id="result" style="font-family: sarabun;">
-                  <div class="container-login">
-     
-                       <form id="searchForm" class="container">
-                           <div class="row fs-3 align-items-center">
-                                      <div class="col-auto">
-                                        <label class="col-form-label fw-bold">Identify :</label>
-                                       </div>
-                                        <div class="col-auto">
-                                          <label>${foundUser.register}</label>
-                                         </div>
-                                       </div>
-                                        <div class="row fs-3 align-items-center">
-                                           <div class="col-auto">
-                                             <label class="col-form-label fw-bold ">ชื่อ นามสกุล :</label>
-                                          </div>
-                                           <div class="col-auto">
-                                              <label>${foundUser.name}</label>
-                                           </div>
-                                         <div class="col-10 ms-1 border border-bottom"></div>
-                                       </div>
-
-                                       <div class="row align-items-center">
-                                           <div class="col-auto">
-                                              <label class="col-form-label fw-bold">อายุ :</label>
-                                          </div>
-                                         <div class="col-auto">
-                                           <label>${foundUser.age}</label>
-                                         </div>
-                                         <div class="col-auto">
-                                           <label class="col-form-label fw-bold">ปี</label>
-                                         </div>
-                                       <div class="col-auto">
-                                          <label class="col-form-label fw-bold">เพศ</label>
-                                       </div>
-                                         <div class="col-auto">
-                                          <label>${foundUser.sex}</label>
-                                         </div>
-                                       
-                                       <div class="row  align-items-center">
-                                        <div class="col-auto">
-                                           <label class="col-form-label fw-bold">น้ำหนัก :</label>
-                                        </div>
-                                         <div class="col-auto">
-                                           <label>${foundUser.waigh}</label>
-                                         </div>
-                                         <div class="col-auto">
-                                           <label class="col-form-label fw-bold">ก.ก.</label>
-                                       </div>
-                                       <div class="col-auto">
-                                          <label class="col-form-label fw-bold">ส่วนสูง</label>
-                                       </div>
-                                         <div class="col-auto">
-                                           <label>${foundUser.tall}</label>
-                                         </div>
-                                         <div class="col-auto">
-                                          <label class="col-form-label fw-bold">ซ.ม.</label>
-                                          </div>
-                                      <div class="col-auto">
-                                          <label class="col-form-label fw-bold">หมู่โลหิต</label>
-                                     </div>
-                                        <div class="col-auto">
-                                          <label>${foundUser.bg}</label>
-                                         </div>
-                                       </div>
-                                    
-                                        <div class="row align-items-center">
-                                            <div class="col-auto">
-                                              <label class="col-form-label mt-3 fw-bold">ผลการตรวจสุขภาพทั่วไปโดยแพทย์</label>
-                                           </div>
-                                         </div>
-                                       
-
-                                       <div class="row align-items-center">
-                                            <div class="col-auto">
-                                               <label class="col-form-label ms-1 fw-bold">ค่าBMI :</label>
-                                            </div>
-                                             <div class="col-auto">
-                                              <label>${foundUser.bmiv}</label>
-                                           </div>
-                                           <div class="col-auto">
-                                             <label class="col-form-label fw-bold">อยู่ในเกณฑ์ :</label>
-                                           </div>
-                                         <div class="col-auto">
-                                            <label>${foundUser.bmir}</label>
-                                         </div>
-                                       </div>
-                                       
-                                       <div class="row align-items-center">
-                                          <div class="col-auto">
-                                            <label class="col-form-label ms-1 fw-bold">ค่าความดันโลหิต :</label>
-                                         </div>
-                                         <div class="col-auto">
-                                            <label>${foundUser.bp}</label>
-                                         </div>
-                                         <div class="col-auto">
-                                          <label class="col-form-label fw-bold">mm.Hg</label>
-                                         </div>
-                                         <div class="col-auto">
-                                           <label class="col-form-label fw-bold">การเต้นของชีพจร :</label>
-                                         </div>
-                                         <div class="col-auto">
-                                          <label>${foundUser.pause}</label>
-                                         </div>
-                                          <div class="col-auto">
-                                        <label class="col-form-label fw-bold">ครั้ง/นาที</label>
-                                         </div>
-                                       </div>
-                                                                                                                  
-                                        <div class="row align-items-center">
-                                           <div class="col-auto">
-                                             <label class="col-form-label ms-1 fw-bold">ผลการตรวจปัสสาวะทั่วไป :</label>
-                                           </div>
-                                           <div class="col-auto">
-                                             <label class="text-danger${foundUser.urine === 'ปกติ' ? 'text-black' : ''}">${foundUser.urine}</label>
-                                           </div>
-                                            <div class="col-auto">
-                                             <label class="text-primary noprint" onclick="openUa()" style="cursor: pointer;">กดดูรายละเอียด</label>
-                                           </div>
-                                       </div>
-                                        <div class="row align-items-center">
-                                           <div class="col-auto">
-                                             <label class="col-form-label ms-1 fw-bold">ผลการเอ็กซเรย์ทรวงอก (Chest X Ray) :</label>
-                                          </div>
-                                          <div class="col-auto">
-                                           <label class="text-danger${foundUser.xray === 'ปกติ' ? 'text-black' : ''}">${foundUser.xray}</label>
-                                         </div>
-                                       </div>
-                                      <div class="row align-items-center">
-                                       <div class="col-auto">
-                                        <label class="col-form-label ms-1 fw-bold">ความเห็นแพทย์ :</label>
-                                        </div>
-                                         <div class="col-auto mt-2 ms-2">
-                                          <label>${foundUser.doctor}</label>
-                                       </div>
-                                       </div>
-                                        
-   
-    </form>
-   </div>
   </div>
 
-<div class="modal" style="display:none" id="hidden">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
+  <!-- CBC MODAL -->
+  <div id="cbcOverlay" class="custom-overlay">
+    <div class="custom-modal">
+      <div class="modal-header d-flex justify-content-between align-items-center">
+        <div class="fw-bold">รายละเอียดผล CBC</div>
         <button type="button" class="btn-close" onclick="closeCbc()"></button>
       </div>
       <div class="modal-body">
-        <table  id="cbctable" class="table-hidden border-dark mb-5" >
-               <thead class="border-bottom" style="border-color: black;">
-            <tr>
-
-      <th colspan="2" class="text-center" style="max-width: 150px; min-width: 150px;">Test</th>
-      <th scope="col" class="text-center">ค่าที่ได้</th>
-      <th scope="col" class="text-center">ค่าปกติ</th>
-    </tr>
-  </thead>
-   <tbody>
-    <tr>
-      <th scope="row"</th>
-      <td>เม็ดเลือดขาว(WBC)</td>
-        <td class="text-center">${foundUser.bwbc}</td> 
-        <td class="text-center">5,000-10,000 cell/mL</td> 
-    </tr>                              
-
-  <tr>
-      <th scope="row"></th>
-        <td>Hemogobin</td>
-       <td class="text-center">${foundUser.hemo}</td> 
-       <td class="text-center">13.7-17.5 g/dL</td> 
-    </tr>     
-
-
-<tr>
-      <th scope="row"></th>
-       <td>Hematocrit</td>
-       <td class="text-center">${foundUser.hema}</td> 
-       <td class="text-center">40.1-51%</td>
-    </tr>     
-
-<tr>
-      <th scope="row"></th>
-      <td>Neutrophils</td>
-        <td class="text-center">${foundUser.neu}</td> 
-       <td class="text-center">34-67.9%</td> 
-    </tr>     
-
-<tr>
-      <th scope="row"></th>
-      <td>Lymthocytes</td>
-        <td class="text-center">${foundUser.lym}</td>
-       <td class="text-center">21.8-53.1%</td> 
-    </tr> 
-
-<tr>
-      <th scope="row"></th>
-      <td>Monocyte</td>
-       <td class="text-center">${foundUser.mono}</td> 
-       <td class="text-center">5.3-12.2%</td> 
-    </tr> 
-
-<tr>
-      <th scope="row"</th>
-      <td>Eosinphil</td>
-       <td class="text-center">${foundUser.eos}</td> 
-       <td class="text-center">0.8-7%</td> 
-    </tr>  
-
- <tr>
-      <th scope="row"></th>
-      <td>Basophill</td>
-        <td class="text-center">${foundUser.bas}</td> 
-       <td class="text-center">0.2-1.2%</td> 
-    </tr>   
-
-  <tr>
-      <th scope="row"></th>
-      <td>Platlet count</td>
-         <td class="text-center">${foundUser.plat}</td>
-       <td class="text-center">140,000-400,000 cell/cu.mm</td> 
-    </tr> 
-
-  <tr>
-      <th scope="row"></th>
-      <td>MCV</td>
-       <td class="text-center">${foundUser.mcv}</td>
-       <td class="text-center">80-100 fl</td> 
-    </tr>                             
-   </tbody>
-   </table> 
+        <div class="responsive-table-wrap">
+          <table id="cbctable" class="table table-bordered table-sm-custom">
+            <thead class="table-light">
+              <tr>
+                <th colspan="2" class="text-center">Test</th>
+                <th class="text-center">ค่าที่ได้</th>
+                <th class="text-center">ค่าปกติ</th>
+              </tr>
+            </thead>
+            <tbody id="cbcBody"></tbody>
+          </table>
+        </div>
       </div>
       <div class="modal-footer">
-        <div style="font-size: 0.75rem;" class="mt-2">สรุปผลตรวจ<br>${foundUser.cbcsum}</div>
+        <div style="font-size: 0.85rem;" id="cbcSummary"></div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="modal" id="hide" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-       
+  <!-- URINE MODAL -->
+  <div id="urineOverlay" class="custom-overlay">
+    <div class="custom-modal">
+      <div class="modal-header d-flex justify-content-between align-items-center">
+        <div class="fw-bold">รายละเอียดผลปัสสาวะ</div>
         <button type="button" class="btn-close" onclick="closeUrine()"></button>
       </div>
       <div class="modal-body">
-         <table id="urinetable" class="table-hidden border-dark mb-5" >
-               <thead class="border-bottom">
-      <tr>
-<th>ผลการตรวจปัสสาวะทั่วไป</th>
-      <th class="text-center">ค่าที่ได้</th>
-      <th class="text-center">ค่าปกติ</th>
-    </tr>
-  </thead>
-   <tbody>
-    <tr>
-      
-      <td>color</td>
-        <td class="text-center">${foundUser.color}</td> 
-        <td class="text-center">yellow</td> 
-    </tr>                              
-
-  <tr>
-    
-        <td>Appearance</td>
-       <td class="text-center">${foundUser.appe}</td> 
-       <td class="text-center">clear</td> 
-    </tr>     
-
-
-<tr>
-      
-       <td>Ph</td>
-       <td class="text-center">${foundUser.ph}</td> 
-       <td class="text-center">4.5-8</td>
-    </tr>     
-
-<tr>
-   
-      <td>Specific Gravity</td>
-        <td class="text-center">${foundUser.spec}</td> 
-       <td class="text-center">1-1.03</td> 
-    </tr>     
-
-<tr>
-  
-      <td>Protain</td>
-        <td class="text-center">${foundUser.protain}</td>
-       <td class="text-center">Negative</td> 
-    </tr> 
-
-<tr>
-     
-      <td>Glucose</td>
-       <td class="text-center">${foundUser.glu}</td> 
-       <td class="text-center">Negative</td> 
-    </tr> 
-
-<tr>
-
-      <td>RBC</td>
-       <td class="text-center">${foundUser.urbc}</td> 
-       <td class="text-center">1-2</td> 
-    </tr>  
-
- <tr>
-   
-      <td>WBC</td>
-        <td class="text-center">${foundUser.uwbc}</td> 
-       <td class="text-center">0-1</td> 
-    </tr>   
-
-  <tr>
-     
-      <td>Epithelium</td>
-         <td class="text-center">${foundUser.epi}</td>
-       <td class="text-center">0-1</td> 
-    </tr> 
-
-  <tr>
-      
-      <td>Bacteria</td>
-       <td class="text-center">${foundUser.bac}</td>
-       <td class="text-center">Normal</td> 
-    </tr> 
-
-    <tr>
-
-      <td>Amphetamine</td>
-       <td class="text-center">${foundUser.amp}</td>
-       <td class="text-center">Negative</td> 
-    </tr> 
-     <tr>
-     
-      <td>Pregnancy (การตั้งครรภ์)</td>
-       <td class="text-center">${foundUser.preg}</td>
-       <td class="text-center">Negative</td> 
-    </tr>                                                                     
-   </tbody>
-   </table> 
-      </div>
-      <div class="modal-footer">
-     
+        <div class="responsive-table-wrap">
+          <table id="urinetable" class="table table-bordered table-sm-custom">
+            <thead class="table-light">
+              <tr>
+                <th>ผลการตรวจปัสสาวะทั่วไป</th>
+                <th class="text-center">ค่าที่ได้</th>
+                <th class="text-center">ค่าปกติ</th>
+              </tr>
+            </thead>
+            <tbody id="urineBody"></tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
+  <script>
+    const BASE_URL = "https://script.google.com/macros/s/AKfycbxIFqg_sVoBadGiZijEkpghbLBNUiYMO9Zz_5eXxZ_JPSp457PnhJwPCRqTg_Qe8REQPA/exec";
 
-  <div class="container-data">
-  <div class="row fs-4 align-items-center">
-                                           <div class="col-auto">
-                                             <label class="col-form-label fs-6 ms-1 fw-bold">ผลตรวจทางห้องปฎิบัติการ</label>
-                                           </div>
-                                           
-                                       </div>
-    
-     <table class="table border-dark">
-  <thead class="table-secondary">
-    <tr>
-      <th class="text-center">รายการตรวจ</th>
-      <th class="text-center">ผลตรวจ</th>
-      <th class="text-center">ค่าประมวลผล</th>
-    </tr>
-  </thead>
-   <tbody>
-    <tr>
-      <td class="fw-bold">ความสมบูรณ์ของเม็ดเลือด</th>   
-       <td class="text-center text-danger${foundUser.cbc === 'ปกติ' ? 'text-black' : ''}">${foundUser.cbc}</td> 
-       <td class="text-primary text-center noprint" onclick="openCbc()" style="cursor: pointer;">กดดู</td>
-    </tr>
-   <tr>
-      <td class="fw-bold">ปริมาณน้ำตาลในเลือด</th>  
-       <td class="text-center text-danger${foundUser.fbsr === 'ปกติ' ? 'text-black' : ''}">${foundUser.fbsr}</td> 
-      <td class="text-center text-danger${foundUser.fbsr === 'ปกติ' ? 'text-black' : ''}">${foundUser.fbsv}</td>
-    </tr> 
-   <tr>
-      <td class="fw-bold" colspan="4" style="background-color:powderblue;">ปริมาณไขมันในเส้นเลือด</td>
-      
-    </tr> 
-    <tr>
-   
-         <td> - Cholestroral</td> 
-       <td class="text-center text-danger${foundUser.cholr === 'ปกติ' ? 'text-black' : ''}">${foundUser.cholr}</td> 
-      <td class="text-center text-danger${foundUser.cholr === 'ปกติ' ? 'text-black' : ''}">${foundUser.cholv}</td>
-    </tr>
-    <tr>
-   
-        <td> - HDL</td>       
-       <td class="text-center text-danger${foundUser.hdlr === 'ปกติ' ? 'text-black' : ''}">${foundUser.hdlr}</td> 
-       <td class="text-center text-danger${foundUser.hdlr === 'ปกติ' ? 'text-black' : ''}">${foundUser.hdlv}</td>
-    </tr>
-    <tr>
+    let currentUser = null;
+    let currentRegister = "";
 
-       <td> - LDL</td>       
-       <td class="text-center text-danger${foundUser.ldlr === 'ปกติ' ? 'text-black' : ''}">${foundUser.ldlr}</td>
-        <td class="text-center text-danger${foundUser.ldlr === 'ปกติ' ? 'text-black' : ''}">${foundUser.ldlv}</td> 
-    </tr>
-    <tr>
-  
-         <td> - Trigleceride</td>        
-       <td class="text-center text-danger${foundUser.trir === 'ปกติ' ? 'text-black' : ''}">${foundUser.trir}</td> 
-       <td class="text-center text-danger${foundUser.trir === 'ปกติ' ? 'text-black' : ''}">${foundUser.triv}</td>
-    </tr>
-     <tr>
-      <td class="fw-bold" scope="row" colspan="4" style=" background-color:powderblue;">การทำงานของตับ</td>
-      
-    </tr> 
-    <tr>
-  
-        <td> - SGPT/ALT</td>       
-       <td class="text-center text-danger${foundUser.sgptr === 'ปกติ' ? 'text-black' : ''}">${foundUser.sgptr}</td> 
-        <td class="text-center text-danger${foundUser.sgptr === 'ปกติ' ? 'text-black' : ''}">${foundUser.sgptv}</td>
-    </tr>
-  <tr>
-     
-        <td> - SGOT/AST</td>        
-       <td class="text-center text-danger${foundUser.sgotr === 'ปกติ' ? 'text-black' : ''}">${foundUser.sgotr}</td> 
-       <td class="text-center text-danger${foundUser.sgotr === 'ปกติ' ? 'text-black' : ''}">${foundUser.sgotv}</td>
-    </tr>
-    <tr>
-      <td class="fw-bold"  colspan="4" style="background-color:powderblue;">การทำงานของไต</th>
-     
-    </tr> 
-   <tr>
-    
-         <td> - BUN</td>        
-       <td class="text-center text-danger${foundUser.bunrl === 'ปกติ' ? 'text-black' : ''}">${foundUser.bunrl}</td> 
-       <td class="text-center text-danger${foundUser.bunrl === 'ปกติ' ? 'text-black' : ''}">${foundUser.bunv}</td>
-    </tr>
-  <tr>
- 
-         <td> - Creatinin</td>        
-       <td class="text-center text-danger${foundUser.crer === 'ปกติ' ? 'text-black' : ''}">${foundUser.crer}</td> 
-       <td class="text-center text-danger${foundUser.crer === 'ปกติ' ? 'text-black' : ''}">${foundUser.crev}</td>
-    </tr>
-     <tr>
-      <td class="fw-bold">กรดยูริค/เก๊า</td>        
-       <td class="text-center text-danger${foundUser.uricv === 'ปกติ' ? 'text-black' : ''}">${foundUser.uricv}</td> 
-       <td class="text-center text-danger${foundUser.uricv === 'ปกติ' ? 'text-black' : ''}">${foundUser.uricr}</td>
-    </tr> 
-    <tr>
-      <td class="fw-bold">เชื้อไวรัสตับอักเสบ บี</td>       
-       <td class="text-center text-danger${foundUser.hbr === 'ปกติ' ? 'text-black' : ''}">${foundUser.hbr}</td> 
-        <td class="text-center text-danger${foundUser.hbr === 'ปกติ' ? 'text-black' : ''}">${foundUser.hbv}</td>
-    </tr> 
-   </tbody>
-  </table>
-     <div class="row fs-4 align-items-center">
-                                           <div class="col-auto">
-                                             <label class="col-form-label ms-1 fs-6 fw-bold">ผลตรวจทางชีวอนามัย</label>
-                                           </div>
-                                         </div>
- <table class="table border-dark" >
-  <thead class="table-secondary">
-    <tr>
-      <th scope="col" colspan="3">รายการตรวจ</th>
-     <th scope="col"></th>
-      <th scope="col" class="text-center">ผลตรวจ</th>
-    </tr>
-  </thead>
-   <tbody>
-    <tr>
-      <th scope="row" colspan="3">สายตาชีวอนามัย</th>
-        <td></td> 
-       <td class="text-center text-danger${foundUser.eyes=== 'ปกติ' ? 'text-black' : ''}">${foundUser.eyes}</td> 
-    </tr>
-   <tr>
-      <th scope="row" colspan="3">การได้ยิน</th>
-       <td></td> 
-       <td class="text-center text-danger${foundUser.ear === 'ปกติ' ? 'text-black' : ''}">${foundUser.ear}</td> 
-    </tr> 
-   
-   <tr>
-      <th scope="row" colspan="3">เป่าปอด</th>
-       <td></td> 
-       <td class="text-center text-danger${foundUser.lung === 'ปกติ' ? 'text-black' : ''}">${foundUser.lung}</td> 
-    </tr> 
-   <tr>
-      <th scope="row" colspan="4">สมรรถภาพทางกล้ามเนื้อ</th>
-       
-         <td></td> 
-    </tr> 
-    <tr>
-      <th scope="row"></th>
-       <td>กล้ามเนื้อมือ</td>
-         <td></td>
-          
-     
-        <td></td>
-       <td class="text-center text-danger${foundUser.hand === 'ปกติ' ? 'text-black' : ''}">${foundUser.hand}</td> 
-    </tr>
-    <tr>
-     <th scope="row"></th>
-        <td>กล้ามเนื้อขา</td>
-        <td></td>
-        <td></td>
-       <td class="text-center text-danger${foundUser.leg === 'ปกติ' ? 'text-black' : ''}">${foundUser.leg}</td> 
-    </tr>
-    <tr>
-     <th scope="row"></th>
-        <td>กล้ามเนื้อหลัง</td>
-        <td></td>
-        <td></td>
-       <td class="text-center text-danger${foundUser.cack === 'ปกติ' ? 'text-black' : ''}">${foundUser.back}</td> 
-    </tr>
-   
-     </tbody>
-     </table><div class="row fs-4 align-items-center">
-                                         <div class="col-auto">
-                                           <label class="col-form-label ms-1 fs-6 fw-bold">ผลตรวจอื่นๆ</label>
-                                         </div>
-                                       </div>
-<table class="table border-dark">
-<thead class="table-secondary">
-  <tr>
-    <th scope="col" colspan="2">รายการตรวจ</th>
-   <th scope="col"></th>
-    <th scope="col" class="text-center">ค่า</th>
-    <th scope="col" class="text-center">ผลตรวจ</th>
-  </tr>
-</thead>   
-     <tbody id="outlab">                               
-     
- </tbody>
-   </table>
-     </div>                                
-     </div>
-    </div>    
-      
-      `
-              document.getElementById('printBtn').disabled = false;
+    function setDatetime() {
+      const el = document.getElementById("datetime");
+      if (!el) return;
+      const now = new Date();
+      el.textContent = now.toLocaleString("th-TH");
+    }
 
-              // เรียกฟังก์ชัน searchOutlab() ถ้ามีอยู่
-              if (typeof searchOutlab === 'function') {
-                searchOutlab();
-              }
+    function showWaiting() {
+      document.getElementById("waiting").style.display = "flex";
+    }
 
-            } else {
-              console.warn("❌ User not found");
-              resultDiv1.innerHTML = '<p style="color:red;">User ID หรือ Password ไม่ถูกต้อง</p>';
-            }
-          })
-          .catch(error => {
-            console.error("❌ Error fetching data:", error);
-            document.getElementById('result').innerHTML = '<p style="color:red;">เกิดข้อผิดพลาดในการดึงข้อมูล</p>';
-          });
-          document.getElementById('waiting').style.display = 'none';
-      }
+    function hideWaiting() {
+      document.getElementById("waiting").style.display = "none";
+    }
 
+    function safe(v) {
+      return v === null || v === undefined ? "" : v;
+    }
 
-      function searchOutlab() {
-  var searchKey = document.getElementById('searchKey').value.trim();
-  const urlsheet2 = "https://script.google.com/macros/s/AKfycbzZJzCPOc3NgrzNgC45Cciw7t5Rep5EoMrvvE-TYEEhNrMOYNtqyUVN4iDHiUq4s0Ab/exec";
+    function resultClass(value) {
+      return String(value).trim() === "ปกติ" ? "text-body-secondary" : "text-danger";
+    }
 
-  fetch(urlsheet2)
-    .then(response => response.json())
-    .then(data => {
-      console.log("🔹 Data received:", data);
-
-      const resultDiv2 = document.getElementById('outlab');
-      resultDiv2.innerHTML = ''; // เคลียร์ผลลัพธ์ก่อนแสดงใหม่
-
-      let found = false;
-
-      data.forEach(row => {
-        if (String(row.register).trim() === searchKey) {
-          console.log("✅ Matched row:", row);
-
-          resultDiv2.innerHTML += `
-            <tr>
-              <th scope="row" colspan="3">${row.test}</th>
-              <td class="text-center">${row.value}</td> 
-              <td class="text-center">${row.result}</td> 
-            </tr>
-          `;
-
-          found = true;
+    function fetchJson(url) {
+      return fetch(url).then(response => {
+        if (!response.ok) {
+          throw new Error("HTTP " + response.status);
         }
+        return response.json();
       });
+    }
 
-      if (!found) {
-        resultDiv2.innerHTML = `<p style="color:red;">ไม่พบข้อมูลสำหรับ Register ID: ${searchKey}</p>`;
+    function searchRecord() {
+      const searchKey = document.getElementById("searchKey").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!searchKey) {
+        alert("กรุณากรอก User ID");
+        return;
       }
-    })
-    .catch(error => {
-      console.error("❌ Error fetching data:", error);
-      document.getElementById('outlab').innerHTML = '<p style="color:red;">เกิดข้อผิดพลาดในการดึงข้อมูล</p>';
+
+      if (!password) {
+        alert("กรุณากรอก Password");
+        return;
+      }
+
+      showWaiting();
+
+      fetchJson(BASE_URL + "?type=main")
+        .then(data => {
+          const resultDiv1 = document.getElementById("result");
+          resultDiv1.innerHTML = "";
+
+          if (!Array.isArray(data) || data.length === 0) {
+            resultDiv1.innerHTML = '<div class="alert alert-danger">ไม่พบข้อมูล</div>';
+            hideWaiting();
+            return;
+          }
+
+          const foundUser = data.find(row =>
+            String(row.username || "").trim() === searchKey &&
+            String(row.pw || "").trim() === password
+          );
+
+          if (!foundUser) {
+            resultDiv1.innerHTML = '<div class="alert alert-danger">User ID หรือ Password ไม่ถูกต้อง</div>';
+            hideWaiting();
+            return;
+          }
+
+          currentUser = foundUser;
+          currentRegister = String(foundUser.register || "").trim();
+
+          resultDiv1.innerHTML = renderMainResult(foundUser);
+          document.getElementById("printBtn").disabled = false;
+
+          renderCbcModal(foundUser);
+          renderUrineModal(foundUser);
+
+          return searchOutlab(currentRegister);
+        })
+        .catch(error => {
+          console.error("❌ Error fetching data:", error);
+          document.getElementById("result").innerHTML = '<div class="alert alert-danger">เกิดข้อผิดพลาดในการดึงข้อมูล</div>';
+        })
+        .finally(() => {
+          hideWaiting();
+        });
+    }
+
+    function renderMainResult(foundUser) {
+      return `
+        <div class="result-layout">
+          <div class="result-left">
+            <form id="searchForm">
+              <div class="row fs-5 align-items-center">
+                <div class="col-auto fw-bold">Identify :</div>
+                <div class="col-auto">${safe(foundUser.register)}</div>
+              </div>
+
+              <div class="row fs-5 align-items-center mt-1">
+                <div class="col-auto fw-bold">ชื่อ นามสกุล :</div>
+                <div class="col-auto">${safe(foundUser.name)}</div>
+                <div class="col-12">
+                  <div class="line-sep"></div>
+                </div>
+              </div>
+
+              <div class="row align-items-center g-2 mt-1">
+                <div class="col-auto fw-bold">อายุ :</div>
+                <div class="col-auto">${safe(foundUser.age)}</div>
+                <div class="col-auto">ปี</div>
+                <div class="col-auto fw-bold">เพศ :</div>
+                <div class="col-auto">${safe(foundUser.sex)}</div>
+              </div>
+
+              <div class="row align-items-center g-2 mt-1">
+                <div class="col-auto fw-bold">น้ำหนัก :</div>
+                <div class="col-auto">${safe(foundUser.waigh)}</div>
+                <div class="col-auto">ก.ก.</div>
+                <div class="col-auto fw-bold">ส่วนสูง :</div>
+                <div class="col-auto">${safe(foundUser.tall)}</div>
+                <div class="col-auto">ซ.ม.</div>
+                <div class="col-auto fw-bold">หมู่โลหิต :</div>
+                <div class="col-auto">${safe(foundUser.bg)}</div>
+              </div>
+
+              <div class="section-title mt-3">ผลการตรวจสุขภาพทั่วไปโดยแพทย์</div>
+
+              <div class="row align-items-center g-2">
+                <div class="col-auto fw-bold">ค่า BMI :</div>
+                <div class="col-auto">${safe(foundUser.bmiv)}</div>
+                <div class="col-auto fw-bold">อยู่ในเกณฑ์ :</div>
+                <div class="col-auto">${safe(foundUser.bmir)}</div>
+              </div>
+
+              <div class="row align-items-center g-2 mt-1">
+                <div class="col-auto fw-bold">ค่าความดันโลหิต :</div>
+                <div class="col-auto">${safe(foundUser.bp)}</div>
+                <div class="col-auto">mm.Hg</div>
+                <div class="col-auto fw-bold">การเต้นของชีพจร :</div>
+                <div class="col-auto">${safe(foundUser.pause)}</div>
+                <div class="col-auto">ครั้ง/นาที</div>
+              </div>
+
+              <div class="row align-items-center g-2 mt-2">
+                <div class="col-auto fw-bold">ผลการตรวจปัสสาวะทั่วไป :</div>
+                <div class="col-auto ${resultClass(foundUser.urine)}">${safe(foundUser.urine)}</div>
+                <div class="col-auto noprint">
+                  <span class="click-link" onclick="openUa()">กดดูรายละเอียด</span>
+                </div>
+              </div>
+
+              <div class="row align-items-center g-2 mt-1">
+                <div class="col-auto fw-bold">ผลการเอ็กซเรย์ทรวงอก (Chest X Ray) :</div>
+                <div class="col-auto ${resultClass(foundUser.xray)}">${safe(foundUser.xray)}</div>
+              </div>
+
+              <div class="row align-items-center g-2 mt-2">
+                <div class="col-auto fw-bold">ความเห็นแพทย์ :</div>
+                <div class="col-auto">${safe(foundUser.doctor)}</div>
+              </div>
+            </form>
+          </div>
+
+          <div class="result-right">
+            <div class="section-title">ผลตรวจทางห้องปฏิบัติการ</div>
+            <div class="table-responsive">
+              <table class="table table-bordered table-sm-custom">
+                <thead class="table-secondary">
+                  <tr>
+                    <th class="text-center">รายการตรวจ</th>
+                    <th class="text-center">ผลตรวจ</th>
+                    <th class="text-center">ค่าประมวลผล</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">ความสมบูรณ์ของเม็ดเลือด</td>
+                    <td class="text-center ${resultClass(foundUser.cbc)}">${safe(foundUser.cbc)}</td>
+                    <td class="text-center noprint"><span class="click-link" onclick="openCbc()">กดดู</span></td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">ปริมาณน้ำตาลในเลือด</td>
+                    <td class="text-center ${resultClass(foundUser.fbsr)}">${safe(foundUser.fbsr)}</td>
+                    <td class="text-center ${resultClass(foundUser.fbsr)}">${safe(foundUser.fbsv)}</td>
+                  </tr>
+
+                  <tr><td class="fw-bold" colspan="3" style="background-color:powderblue;">ปริมาณไขมันในเส้นเลือด</td></tr>
+                  <tr>
+                    <td>- Cholestroral</td>
+                    <td class="text-center ${resultClass(foundUser.cholr)}">${safe(foundUser.cholr)}</td>
+                    <td class="text-center ${resultClass(foundUser.cholr)}">${safe(foundUser.cholv)}</td>
+                  </tr>
+                  <tr>
+                    <td>- HDL</td>
+                    <td class="text-center ${resultClass(foundUser.hdlr)}">${safe(foundUser.hdlr)}</td>
+                    <td class="text-center ${resultClass(foundUser.hdlr)}">${safe(foundUser.hdlv)}</td>
+                  </tr>
+                  <tr>
+                    <td>- LDL</td>
+                    <td class="text-center ${resultClass(foundUser.ldlr)}">${safe(foundUser.ldlr)}</td>
+                    <td class="text-center ${resultClass(foundUser.ldlr)}">${safe(foundUser.ldlv)}</td>
+                  </tr>
+                  <tr>
+                    <td>- Trigleceride</td>
+                    <td class="text-center ${resultClass(foundUser.trir)}">${safe(foundUser.trir)}</td>
+                    <td class="text-center ${resultClass(foundUser.trir)}">${safe(foundUser.triv)}</td>
+                  </tr>
+
+                  <tr><td class="fw-bold" colspan="3" style="background-color:powderblue;">การทำงานของตับ</td></tr>
+                  <tr>
+                    <td>- SGPT/ALT</td>
+                    <td class="text-center ${resultClass(foundUser.sgptr)}">${safe(foundUser.sgptr)}</td>
+                    <td class="text-center ${resultClass(foundUser.sgptr)}">${safe(foundUser.sgptv)}</td>
+                  </tr>
+                  <tr>
+                    <td>- SGOT/AST</td>
+                    <td class="text-center ${resultClass(foundUser.sgotr)}">${safe(foundUser.sgotr)}</td>
+                    <td class="text-center ${resultClass(foundUser.sgotr)}">${safe(foundUser.sgotv)}</td>
+                  </tr>
+
+                  <tr><td class="fw-bold" colspan="3" style="background-color:powderblue;">การทำงานของไต</td></tr>
+                  <tr>
+                    <td>- BUN</td>
+                    <td class="text-center ${resultClass(foundUser.bunrl)}">${safe(foundUser.bunrl)}</td>
+                    <td class="text-center ${resultClass(foundUser.bunrl)}">${safe(foundUser.bunv)}</td>
+                  </tr>
+                  <tr>
+                    <td>- Creatinin</td>
+                    <td class="text-center ${resultClass(foundUser.crer)}">${safe(foundUser.crer)}</td>
+                    <td class="text-center ${resultClass(foundUser.crer)}">${safe(foundUser.crev)}</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">กรดยูริค/เก๊า</td>
+                    <td class="text-center ${resultClass(foundUser.uricv)}">${safe(foundUser.uricv)}</td>
+                    <td class="text-center ${resultClass(foundUser.uricv)}">${safe(foundUser.uricr)}</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">เชื้อไวรัสตับอักเสบ บี</td>
+                    <td class="text-center ${resultClass(foundUser.hbr)}">${safe(foundUser.hbr)}</td>
+                    <td class="text-center ${resultClass(foundUser.hbr)}">${safe(foundUser.hbv)}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="section-title mt-3">ผลตรวจทางชีวอนามัย</div>
+            <div class="table-responsive">
+              <table class="table table-bordered table-sm-custom">
+                <thead class="table-secondary">
+                  <tr>
+                    <th colspan="3">รายการตรวจ</th>
+                    <th></th>
+                    <th class="text-center">ผลตรวจ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th colspan="3">สายตาชีวอนามัย</th>
+                    <td></td>
+                    <td class="text-center ${resultClass(foundUser.eyes)}">${safe(foundUser.eyes)}</td>
+                  </tr>
+                  <tr>
+                    <th colspan="3">การได้ยิน</th>
+                    <td></td>
+                    <td class="text-center ${resultClass(foundUser.ear)}">${safe(foundUser.ear)}</td>
+                  </tr>
+                  <tr>
+                    <th colspan="3">เป่าปอด</th>
+                    <td></td>
+                    <td class="text-center ${resultClass(foundUser.lung)}">${safe(foundUser.lung)}</td>
+                  </tr>
+                  <tr>
+                    <th colspan="4">สมรรถภาพทางกล้ามเนื้อ</th>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <th></th>
+                    <td>กล้ามเนื้อมือ</td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-center ${resultClass(foundUser.hand)}">${safe(foundUser.hand)}</td>
+                  </tr>
+                  <tr>
+                    <th></th>
+                    <td>กล้ามเนื้อขา</td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-center ${resultClass(foundUser.leg)}">${safe(foundUser.leg)}</td>
+                  </tr>
+                  <tr>
+                    <th></th>
+                    <td>กล้ามเนื้อหลัง</td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-center ${resultClass(foundUser.back)}">${safe(foundUser.back)}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="section-title mt-3">ผลตรวจอื่นๆ</div>
+            <div class="table-responsive">
+              <table class="table table-bordered table-sm-custom">
+                <thead class="table-secondary">
+                  <tr>
+                    <th colspan="2">รายการตรวจ</th>
+                    <th></th>
+                    <th class="text-center">ค่า</th>
+                    <th class="text-center">ผลตรวจ</th>
+                  </tr>
+                </thead>
+                <tbody id="outlab"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCbcModal(foundUser) {
+      document.getElementById("cbcBody").innerHTML = `
+        <tr><td></td><td>เม็ดเลือดขาว(WBC)</td><td class="text-center">${safe(foundUser.bwbc)}</td><td class="text-center">5,000-10,000 cell/mL</td></tr>
+        <tr><td></td><td>Hemogobin</td><td class="text-center">${safe(foundUser.hemo)}</td><td class="text-center">13.7-17.5 g/dL</td></tr>
+        <tr><td></td><td>Hematocrit</td><td class="text-center">${safe(foundUser.hema)}</td><td class="text-center">40.1-51%</td></tr>
+        <tr><td></td><td>Neutrophils</td><td class="text-center">${safe(foundUser.neu)}</td><td class="text-center">34-67.9%</td></tr>
+        <tr><td></td><td>Lymthocytes</td><td class="text-center">${safe(foundUser.lym)}</td><td class="text-center">21.8-53.1%</td></tr>
+        <tr><td></td><td>Monocyte</td><td class="text-center">${safe(foundUser.mono)}</td><td class="text-center">5.3-12.2%</td></tr>
+        <tr><td></td><td>Eosinphil</td><td class="text-center">${safe(foundUser.eos)}</td><td class="text-center">0.8-7%</td></tr>
+        <tr><td></td><td>Basophill</td><td class="text-center">${safe(foundUser.bas)}</td><td class="text-center">0.2-1.2%</td></tr>
+        <tr><td></td><td>Platlet count</td><td class="text-center">${safe(foundUser.plat)}</td><td class="text-center">140,000-400,000 cell/cu.mm</td></tr>
+        <tr><td></td><td>MCV</td><td class="text-center">${safe(foundUser.mcv)}</td><td class="text-center">80-100 fl</td></tr>
+      `;
+      document.getElementById("cbcSummary").innerHTML = `สรุปผลตรวจ<br>${safe(foundUser.cbcsum)}`;
+    }
+
+    function renderUrineModal(foundUser) {
+      document.getElementById("urineBody").innerHTML = `
+        <tr><td>color</td><td class="text-center">${safe(foundUser.color)}</td><td class="text-center">yellow</td></tr>
+        <tr><td>Appearance</td><td class="text-center">${safe(foundUser.appe)}</td><td class="text-center">clear</td></tr>
+        <tr><td>Ph</td><td class="text-center">${safe(foundUser.ph)}</td><td class="text-center">4.5-8</td></tr>
+        <tr><td>Specific Gravity</td><td class="text-center">${safe(foundUser.spec)}</td><td class="text-center">1-1.03</td></tr>
+        <tr><td>Protain</td><td class="text-center">${safe(foundUser.protain)}</td><td class="text-center">Negative</td></tr>
+        <tr><td>Glucose</td><td class="text-center">${safe(foundUser.glu)}</td><td class="text-center">Negative</td></tr>
+        <tr><td>RBC</td><td class="text-center">${safe(foundUser.urbc)}</td><td class="text-center">1-2</td></tr>
+        <tr><td>WBC</td><td class="text-center">${safe(foundUser.uwbc)}</td><td class="text-center">0-1</td></tr>
+        <tr><td>Epithelium</td><td class="text-center">${safe(foundUser.epi)}</td><td class="text-center">0-1</td></tr>
+        <tr><td>Bacteria</td><td class="text-center">${safe(foundUser.bac)}</td><td class="text-center">Normal</td></tr>
+        <tr><td>Amphetamine</td><td class="text-center">${safe(foundUser.amp)}</td><td class="text-center">Negative</td></tr>
+        <tr><td>Pregnancy (การตั้งครรภ์)</td><td class="text-center">${safe(foundUser.preg)}</td><td class="text-center">Negative</td></tr>
+      `;
+    }
+
+    function searchOutlab(registerValue) {
+      if (!registerValue) {
+        document.getElementById("outlab").innerHTML = `
+          <tr><td colspan="5" class="text-center text-danger">ไม่พบเลข Register</td></tr>
+        `;
+        return Promise.resolve();
+      }
+
+      return fetchJson(BASE_URL + "?type=outlab")
+        .then(data => {
+          const resultDiv2 = document.getElementById("outlab");
+          resultDiv2.innerHTML = "";
+
+          let found = false;
+
+          data.forEach(row => {
+            if (String(row.register || "").trim() === String(registerValue).trim()) {
+              resultDiv2.innerHTML += `
+                <tr>
+                  <th scope="row" colspan="3">${safe(row.test)}</th>
+                  <td class="text-center">${safe(row.value)}</td>
+                  <td class="text-center">${safe(row.result)}</td>
+                </tr>
+              `;
+              found = true;
+            }
+          });
+
+          if (!found) {
+            resultDiv2.innerHTML = `
+              <tr><td colspan="5" class="text-center text-danger">ไม่พบข้อมูลสำหรับ Register ID: ${registerValue}</td></tr>
+            `;
+          }
+        })
+        .catch(error => {
+          console.error("❌ Error fetching outlab:", error);
+          document.getElementById("outlab").innerHTML = `
+            <tr><td colspan="5" class="text-center text-danger">เกิดข้อผิดพลาดในการดึงข้อมูล</td></tr>
+          `;
+        });
+    }
+
+    function printResult() {
+      window.print();
+    }
+
+    function openCbc() {
+      document.getElementById("cbcOverlay").style.display = "flex";
+    }
+
+    function openUa() {
+      document.getElementById("urineOverlay").style.display = "flex";
+    }
+
+    function closeCbc() {
+      document.getElementById("cbcOverlay").style.display = "none";
+    }
+
+    function closeUrine() {
+      document.getElementById("urineOverlay").style.display = "none";
+    }
+
+    document.getElementById("cbcOverlay").addEventListener("click", function (e) {
+      if (e.target === this) closeCbc();
     });
-}
 
+    document.getElementById("urineOverlay").addEventListener("click", function (e) {
+      if (e.target === this) closeUrine();
+    });
 
-      function printResult() {
-
-        window.print(); // ใช้คำสั่ง print เพื่อพิมพ์เฉพาะส่วนผลลัพธ์
-      }
-
-
-
-      function openCbc() {
-        $('#hidden').css('display', 'flex');
-        $('#hide').css('display', 'none')
-
-      }
-      function openUa() {
-        $('#hide').css('display', 'flex');
-        $('#hidden').css('display', 'none')
-      }
-      function closehidden() {
-        event.preventDefault();
-        $('#hidden').css('display', 'none')
-      }
-
-      function closehide() {
-        event.preventDefault();
-        $('#hide').css('display', 'none')
-      }
-
-      function closeCbc(){
-        $("#hidden").css('display' , 'none');
-      }
-
-      function closeUrine(){
-        $("#hide").css('display' , 'none');
-      }
-
-    </script>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-      crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-      crossorigin="anonymous"></script>
+    document.addEventListener("DOMContentLoaded", setDatetime);
+  </script>
 </body>
-
 </html>
