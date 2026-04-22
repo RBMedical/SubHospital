@@ -5,320 +5,201 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@100..900&display=swap" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-    crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
-    rel="stylesheet">
-  
-  
-  <link rel="stylesheet" href="index.css">
-</head>
-<body>
-    <style>
-.body {
-    font-family: Sarabun;
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-}
-      table {
-  border-collapse: collapse;
-}
-
-th, td {
-  border: 1px solid black;
-}
+  <style>
+    body {
+      font-family: Sarabun, sans-serif;
+    }
 
     table {
-  border-collapse: collapse;
-  font-size: 11px;
-}
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 11px;
+    }
 
-th {
-  font-size: 12px;
-  font-weight: bold;
-}
+    th, td {
+      border: 1px solid black;
+      padding: 4px 6px;
+      line-height: 1.2;
+    }
 
-td {
-  padding: 4px 6px;
-  line-height: 1.2;
-}
-.table-result{
-    font-size: 0.75rem;
-}
+    th {
+      font-size: 12px;
+      font-weight: bold;
+    }
 
+    .table-result {
+      font-size: 0.75rem;
+    }
 
-@media print {
-            /* ตั้งค่าหน้ากระดาษเป็น A4 และแนวนอน */
-            @page {
-                size: A4 landscape; /* กระดาษ A4 แนวนอน */
-                margin: 0mm; /* กำหนดระยะขอบของกระดาษ */
-            }
+    /* PRINT */
+    @media print {
+      @page {
+        size: A4 landscape;
+        margin: 8mm;
+      }
 
-            /* กำหนดการจัดการกับองค์ประกอบบนหน้าพิมพ์ */
-            body {
-                font-family: Arial, sans-serif;
-                font-size: 14px;
-            }
+      body * {
+        visibility: hidden;
+      }
 
-            .print-content {
-                width: 100%;
-                text-align: center;
-                margin-top: 50px;
-            }
+      .print-area, .print-area * {
+        visibility: visible;
+      }
 
-            /* ซ่อนองค์ประกอบที่ไม่ต้องการพิมพ์ เช่นปุ่มหรือเมนู */
-            .noprint {
-                display: none;
-            }
-        }
-       .container-sm{
-          display: flex;
-          flex-direction: row;
-       
-          justify-content: space-between;
-        }
-        .container-left{
-          width: 85%;
-      
-        }
-        .container-right{
-          width: 15%;
-     
-        }
-        .container-middle{
-          width: 60%;
-          flex-direction: row;
-          background-color: brown;
-        }
-        .container-link{
-          width: 40;
-          background-color: aqua;
-        }
-    </style>
-    <div id="message">
-      
-  </div>
-    <header class="d-flex flex-wrap justify-content-end py-3 mb-4 border-bottom noprint">
-      <div class="container">
-     
-        <div class="container-sm noprint" style="font-family: sarabun;">
-          <div class="container-left noprint">
-            <p>ระบบค้นหาผลการตรวจสุขภาพทางอินเตอร์เน็ต</p>
-          </div>
-          <div class="container-right ms-5 text-end noprint" id="datetime"></div>
-          </div>
-          <p id="selectedValue" class="ms-2 fs-4 fw-bold noprint"></p>
-                  
-        <div class="container-sm noprint">
-          <ul class="nav justify-content-start noprint" style="font-family: sarabun;">
-        
-            <div class="d-flex gap-2 mb-3">
-              <a href="index.html" class="btn btn-outline-secondary">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
-    <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
-    </svg>
-    </a>
-    <button type="button" id="printBtn" onclick="printResult()" class="btn btn-secondary ms-1">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer"
-        viewBox="0 0 16 16">
-        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1" />
-        <path
-          d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1" />
-      </svg>
-    </button>
-  </ul> 
-  <ul class="nav nav-tabs justify-content-end noprint" style="font-family: sarabun;">
-                <li class="nav-item">
-                    <a class="nav-link active" href="pe.html"  aria-current="page"  aria-disabled="true">ผลตรวจสุขภาพทั่วไป</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link"  href="cbc.html" >ความสมบูรณ์ของเม็ดเลือด</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link"  href="ua.html">ปัสสาวะทั่วไป</a>
-                </li>
-                <li class="nav-item" >
-                  <a class="nav-link" href="chem.html">ผลวิเคราะห์ทางห้องปฎิบัติการ</a>
-                </li>
-                <li class="nav-item text-end">
-                  <a class="nav-link" href="bio.html">ชีวอนามัย</a>
-                </li>
-              </ul>
+      .print-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+      }
+
+      .noprint {
+        display: none !important;
+      }
+
+      table {
+        font-size: 10px;
+      }
+
+      th, td {
+        padding: 3px 4px;
+      }
+    }
+
+    .container-sm {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .container-left { width: 85%; }
+    .container-right { width: 15%; }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="border-bottom mb-3 noprint">
+    <div class="container">
+      <div class="container-sm">
+        <div class="container-left">
+          <p>ระบบค้นหาผลการตรวจสุขภาพทางอินเตอร์เน็ต</p>
         </div>
-        </div>
-    </header>
-   
-<div class="container-md" style="font-family: sarabun;">
-    <span id="loading" class="fs-5 mt-2 mb-2"></span>
+        <div class="container-right text-end" id="datetime"></div>
+      </div>
+
+      <p id="selectedValue" class="fs-5 fw-bold"></p>
+
+      <div class="d-flex gap-2 mb-2">
+        <a href="index.html" class="btn btn-outline-secondary">🏠</a>
+
+        <button onclick="printResult()" class="btn btn-secondary">
+          🖨 พิมพ์
+        </button>
+      </div>
+
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active">ผลตรวจสุขภาพทั่วไป</a>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="cbc.html">CBC</a></li>
+        <li class="nav-item"><a class="nav-link" href="ua.html">Urine</a></li>
+        <li class="nav-item"><a class="nav-link" href="chem.html">Chem</a></li>
+        <li class="nav-item"><a class="nav-link" href="bio.html">Bio</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- CONTENT (PRINT AREA) -->
+  <div class="container print-area">
+
+    <span id="loading" class="fs-5"></span>
+
     <table class="table table-result mt-3">
-       <head>
-        <thead class="table-info">
-            <tr>
-              <th scope="col" colspan="2" class="text-center">รหัสประจำตัว</th>
-              <th scope="col" colspan="3" class="text-center">ชื่อ นามสกุล</th>
-              <th scope="col" class="text-center">อายุ</th>
-              <th scope="col" class="text-center">เพศ</th>
-              <th scope="col" class="text-center">น้ำหนัก</th>
-              <th scope="col" class="text-center">ส่วนสูง</th>
-              <th scope="col" class="text-center">หมู่เลือด</th>
-              <th scope="col" class="text-center">BMI</th>
-              <th scope="col" class="text-center">BP</th>
-              <th scope="col" class="text-center">Pause</th>
-              <th scope="col" class="text-center">คลื่นไฟฟ้าหัวใจ</th>
-              <th scope="col" class="text-center">Urine</th>
-              <th scope="col" class="text-center">X Ray</th>
-              <th scope="col" class="text-center">ความเห็นแพทย์</th>
-             
-
-
-            </tr>
-          </thead>
-              <tbody id="cbcresult">
-
-           </tbody>
+      <thead class="table-info">
+        <tr>
+          <th colspan="2">รหัส</th>
+          <th colspan="3">ชื่อ</th>
+          <th>อายุ</th>
+          <th>เพศ</th>
+          <th>น้ำหนัก</th>
+          <th>สูง</th>
+          <th>เลือด</th>
+          <th>BMI</th>
+          <th>BP</th>
+          <th>Pulse</th>
+          <th>EKG</th>
+          <th>Urine</th>
+          <th>X-Ray</th>
+          <th>แพทย์</th>
+        </tr>
+      </thead>
+      <tbody id="cbcresult"></tbody>
     </table>
-  
-</div>
 
-<script>
-  const BASE_URL = "https://script.google.com/macros/s/AKfycbxIFqg_sVoBadGiZijEkpghbLBNUiYMO9Zz_5eXxZ_JPSp457PnhJwPCRqTg_Qe8REQPA/exec";
+  </div>
 
-  function showLoading(message = "Waiting for loading......") {
-    const loading = document.getElementById("loading");
-    if (loading) {
-      loading.style.display = "block";
-      loading.innerText = message;
+  <script>
+    function printResult() {
+      window.print();
     }
-  }
 
-  function hideLoading() {
-    const loading = document.getElementById("loading");
-    if (loading) {
-      loading.innerText = "";
-      loading.style.display = "none";
+    const BASE_URL = "https://script.google.com/macros/s/AKfycbxIFqg_sVoBadGiZijEkpghbLBNUiYMO9Zz_5eXxZ_JPSp457PnhJwPCRqTg_Qe8REQPA/exec";
+
+    function fetchJson(url) {
+      return fetch(url).then(r => r.json());
     }
-  }
 
-  function fetchJson(url) {
-    return fetch(url).then(response => {
-      if (!response.ok) {
-        throw new Error("HTTP error: " + response.status);
+    function loadAllRecords() {
+      const result = document.getElementById("cbcresult");
+      result.innerHTML = "";
+
+      const selected = localStorage.getItem("selectedCustomer") || "";
+
+      if (!selected) {
+        result.innerHTML = `<tr><td colspan="17">ไม่พบข้อมูล</td></tr>`;
+        return;
       }
-      return response.json();
-    });
-  }
 
-  function loadAllRecords() {
-   
+      fetchJson(BASE_URL + "?type=main")
+        .then(data => {
+          let found = false;
 
-    const resultDiv1 = document.getElementById("cbcresult");
-    if (resultDiv1) {
-      resultDiv1.innerHTML = "";
-    }
+          data.forEach(row => {
+            if (row.customer === selected) {
+              found = true;
 
-    // ค่านี้มาจากหน้า login
-    // UserDetail[1] = Main[67]
-    const selectedValue =
-      String(localStorage.getItem("selectedCustomer") || localStorage.getItem("selectedDropdownValue") || "").trim();
+              result.innerHTML += `
+                <tr>
+                  <td colspan="2">${row.register}</td>
+                  <td colspan="3">${row.name}</td>
+                  <td>${row.age}</td>
+                  <td>${row.sex}</td>
+                  <td>${row.waigh}</td>
+                  <td>${row.tall}</td>
+                  <td>${row.bg}</td>
+                  <td>${row.bmiv}</td>
+                  <td>${row.bp}</td>
+                  <td>${row.pause}</td>
+                  <td>${row.ekg}</td>
+                  <td>${row.urine}</td>
+                  <td>${row.xray}</td>
+                  <td>${row.doctor}</td>
+                </tr>`;
+            }
+          });
 
-    console.log("🔹 Selected Value from Local Storage:", selectedValue);
-
-    if (!selectedValue) {
-     
-      if (resultDiv1) {
-        resultDiv1.innerHTML = `
-          <tr>
-            <td colspan="17" class="text-center text-danger">ไม่พบข้อมูลผู้ใช้ กรุณาเข้าสู่ระบบใหม่</td>
-          </tr>
-        `;
-      }
-      return;
-    }
-
-    fetchJson(BASE_URL + "?type=main")
-      .then(data => {
-        console.log("🔹 Data received from API:", data);
-
-        if (!Array.isArray(data) || data.length === 0) {
-          console.warn("⚠️ No data found in API response:", data);
-          if (resultDiv1) {
-            resultDiv1.innerHTML = `
-              <tr>
-                <td colspan="17" class="text-center text-danger">ไม่พบข้อมูล</td>
-              </tr>
-            `;
-          }
-         
-          return;
-        }
-
-        let found = false;
-
-        data.forEach(row => {
-          console.log("🔹 Checking row:", row);
-
-          if (String(row.customer || "").trim() === selectedValue) {
-            found = true;
-
-            resultDiv1.innerHTML += ` 
-              <tr>
-                <th class="text-center" scope="row" colspan="2">${row.register || ""}</th>
-                <td colspan="3">${row.name || ""}</td>
-                <td class="text-center">${row.age || ""}</td>
-                <td class="text-center">${row.sex || ""}</td>
-                <td class="text-center">${row.waigh || ""}</td>
-                <td class="text-center">${row.tall || ""}</td>
-                <td class="text-center">${row.bg || ""}</td>
-                <td class="text-center">${row.bp || ""}</td>
-                <td class="text-center">${row.pause || ""}</td>
-                <td class="text-center">${row.bmiv || ""}</td>
-                <td class="text-center">${row.ekg || ""}</td>
-                <td class="text-center">${row.urine || ""}</td>
-                <td class="text-center">${row.xray || ""}</td>
-                <td class="text-center">${row.doctor || ""}</td>
-              </tr>
-            `;
+          if (!found) {
+            result.innerHTML = `<tr><td colspan="17">ไม่พบข้อมูล</td></tr>`;
           }
         });
+    }
 
-        if (!found && resultDiv1) {
-          resultDiv1.innerHTML = `
-            <tr>
-              <td colspan="17" class="text-center text-danger">ไม่พบข้อมูลของผู้ใช้ที่เลือก</td>
-            </tr>
-          `;
-        }
+    document.addEventListener("DOMContentLoaded", loadAllRecords);
+  </script>
 
-      
-      })
-      .catch(error => {
-        console.error("❌ Error fetching data:", error);
-
-        if (resultDiv1) {
-          resultDiv1.innerHTML = `
-            <tr>
-              <td colspan="17" class="text-center text-danger">เกิดข้อผิดพลาดในการดึงข้อมูล</td>
-            </tr>
-          `;
-        }
-
-      
-      });
-  }
-
-  document.addEventListener("DOMContentLoaded", loadAllRecords);
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
 </html>
