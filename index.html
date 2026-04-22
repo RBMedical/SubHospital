@@ -10,12 +10,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
     body {
       font-family: 'Sarabun', sans-serif;
-      background-image:url("pic/bgs.png");
+      background-image: url("pic/bgs.png");
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
+
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main-content {
+      flex: 1;
     }
 
     /* LOGO */
@@ -42,7 +55,7 @@
       background: rgba(255, 255, 255, 0.95);
       border-radius: 15px;
       padding: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     }
 
     /* FLOAT ICON */
@@ -55,9 +68,45 @@
       z-index: 9999;
     }
 
+    /* FOOTER */
+    .footer {
+      width: 100%;
+      border-top: 1px solid #bcd9e6;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(3px);
+      margin-top: 20px;
+    }
+
+    .footer-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 10px 20px;
+      font-size: 11px;
+      color: #555;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .footer-left {
+      line-height: 1.4;
+    }
+
+    .footer-right a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-right a:hover {
+      text-decoration: underline;
+    }
+
     /* MOBILE */
     @media (max-width: 768px) {
-
       .nav-logo {
         width: 30px;
       }
@@ -84,104 +133,99 @@
       .main-card {
         padding: 15px;
       }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+        font-size: 10px;
+      }
+
+      #floating-img {
+        width: 60px;
+        height: 60px;
+        bottom: 20px;
+        right: 15px;
+      }
     }
-
-    .footer {
-  border-top: 1px solid #ccc;   /* เส้นด้านบน */
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 11px;
-  color: #555;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.footer a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.footer a:hover {
-  text-decoration: underline;
-}
   </style>
 </head>
 
 <body>
 
-  <div class="container py-3">
+  <div class="main-content">
+    <div class="container py-3">
 
-    <!-- HEADER -->
-    <header class="d-flex flex-wrap justify-content-between align-items-center border-bottom pb-3 mb-4" style="background-color: white;">
+      <!-- HEADER -->
+      <header class="d-flex flex-wrap justify-content-between align-items-center border-bottom pb-3 mb-4" style="background-color: white;">
 
-      <div class="d-flex align-items-center">
-        <img src="pic/Logo.png" class="nav-logo me-2">
-        <span class="fw-bold text-info">Mitrpracha Hospital</span>
-      </div>
-
-      <div class="fw-bold me-5" style="color: #00acc1;">
-        หน่วยงานตรวจสุขภาพเคลื่อนที่
-      </div>
-
-    </header>
-
-    <!-- CONTENT -->
-    <div class="main-card">
-
-      <div class="row align-items-center">
-
-        <!-- IMAGE -->
-        <div class="col-12 col-lg-6 mb-3">
-          <img src="https://img2.pic.in.th/pic/-282f2dab186d5afab.png" class="hero-img">
+        <div class="d-flex align-items-center">
+          <img src="pic/Logo.png" class="nav-logo me-2" alt="Logo">
+          <span class="fw-bold text-info">Mitrpracha Hospital</span>
         </div>
 
-        <!-- TEXT -->
-        <div class="col-12 col-lg-6">
+        <div class="fw-bold me-5" style="color: #00acc1;">
+          หน่วยงานตรวจสุขภาพเคลื่อนที่
+        </div>
 
-          <h2 class="bigfont fw-bold">CHECK UP</h2>
+      </header>
 
-          <h1 class="fw-bold mb-3">Check it by yourself.</h1>
+      <!-- CONTENT -->
+      <div class="main-card">
+        <div class="row align-items-center">
 
-          <p class="lead">
-            บริการเช็คผลการตรวจสุขภาพประจำปีด้วยตนเองทางอินเตอร์เน็ต
-          </p>
+          <!-- IMAGE -->
+          <div class="col-12 col-lg-6 mb-3">
+            <img src="https://img2.pic.in.th/pic/-282f2dab186d5afab.png" class="hero-img" alt="Check up">
+          </div>
 
-          <div class="d-grid gap-2 d-md-flex">
+          <!-- TEXT -->
+          <div class="col-12 col-lg-6">
 
-            <a href="personal.html" class="btn btn-outline-primary fw-bold">
-              สำหรับบุคคลทั่วไป
-            </a>
+            <h2 class="bigfont fw-bold">CHECK UP</h2>
 
-            <a href="main.html" class="btn btn-outline-success fw-bold">
-              สำหรับสถานประกอบการ
-            </a>
+            <h1 class="fw-bold mb-3">Check it by yourself.</h1>
+
+            <p class="lead">
+              บริการเช็คผลการตรวจสุขภาพประจำปีด้วยตนเองทางอินเตอร์เน็ต
+            </p>
+
+            <div class="d-grid gap-2 d-md-flex">
+              <a href="personal.html" class="btn btn-outline-primary fw-bold">
+                สำหรับบุคคลทั่วไป
+              </a>
+
+              <a href="main.html" class="btn btn-outline-success fw-bold">
+                สำหรับสถานประกอบการ
+              </a>
+            </div>
 
           </div>
 
         </div>
-
       </div>
 
     </div>
-
   </div>
 
   <!-- FLOAT BUTTON -->
-  <a id="floating-img" href="https://lin.ee/6KvgXbZ">
-    <img src="https://img2.pic.in.th/pic/admin-contact-1.png" style="width:100%; height:100%;">
+  <a id="floating-img" href="https://lin.ee/6KvgXbZ" target="_blank">
+    <img src="https://img2.pic.in.th/pic/admin-contact-1.png" style="width:100%; height:100%;" alt="LINE Contact">
   </a>
-<footer class="footer">
-  <div class="footer-left">
-    เวปไซท์เฉพาะแผนกตรวจสุขภาพเคลื่อนที่ (Mobile Check up) โรงพยาบาลมิตรประชาเท่านั้น
-  </div>
-  <div class="footer-right">
-    <a href="https://www.mitrprachahospital.com" target="_blank">
-      หน้าหลักโรงพยาบาล
-    </a>
-  </div>
-</footer>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        เว็บไซต์เฉพาะแผนกตรวจสุขภาพเคลื่อนที่ (Mobile Check up) โรงพยาบาลมิตรประชาเท่านั้น
+      </div>
+      <div class="footer-right">
+        <a href="https://www.mitrprachahospital.com" target="_blank">
+          หน้าหลักโรงพยาบาล
+        </a>
+      </div>
+    </div>
+  </footer>
+
 </body>
 
 </html>
