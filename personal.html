@@ -337,9 +337,23 @@
       </div>
     </div>
   </div>
+  <!-- ABNORMAL MODAL -->
+  <div id="abnormalOverlay" class="custom-overlay">
+    <div class="custom-modal">
+      <div class="modal-header d-flex justify-content-between align-items-center">
+        <div class="fw-bold">อธิบายค่าผิดปกติ</div>
+        <button type="button" class="btn-close" onclick="closeAbnormal()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="responsive-table-wrap">
+         <p id="abnormalResults"></p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
-    const BASE_URL = "https://script.google.com/macros/s/AKfycbxIFqg_sVoBadGiZijEkpghbLBNUiYMO9Zz_5eXxZ_JPSp457PnhJwPCRqTg_Qe8REQPA/exec";
+    const BASE_URL = "https://script.google.com/macros/s/AKfycbxEhOtHwyspdaoOlixOZNfPGNl0sRsXHdHPhbjCzoLCiqdz8u7MESfnotnu30m03XiEpw/exec";
 
     let currentUser = null;
     let currentRegister = "";
@@ -377,62 +391,81 @@
     }
 
     function searchRecord() {
-      const searchKey = document.getElementById("searchKey").value.trim();
-      const password = document.getElementById("password").value.trim();
+  const searchKey = document.getElementById("searchKey").value.trim();
+  const password = document.getElementById("password").value.trim();
 
-      if (!searchKey) {
-        alert("กรุณากรอก User ID");
-        return;
+  if (!searchKey) {
+    alert("กรุณากรอก User ID");
+    return;
+  }
+
+  if (!password) {
+    alert("กรุณากรอก Password");
+    return;
+  }
+
+  showWaiting();
+
+  fetchJson(BASE_URL + "?type=main")
+    .then(data => {
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = "";
+
+      if (!Array.isArray(data) || data.length === 0) {
+        resultDiv.innerHTML = '<div class="alert alert-danger">ไม่พบข้อมูล</div>';
+        throw new Error("no data");
       }
 
-      if (!password) {
-        alert("กรุณากรอก Password");
-        return;
+      const foundUser = data.find(row =>
+        String(row.username || "").trim() === searchKey &&
+        String(row.pw || "").trim() === password
+      );
+
+      if (!foundUser) {
+        resultDiv.innerHTML = '<div class="alert alert-danger">User ID หรือ Password ไม่ถูกต้อง</div>';
+        throw new Error("not found");
       }
 
-      showWaiting();
+      currentUser = foundUser;
+      currentRegister = String(foundUser.register || "").trim();
 
-      fetchJson(BASE_URL + "?type=main")
-        .then(data => {
-          const resultDiv1 = document.getElementById("result");
-          resultDiv1.innerHTML = "";
+      resultDiv.innerHTML = renderMainResult(foundUser);
+      document.getElementById("printBtn").disabled = false;
 
-          if (!Array.isArray(data) || data.length === 0) {
-            resultDiv1.innerHTML = '<div class="alert alert-danger">ไม่พบข้อมูล</div>';
-            hideWaiting();
-            return;
-          }
+      renderCbcModal(foundUser);
+      renderUrineModal(foundUser);
 
-          const foundUser = data.find(row =>
-            String(row.username || "").trim() === searchKey &&
-            String(row.pw || "").trim() === password
-          );
+      // ✅ chain ถูกต้อง
+      return searchOutlab(currentRegister)
+        .then(() => searchAbnormal(currentRegister));
+    })
+    .then(abnormalList => {
+      if (!abnormalList || abnormalList.length === 0) return;
 
-          if (!foundUser) {
-            resultDiv1.innerHTML = '<div class="alert alert-danger">User ID หรือ Password ไม่ถูกต้อง</div>';
-            hideWaiting();
-            return;
-          }
+      // 👉 ใส่ข้อมูลลง modal
+      document.getElementById("abnormalResults").innerHTML =
+        abnormalList.join("<br>");
 
-          currentUser = foundUser;
-          currentRegister = String(foundUser.register || "").trim();
+      // 👉 optional: แสดง preview ด้านล่าง
+      const html = `
+        <div class="alert alert-warning mt-3">
+          ${abnormalList.join("<br>")}
+        </div>
+      `;
+      document.getElementById("result").insertAdjacentHTML("beforeend", html);
+    })
+    .catch(error => {
+      console.error("❌ Error:", error);
 
-          resultDiv1.innerHTML = renderMainResult(foundUser);
-          document.getElementById("printBtn").disabled = false;
-
-          renderCbcModal(foundUser);
-          renderUrineModal(foundUser);
-
-          return searchOutlab(currentRegister);
-        })
-        .catch(error => {
-          console.error("❌ Error fetching data:", error);
-          document.getElementById("result").innerHTML = '<div class="alert alert-danger">เกิดข้อผิดพลาดในการดึงข้อมูล</div>';
-        })
-        .finally(() => {
-          hideWaiting();
-        });
-    }
+      if (error.message !== "no data" && error.message !== "not found") {
+        document.getElementById("result").innerHTML =
+          '<div class="alert alert-danger">เกิดข้อผิดพลาดในการดึงข้อมูล</div>';
+      }
+    })
+    .finally(() => {
+      hideWaiting();
+    });
+}
 
     function renderMainResult(foundUser) {
       return `
@@ -589,6 +622,9 @@
                   </tr>
                 </tbody>
               </table>
+              <div class="text-danger" style="cursor:pointer;" onclick="openAbnormal()">
+  คำอธิบายผลผิดปกติ
+</div>
             </div>
 
             <div class="section-title mt-3">ผลตรวจทางชีวอนามัย</div>
@@ -740,6 +776,26 @@
         });
     }
 
+    function searchAbnormal(registerValue) {
+  if (!registerValue) {
+    return Promise.resolve([]);
+  }
+
+  return fetchJson(BASE_URL + "?type=abnormal&register=" + encodeURIComponent(registerValue))
+    .then(data => {
+      if (!Array.isArray(data) || data.length === 0) {
+        return [];
+      }
+
+      // ดึงเฉพาะ column B (value)
+      return data.map(row => safe(row.value));
+    })
+    .catch(error => {
+      console.error("❌ Error fetching abnormal:", error);
+      return [];
+    });
+}
+
     function printResult() {
       window.print();
     }
@@ -758,6 +814,12 @@
 
     function closeUrine() {
       document.getElementById("urineOverlay").style.display = "none";
+    }
+     function openAbnormal() {
+      document.getElementById("abnormalOverlay").style.display = "flex";
+    }
+      function closeAbnormal() {
+      document.getElementById("abnormalOverlay").style.display = "none";
     }
 
     document.getElementById("cbcOverlay").addEventListener("click", function (e) {
