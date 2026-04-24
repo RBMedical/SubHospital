@@ -314,6 +314,24 @@
     </div>
   </div>
 
+   <!-- Abnormal MODAL -->
+  <div id="AbnormalOverlay" class="custom-overlay">
+    <div class="custom-modal">
+      <div class="modal-header d-flex justify-content-between align-items-center">
+        <div class="fw-bold">รายละเอียดผลผิดปกติ</div>
+        <button type="button" class="btn-close" onclick="closeAbnormal()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="responsive-table-wrap">
+         <div id="abnormalResult"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div style="font-size: 0.85rem;" id="cbcSummary"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- URINE MODAL -->
   <div id="urineOverlay" class="custom-overlay">
     <div class="custom-modal">
@@ -441,7 +459,7 @@
             <form id="searchForm">
               <div class="row fs-5 align-items-center">
                 <div class="col-auto fw-bold">Identify :</div>
-                <div class="col-auto">${safe(foundUser.register)}</div>
+                <div id="HN" class="col-auto">${safe(foundUser.register)}</div>
               </div>
 
               <div class="row fs-5 align-items-center mt-1">
@@ -589,6 +607,9 @@
                   </tr>
                 </tbody>
               </table>
+              <div class="text-danger fs-6" style="cursor:pointer;" onclick="loadAbnormal()">
+  คำอธิบายผลผิดปกติ
+</div>
             </div>
 
             <div class="section-title mt-3">ผลตรวจทางชีวอนามัย</div>
@@ -740,6 +761,35 @@
         });
     }
 
+    function loadAbnormal() {
+  const hn = document.getElementById("HN").innerText.trim();
+
+  if (hn === "") {
+    alert("ไม่พบค่า HN");
+    return;
+  }
+
+  const url = "https://script.google.com/macros/s/AKfycbw0Ufo4vXzReTJrX9kkYxjnXkFn9gtfEZQeWPx9tbryF_IAeXEuk0R58PJkKlES_7aZMw/exec?hn=" + encodeURIComponent(hn);
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      const resultBox = document.getElementById("abnormalResult");
+
+      if (data.success) {
+        resultBox.innerHTML = data.abnormal;
+      } else {
+        resultBox.innerHTML = data.message;
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById("abnormalResult").innerHTML =
+        "เกิดข้อผิดพลาด";
+    });
+      openAbnormal();
+}
+
     function printResult() {
       window.print();
     }
@@ -751,6 +801,10 @@
     function openUa() {
       document.getElementById("urineOverlay").style.display = "flex";
     }
+     function openAbnormal() {
+      document.getElementById("aabnormalOverlay").style.display = "flex";
+    }
+
 
     function closeCbc() {
       document.getElementById("cbcOverlay").style.display = "none";
@@ -758,6 +812,10 @@
 
     function closeUrine() {
       document.getElementById("urineOverlay").style.display = "none";
+    }
+
+     function closeAbnormal() {
+      document.getElementById("abnormalOverlay").style.display = "none";
     }
 
     document.getElementById("cbcOverlay").addEventListener("click", function (e) {
