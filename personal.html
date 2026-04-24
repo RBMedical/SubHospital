@@ -768,35 +768,57 @@
         });
     }
 
-    function loadAbnormal() {
-  const hn = document.getElementById("HN").innerText.trim();
+ function loadAbnormal() {
+  const hnEl = document.getElementById("HN");
+  const resultBox = document.getElementById("abnormalResult");
+
+  if (!hnEl) {
+    alert("ไม่พบ element id='HN'");
+    return;
+  }
+
+  if (!resultBox) {
+    alert("ไม่พบ element id='abnormalResult'");
+    return;
+  }
+
+  const hn = hnEl.innerText.trim();
 
   if (hn === "") {
     alert("ไม่พบค่า HN");
     return;
   }
 
-  const url = "https://script.google.com/macros/s/AKfycbw0Ufo4vXzReTJrX9kkYxjnXkFn9gtfEZQeWPx9tbryF_IAeXEuk0R58PJkKlES_7aZMw/exec?hn=" + encodeURIComponent(hn);
+  resultBox.innerHTML = "กำลังโหลดข้อมูล...";
+  openAbnormal();
+
+  const url =
+    "https://script.google.com/macros/s/AKfycbw0Ufo4vXzReTJrX9kkYxjnXkFn9gtfEZQeWPx9tbryF_IAeXEuk0R58PJkKlES_7aZMw/exec?hn=" +
+    encodeURIComponent(hn) +
+    "&t=" +
+    new Date().getTime();
 
   fetch(url)
     .then(res => res.json())
     .then(data => {
-      const resultBox = document.getElementById("abnormalResult");
-
       if (data.success) {
-        resultBox.innerHTML = data.abnormal;
+        if (Array.isArray(data.abnormal)) {
+          resultBox.innerHTML = data.abnormal
+            .map(item => `<div class="mb-2">• ${item}</div>`)
+            .join("");
+        } else {
+          resultBox.innerHTML = data.abnormal;
+        }
       } else {
         resultBox.innerHTML = data.message;
       }
     })
     .catch(err => {
       console.error(err);
-      document.getElementById("abnormalResult").innerHTML =
-        "เกิดข้อผิดพลาด";
+      resultBox.innerHTML = "เกิดข้อผิดพลาด";
     });
-      openAbnormal();
+   openAbnormal();
 }
-
     function printResult() {
       window.print();
     }
