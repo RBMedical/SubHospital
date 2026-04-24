@@ -767,18 +767,12 @@
           `;
         });
     }
-
- function loadAbnormal() {
+function loadAbnormal() {
   const hnEl = document.getElementById("HN");
   const resultBox = document.getElementById("abnormalResult");
 
   if (!hnEl) {
     alert("ไม่พบ element id='HN'");
-    return;
-  }
-
-  if (!resultBox) {
-    alert("ไม่พบ element id='abnormalResult'");
     return;
   }
 
@@ -801,14 +795,16 @@
   fetch(url)
     .then(res => res.json())
     .then(data => {
-      if (data.success) {
-        if (Array.isArray(data.abnormal)) {
-          resultBox.innerHTML = data.abnormal
-            .map(item => `<div class="mb-2">• ${item}</div>`)
-            .join("");
-        } else {
-          resultBox.innerHTML = data.abnormal;
-        }
+      if (data.success && Array.isArray(data.abnormal)) {
+        resultBox.innerHTML = data.abnormal
+          .map((item, index) => `
+            <div class="mb-2">
+              ${index + 1}. ${item}
+            </div>
+          `)
+          .join("");
+      } else if (data.success) {
+        resultBox.innerHTML = data.abnormal;
       } else {
         resultBox.innerHTML = data.message;
       }
@@ -817,7 +813,6 @@
       console.error(err);
       resultBox.innerHTML = "เกิดข้อผิดพลาด";
     });
-   openAbnormal();
 }
     function printResult() {
       window.print();
