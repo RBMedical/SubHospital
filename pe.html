@@ -326,6 +326,11 @@
     .pdf-only {
       display: none;
     }
+
+    .text-danger-custom {
+  color: red !important;
+  font-weight: 600;
+}
   </style>
 </head>
 
@@ -611,6 +616,14 @@
         });
       }
 
+      function isAbnormal(value) {
+  if (!value) return false;
+
+  const text = String(value).trim();
+
+  return text === "ผิดปกติ" || text.includes("สูง");
+}
+
       function loadAllRecords() {
         const resultDiv1 = document.getElementById("cbcresult");
         const selectedText = document.getElementById("selectedValue");
@@ -678,9 +691,17 @@
                   <td class="text-center">${row.bmiv || ""}</td>
                   <td class="text-center">${row.bp || ""}</td>
                   <td class="text-center">${row.pause || ""}</td>
-                  <td class="text-center">${row.ekg || ""}</td>
-                  <td class="text-center">${row.urine || ""}</td>
-                  <td class="text-center">${row.xray || ""}</td>
+                  <td class="text-center ${isAbnormal(row.ekg) ? 'text-danger-custom' : ''}">
+      ${row.ekg || ""}
+    </td>
+
+    <td class="text-center ${isAbnormal(row.urine) ? 'text-danger-custom' : ''}">
+      ${row.urine || ""}
+    </td>
+
+    <td class="text-center ${isAbnormal(row.xray) ? 'text-danger-custom' : ''}">
+      ${row.xray || ""}
+    </td>
                   <td class="text-start">${row.doctor || ""}</td>
                 </tr>
               `;
