@@ -324,6 +324,11 @@
     .pdf-only {
       display: none;
     }
+
+    .text-danger-custom {
+  color: red !important;
+  font-weight: 600;
+}
   </style>
 </head>
 <body>
@@ -606,6 +611,14 @@
       });
     }
 
+    function isAbnormal(value) {
+  if (!value) return false;
+
+  const text = String(value).trim();
+
+  return text === "ผิดปกติ" || text.includes("สูง");
+}
+
     function loadAllRecords() {
       const resultDiv1 = document.getElementById("cbcresult");
       const selectedText = document.getElementById("selectedValue");
@@ -669,13 +682,15 @@
                   <td class="text-center">${row.appe || ""}</td>
                   <td class="text-center">${row.spec || ""}</td>
                   <td class="text-center">${row.ph || ""}</td>
-                  <td class="text-center">${row.protain || ""}</td>
-                  <td class="text-center">${row.glu || ""}</td>
-                  <td class="text-center">${row.urbc || ""}</td>
-                  <td class="text-center">${row.uwbc || ""}</td>
-                  <td class="text-center">${row.bac || ""}</td>
-                  <td class="text-center">${row.epi || ""}</td>
-                   <td class="text-center">${row.urine || ""}</td>
+                 <td class="text-center">${row.protain ? row.protain + " mg/dL" : ""}</td>
+                <td class="text-center">${row.glu ? row.glu + " mg/dL" : ""}</td>
+                 <td class="text-center">${row.urbc ? row.urbc + " cells/HPF" : ""}</td>
+                  <td class="text-center">${row.uwbc ? row.uwbc + " cells/HPF" : ""}</td>
+                 <td class="text-center">${row.bac || ""}</td>
+                  <td class="text-center">${row.epi ? row.epi + " cells/HPF" : ""}</td>
+                 <td class="text-center ${isAbnormal(row.urine) ? 'text-danger-custom' : ''}">
+      ${row.urine || ""}
+    </td>
                   <td class="text-center">${row.amp || ""}</td>
                   <td class="text-center">${row.preg || ""}</td>
                 </tr>
