@@ -341,8 +341,7 @@ let myChart = null;
 
 document.addEventListener("DOMContentLoaded", function () {
   loadData();
-    drawChart(data);
-  showMaxAbnormal(data);
+
 });
 
 function loadData() {
@@ -515,6 +514,10 @@ function showMaxAbnormal(data) {
   `;
 }
 
+  window.handleData = function (data) {
+  drawChart(data);
+  showMaxAbnormal(data);  // ✅ ถูกที่
+};
 
 </script>
 
