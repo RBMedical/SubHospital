@@ -695,20 +695,21 @@
 
               resultDiv1.innerHTML += `
                 <tr>
-                <th class="text-center" scope="row" colspan="2">${row.register || ""}</th>
-                  <td class="text-start" colspan="3">${row.name || ""}</td>
-                  <td class="text-center">${row.fbsv || ""}mg/dL</td>
-                  <td class="text-center">${row.cholv || ""}mg/dL</td>
-                  <td class="text-center">${row.hdlv || ""}mg/dL</td>
-                  <td class="text-center">${row.ldlv || ""}mg/dL</td>
-                  <td class="text-center">${row.triv || ""}mg/dL</td>
-                  <td class="text-center">${row.sgptv || ""}U/L</td>
-                  <td class="text-center">${row.sgotv || ""}U/L</td>
-                 <td class="text-center">${row.alkv || ""}U/L</td>
-                  <td class="text-center">${row.bunv || ""}mg/dL</td>
-                  <td class="text-center">${row.crev || ""}mg/dL</td>
-                  <td class="text-center">${row.uricr || ""}mg/dL</td>
-                  <td class="text-center">${row.hbv || ""}</td>
+               <td class="text-center">${row.fbsv ? row.fbsv + " mg/dL" : ""}</td>
+<td class="text-center">${row.cholv ? row.cholv + " mg/dL" : ""}</td>
+<td class="text-center">${row.hdlv ? row.hdlv + " mg/dL" : ""}</td>
+<td class="text-center">${row.ldlv ? row.ldlv + " mg/dL" : ""}</td>
+<td class="text-center">${row.triv ? row.triv + " mg/dL" : ""}</td>
+
+<td class="text-center">${row.sgptv ? row.sgptv + " U/L" : ""}</td>
+<td class="text-center">${row.sgotv ? row.sgotv + " U/L" : ""}</td>
+<td class="text-center">${row.alkv ? row.alkv + " U/L" : ""}</td>
+
+<td class="text-center">${row.bunv ? row.bunv + " mg/dL" : ""}</td>
+<td class="text-center">${row.crev ? row.crev + " mg/dL" : ""}</td>
+<td class="text-center">${row.uricr ? row.uricr + " mg/dL" : ""}</td>
+
+<td class="text-center">${row.hbv || ""}</td>
                 </tr>
               `;
             }
