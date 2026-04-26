@@ -356,11 +356,14 @@ function loadData() {
 
   document.getElementById("loading").innerText = "กำลังโหลดข้อมูล...";
 
-  window.handleData = function (data) {
-    document.getElementById("loading").innerText = "";
-    drawChart(data);
-  };
+window.handleData = function (data) {
+  document.getElementById("loading").innerText = "";
 
+  console.log("ข้อมูลที่รับมา =", data);
+
+  drawChart(data);
+  showMaxAbnormal(data); // ✅ เพิ่มบรรทัดนี้
+};
   const script = document.createElement("script");
   script.src = GAS_URL
     + "?id=" + encodeURIComponent(selectedValue)
@@ -451,6 +454,59 @@ function drawChart(data) {
   });
 }
 
+  function showMaxAbnormal(data) {
+  console.log("showMaxAbnormal ทำงานแล้ว");
+
+  const map = {
+    bmiab: "ดัชนีมวลกาย",
+    cbcab: "ความสมบูรณ์ของเม็ดเลือด",
+    urineab: "ตรวจปัสสาวะ",
+    xrayab: "เอ็กซเรย์ปอด",
+    fbsab: "ปริมาณน้ำตาลในเลือด",
+    cholab: "ปริมาณไขมันในเลือด",
+    uricab: "ปริมาณกรดยูริค"
+  };
+
+  const values = {
+    bmiab: Number(data.bmiab || 0),
+    cbcab: Number(data.cbcab || 0),
+    urineab: Number(data.urineab || 0),
+    xrayab: Number(data.xrayab || 0),
+    fbsab: Number(data.fbsab || 0),
+    cholab: Number(data.cholab || 0),
+    uricab: Number(data.uricab || 0)
+  };
+
+  let maxKey = "bmiab";
+  let maxValue = values[maxKey];
+
+  for (let key in values) {
+    if (values[key] > maxValue) {
+      maxValue = values[key];
+      maxKey = key;
+    }
+  }
+
+  const resultText = maxValue > 0 ? map[maxKey] : "ไม่พบค่าผิดปกติ";
+
+  document.getElementById("maxabnormal").innerHTML = `
+    <div class="rounded d-flex align-items-center justify-content-between p-4" style="background-color: paleturquoise;">
+      <i class="fa fa-chart-line fa-3x text-primary"></i>
+
+      <div class="col-2">
+        <img id="human" src="pic/human.png" style="width:45px;">
+      </div>
+
+      <div class="col-10">
+        <div class="ms-3">
+          <p class="mb-2">รายการตรวจที่ผลผิดปกติสูงสุด</p>
+          <h6 class="mb-0">${resultText}</h6>
+          <small>จำนวน ${maxValue} รายการ</small>
+        </div>
+      </div>
+    </div>
+  `;
+}
 function exportPDF() {
   window.print();
 }
