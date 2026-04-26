@@ -325,7 +325,10 @@
     .pdf-only {
       display: none;
     }
-  </style>
+ .text-danger-custom {
+  color: red !important;
+  font-weight: 600;
+}
   </style>
 </head>
 <body>
@@ -604,6 +607,14 @@
       });
     }
 
+    function isAbnormal(value) {
+  if (!value) return false;
+
+  const text = String(value).trim();
+
+  return text === "ผิดปกติ" || text.includes("สูง");
+}
+
     function loadAllRecords() {
       const resultDiv1 = document.getElementById("cbcresult");
       const selectedText = document.getElementById("selectedValue");
@@ -673,7 +684,9 @@
                   <td class="text-center">${row.bas || ""}</td>
                   <td class="text-center">${row.plat || ""}</td>
                   <td class="text-center">${row.mcv || ""}</td>
-                  <td class="text-center">${row.cbc || ""}</td>
+                 <td class="text-center ${isAbnormal(row.cbc) ? 'text-danger-custom' : ''}">
+      ${row.cbc || ""}
+    </td>
                 </tr>
               `;
             }
