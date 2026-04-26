@@ -378,16 +378,17 @@
       <h5>ผลการตรวจทางเคมีในเลือด/blood chemistry(Chem)</h5>
       
       <div class="d-flex gap-3">
-        <a class="icon-link text-decoration-none text-secondary" href="legs.html">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle" viewBox="0 0 16 16">
-            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-          </svg>
-          ค่าทดสอบ
-        </a>
+      
         
         <a class="icon-link text-decoration-none" href="#">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16">
             <circle cx="8" cy="8" r="8"/>
+          </svg>
+          ค่าทดสอบ
+        </a>
+          <a class="icon-link text-decoration-none text-secondary" href="legs.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
           </svg>
           ผลตรวจ
         </a>
@@ -696,18 +697,18 @@
                 <tr>
                 <th class="text-center" scope="row" colspan="2">${row.register || ""}</th>
                   <td class="text-start" colspan="3">${row.name || ""}</td>
-                  <td class="text-center">${row.fbsr || ""}</td>
-                  <td class="text-center">${row.cholr || ""}</td>
-                  <td class="text-center">${row.hdlr || ""}</td>
-                  <td class="text-center">${row.ldlr || ""}</td>
-                  <td class="text-center">${row.trir || ""}</td>
-                  <td class="text-center">${row.sgptr || ""}</td>
-                  <td class="text-center">${row.sgotr || ""}</td>
-                 <td class="text-center">${row.alkr || ""}</td>
-                  <td class="text-center">${row.bunr || ""}</td>
-                  <td class="text-center">${row.crer || ""}</td>
-                  <td class="text-center">${row.uricv || ""}</td>
-                  <td class="text-center">${row.hbr || ""}</td>
+                  <td class="text-center">${row.fbsv || ""}</td>
+                  <td class="text-center">${row.cholv || ""}</td>
+                  <td class="text-center">${row.hdlv || ""}</td>
+                  <td class="text-center">${row.ldlv || ""}</td>
+                  <td class="text-center">${row.triv || ""}</td>
+                  <td class="text-center">${row.sgptv || ""}</td>
+                  <td class="text-center">${row.sgotv || ""}</td>
+                 <td class="text-center">${row.alkv || ""}</td>
+                  <td class="text-center">${row.bunv || ""}</td>
+                  <td class="text-center">${row.crev || ""}</td>
+                  <td class="text-center">${row.uricr || ""}</td>
+                  <td class="text-center">${row.hbv || ""}</td>
                 </tr>
               `;
             }
