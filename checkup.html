@@ -352,7 +352,7 @@
 <script>
 const GAS_URL = "https://script.google.com/macros/s/AKfycbxwTH5ibnrj_4_jh80pgpb1x4kfIe2lw1V8kSCR9MtMjncuoMAQH4YGSlJMFE7qvOcH/exec";
 
-const SUMMARY_URL = "https://script.google.com/macros/s/AKfycbyymVGuP5H4FBsGbXAqK0TQwyFg0NELtdvzXkWu5oI2YN1h7NTEcTOhmz-76kmvPYLdiQ/exec";
+const SUMMARY_URL = "https://script.google.com/macros/s/AKfycbwiQz2lt8DRhth8P3Z58PLnVagv4P7j_q9zKKZ6ksQm72y58h3rq5Tb_UCH6oOwKyr2Iw/exec";
 
 let myChart = null;
 
@@ -398,29 +398,22 @@ function loadData() {
   document.body.appendChild(script);
 }
 
-async function loadSummary() {
-  const selectedValue = getSelectedValue();
+function loadSummary() {
+  const selectedValue = localStorage.getItem("selectedCustomer") || "";
   const resultDiv = document.getElementById("allew");
 
-  if (!resultDiv) return;
-
   if (!selectedValue) {
-    resultDiv.innerHTML = "<tr><td colspan='3' class='text-center'>ไม่พบ selectedCustomer</td></tr>";
+    resultDiv.innerHTML = `
+      <tr>
+        <td colspan="3" class="text-center text-danger">
+          ไม่พบ selectedCustomer
+        </td>
+      </tr>
+    `;
     return;
   }
 
-  const url = SUMMARY_URL
-    + "?selectedValue=" + encodeURIComponent(selectedValue)
-    + "&t=" + Date.now();
-
-  try {
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error("HTTP error " + response.status);
-    }
-
-    const data = await response.json();
+  window.handleSummary = function(data) {
     console.log("ข้อมูลตาราง =", data);
 
     resultDiv.innerHTML = `
@@ -500,11 +493,26 @@ async function loadSummary() {
         <td class="text-center">${data.urica || 0}</td>
       </tr>
     `;
+  };
 
-  } catch (error) {
-    resultDiv.innerHTML = "<tr><td colspan='3' class='text-center text-danger'>โหลดข้อมูลตารางไม่สำเร็จ</td></tr>";
-    console.error("loadSummary error:", error);
-  }
+  const script = document.createElement("script");
+
+  script.src = SUMMARY_URL
+    + "?selectedValue=" + encodeURIComponent(selectedValue)
+    + "&callback=handleSummary"
+    + "&t=" + Date.now();
+
+  script.onerror = function() {
+    resultDiv.innerHTML = `
+      <tr>
+        <td colspan="3" class="text-center text-danger">
+          โหลดข้อมูลตารางไม่สำเร็จ
+        </td>
+      </tr>
+    `;
+  };
+
+  document.body.appendChild(script);
 }
 
 function drawChart(data) {
