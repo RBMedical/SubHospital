@@ -1,19 +1,17 @@
 <style>
-@media print {
-    /* Fix PDF export layout issues */
     .print-area {
-        margin: 0; /* Removed negative margins */
-        /* Add any other necessary adjustments for print */
+        /* Other styles... */
+        margin-left: 0;
+        /* Removed the width override */
     }
-}
 </style>
+
 <script>
 function exportPDF() {
-    // Fix the exportPDF function to hide the sidebar
+    // Hide sidebar
     document.getElementById('sidebar').style.display = 'none';
-    // Add logic to generate PDF layout properly
-
-    // Code for generating PDF...
+    // Set margins for PDF export
+    const pdfMargins = { top: 20, left: 20, right: 20, bottom: 20 };
+    // Additional logic for exporting goes here...
 }
 </script>
-<!-- Other HTML content remains unchanged -->
