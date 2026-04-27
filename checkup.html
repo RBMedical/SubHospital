@@ -352,15 +352,21 @@
 <script>
 const GAS_URL = "https://script.google.com/macros/s/AKfycbxwTH5ibnrj_4_jh80pgpb1x4kfIe2lw1V8kSCR9MtMjncuoMAQH4YGSlJMFE7qvOcH/exec";
 
+const SUMMARY_URL = "https://script.google.com/macros/s/AKfycbyymVGuP5H4FBsGbXAqK0TQwyFg0NELtdvzXkWu5oI2YN1h7NTEcTOhmz-76kmvPYLdiQ/exec";
+
 let myChart = null;
 
 document.addEventListener("DOMContentLoaded", function () {
   loadData();
-
+  loadSummary();
 });
 
+function getSelectedValue() {
+  return localStorage.getItem("selectedCustomer") || "";
+}
+
 function loadData() {
-  const selectedValue = localStorage.getItem("selectedCustomer") || "";
+  const selectedValue = getSelectedValue();
 
   document.getElementById("selectedValue").innerText = selectedValue;
 
@@ -371,14 +377,14 @@ function loadData() {
 
   document.getElementById("loading").innerText = "กำลังโหลดข้อมูล...";
 
-window.handleData = function (data) {
-  document.getElementById("loading").innerText = "";
+  window.handleData = function (data) {
+    document.getElementById("loading").innerText = "";
+    console.log("ข้อมูลกราฟ =", data);
 
-  console.log("ข้อมูลที่รับมา =", data);
+    drawChart(data);
+    showMaxAbnormal(data);
+  };
 
-  drawChart(data);
-  showMaxAbnormal(data); // ✅ เพิ่มบรรทัดนี้
-};
   const script = document.createElement("script");
   script.src = GAS_URL
     + "?id=" + encodeURIComponent(selectedValue)
@@ -386,11 +392,119 @@ window.handleData = function (data) {
     + "&t=" + Date.now();
 
   script.onerror = function () {
-    document.getElementById("loading").innerText = "โหลดข้อมูลไม่สำเร็จ";
+    document.getElementById("loading").innerText = "โหลดข้อมูลกราฟไม่สำเร็จ";
   };
 
   document.body.appendChild(script);
- 
+}
+
+async function loadSummary() {
+  const selectedValue = getSelectedValue();
+  const resultDiv = document.getElementById("allew");
+
+  if (!resultDiv) return;
+
+  if (!selectedValue) {
+    resultDiv.innerHTML = "<tr><td colspan='3' class='text-center'>ไม่พบ selectedCustomer</td></tr>";
+    return;
+  }
+
+  const url = SUMMARY_URL
+    + "?selectedValue=" + encodeURIComponent(selectedValue)
+    + "&t=" + Date.now();
+
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error("HTTP error " + response.status);
+    }
+
+    const data = await response.json();
+    console.log("ข้อมูลตาราง =", data);
+
+    resultDiv.innerHTML = `
+      <tr>
+        <td class="text-start">ดัชนีมวลกาย</td>
+        <td class="text-center">${data.bmin || 0}</td>
+        <td class="text-center">${data.bmia || 0}</td>
+      </tr>
+      <tr>
+        <td class="text-start">ความสมบูรณ์ของเม็ดเลือด</td>
+        <td class="text-center">${data.cbcn || 0}</td>
+        <td class="text-center">${data.cbca || 0}</td>
+      </tr>
+      <tr>
+        <td class="text-start">ปัสสาวะแบบสมบูรณ์</td>
+        <td class="text-center">${data.urinen || 0}</td>
+        <td class="text-center">${data.urinea || 0}</td>
+      </tr>
+      <tr>
+        <td class="text-start">เอ็กซเรย์ปอด</td>
+        <td class="text-center">${data.xrayn || 0}</td>
+        <td class="text-center">${data.xraya || 0}</td>
+      </tr>
+      <tr>
+        <td class="text-start">ปริมาณน้ำตาลในเลือด</td>
+        <td class="text-center">${data.fbsn || 0}</td>
+        <td class="text-center">${data.fbsa || 0}</td>
+      </tr>
+      <tr>
+        <td class="text-start">ปริมาณไขมันในเลือด Cholesterol</td>
+        <td class="text-center">${data.choln || 0}</td>
+        <td class="text-center">${data.chola || 0}</td>
+      </tr>
+      <tr>
+        <td class="text-start">ปริมาณไขมันดีในเลือด</td>
+        <td class="text-center">${data.hdln || 0}</td>
+        <td class="text-center">${data.hdla || 0}</td>
+      </tr>
+      <tr>
+        <td class="text-start">ปริมาณไขมันไม่ดีในเลือด</td>
+        <td class="text-center">${data.ldln || 0}</td>
+        <td class="text-center">${data.ldla || 0}</td>
+      </tr>
+      <tr>
+        <td class="text-start">ปริมาณ Triglycerides</td>
+        <td class="text-center">${data.trin || 0}</td>
+        <td class="text-center">${data.tria || 0}</td>
+      </tr>
+      <tr>
+        <td class="text-start">การทำงานของตับ SGPT</td>
+        <td class="text-center">${data.sgptn || 0}</td>
+        <td class="text-center">${data.sgpta || 0}</td>
+      </tr>
+      <tr>
+        <td class="text-start">การทำงานของตับ SGOT</td>
+        <td class="text-center">${data.sgotn || 0}</td>
+        <td class="text-center">${data.sgota || 0}</td>
+      </tr>
+      <tr>
+        <td class="text-start">การทำงานของตับ Alk</td>
+        <td class="text-center">${data.alkn || 0}</td>
+        <td class="text-center">${data.alka || 0}</td>
+      </tr>
+      <tr>
+        <td class="text-start">การทำงานของไต BUN</td>
+        <td class="text-center">${data.bunn || 0}</td>
+        <td class="text-center">${data.buna || 0}</td>
+      </tr>
+      <tr>
+        <td class="text-start">การทำงานของไต Creatinine</td>
+        <td class="text-center">${data.crean || 0}</td>
+        <td class="text-center">${data.creaa || 0}</td>
+      </tr>
+      <tr>
+        <td class="text-start">ปริมาณกรด Uric ในเลือด</td>
+        <td class="text-center">${data.uricn || 0}</td>
+        <td class="text-center">${data.urica || 0}</td>
+      </tr>
+    `;
+
+  } catch (error) {
+    resultDiv.innerHTML = "<tr><td colspan='3' class='text-center text-danger'>โหลดข้อมูลตารางไม่สำเร็จ</td></tr>";
+    console.error("loadSummary error:", error);
+  }
 }
 
 function drawChart(data) {
@@ -469,65 +583,7 @@ function drawChart(data) {
   });
 }
 
-  function showMaxAbnormal(data) {
-  console.log("showMaxAbnormal ทำงานแล้ว");
-
-  const map = {
-    bmiab: "ดัชนีมวลกาย",
-    cbcab: "ความสมบูรณ์ของเม็ดเลือด",
-    urineab: "ตรวจปัสสาวะ",
-    xrayab: "เอ็กซเรย์ปอด",
-    fbsab: "ปริมาณน้ำตาลในเลือด",
-    cholab: "ปริมาณไขมันในเลือด",
-    uricab: "ปริมาณกรดยูริค"
-  };
-
-  const values = {
-    bmiab: Number(data.bmiab || 0),
-    cbcab: Number(data.cbcab || 0),
-    urineab: Number(data.urineab || 0),
-    xrayab: Number(data.xrayab || 0),
-    fbsab: Number(data.fbsab || 0),
-    cholab: Number(data.cholab || 0),
-    uricab: Number(data.uricab || 0)
-  };
-
-  let maxKey = "bmiab";
-  let maxValue = values[maxKey];
-
-  for (let key in values) {
-    if (values[key] > maxValue) {
-      maxValue = values[key];
-      maxKey = key;
-    }
-  }
-
-  const resultText = maxValue > 0 ? map[maxKey] : "ไม่พบค่าผิดปกติ";
-
-  document.getElementById("maxabnormal").innerHTML = `
-    <div class="rounded d-flex align-items-center justify-content-between p-4" style="background-color: paleturquoise;">
-      <i class="fa fa-chart-line fa-3x text-primary"></i>
-
-      <div class="col-2">
-        <img id="sick" src="pic/sick.png" style="width:45px;">
-      </div>
-
-      <div class="col-10">
-        <div class="ms-3">
-          <p class="mb-2">รายการตรวจที่ผลผิดปกติสูงสุด</p>
-          <h6 class="mb-0">${resultText}</h6>
-          <small>จำนวน ${maxValue} รายการ</small>
-        </div>
-      </div>
-    </div>
-  `;
-}
-function exportPDF() {
-  window.print();
-}
-
 function showMaxAbnormal(data) {
-
   const map = {
     bmiab: "ดัชนีมวลกาย",
     cbcab: "ความสมบูรณ์ของเม็ดเลือด",
@@ -558,18 +614,10 @@ function showMaxAbnormal(data) {
     }
   }
 
-  let resultText = "ไม่พบค่าผิดปกติ";
+  const resultText = maxValue > 0 ? map[maxKey] : "ไม่พบค่าผิดปกติ";
 
-  if (maxValue > 0) {
-    resultText = map[maxKey];
-  }
-
-  // 🔥 ใส่ HTML เข้าไปทั้ง block
   document.getElementById("maxabnormal").innerHTML = `
     <div class="rounded d-flex align-items-center justify-content-between p-4" style="background-color: lightseagreen;">
-      
-      <i class="fa fa-chart-line fa-3x text-primary"></i>
-      
       <div class="col-2">
         <img id="sick" src="pic/sick.png">
       </div>
@@ -578,18 +626,16 @@ function showMaxAbnormal(data) {
         <div class="ms-3 text-light">
           <p class="mb-2">การตรวจที่ผลผิดปกติสูงสุด</p>
           <h6 class="mb-0">${resultText}</h6>
+          <small>จำนวน ${maxValue > 0 ? maxValue : 0} รายการ</small>
         </div>
       </div>
-
     </div>
   `;
 }
 
-  window.handleData = function (data) {
-  drawChart(data);
-  showMaxAbnormal(data);  // ✅ ถูกที่
-};
-
+function exportPDF() {
+  window.print();
+}
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
