@@ -377,13 +377,15 @@ function loadData() {
 
   document.getElementById("loading").innerText = "กำลังโหลดข้อมูล...";
 
-  window.handleData = function (data) {
-    document.getElementById("loading").innerText = "";
-    console.log("ข้อมูลกราฟ =", data);
+ window.handleData = function (data) {
+  document.getElementById("loading").innerText = "";
 
-    drawChart(data);
-    showMaxAbnormal(data);
-  };
+  console.log("ข้อมูล =", data);
+
+  drawChart(data);
+  showMaxAbnormal(data);
+  renderSummaryTable(data); // ✅ ใช้อันนี้แทน
+};
 
   const script = document.createElement("script");
   script.src = GAS_URL
@@ -398,121 +400,52 @@ function loadData() {
   document.body.appendChild(script);
 }
 
-function loadSummary() {
-  const selectedValue = localStorage.getItem("selectedCustomer") || "";
+function renderSummaryTable(data) {
   const resultDiv = document.getElementById("allew");
 
-  if (!selectedValue) {
-    resultDiv.innerHTML = `
-      <tr>
-        <td colspan="3" class="text-center text-danger">
-          ไม่พบ selectedCustomer
-        </td>
-      </tr>
-    `;
-    return;
-  }
+  resultDiv.innerHTML = `
+    <tr>
+      <td class="text-start">ดัชนีมวลกาย</td>
+      <td class="text-center">${data.bminormal || 0}</td>
+      <td class="text-center">${data.bmiab || 0}</td>
+    </tr>
 
-  window.handleSummary = function(data) {
-    console.log("ข้อมูลตาราง =", data);
+    <tr>
+      <td class="text-start">ความสมบูรณ์ของเม็ดเลือด</td>
+      <td class="text-center">${data.cbcnormal || 0}</td>
+      <td class="text-center">${data.cbcab || 0}</td>
+    </tr>
 
-    resultDiv.innerHTML = `
-      <tr>
-        <td class="text-start">ดัชนีมวลกาย</td>
-        <td class="text-center">${data.bmin || 0}</td>
-        <td class="text-center">${data.bmia || 0}</td>
-      </tr>
-      <tr>
-        <td class="text-start">ความสมบูรณ์ของเม็ดเลือด</td>
-        <td class="text-center">${data.cbcn || 0}</td>
-        <td class="text-center">${data.cbca || 0}</td>
-      </tr>
-      <tr>
-        <td class="text-start">ปัสสาวะแบบสมบูรณ์</td>
-        <td class="text-center">${data.urinen || 0}</td>
-        <td class="text-center">${data.urinea || 0}</td>
-      </tr>
-      <tr>
-        <td class="text-start">เอ็กซเรย์ปอด</td>
-        <td class="text-center">${data.xrayn || 0}</td>
-        <td class="text-center">${data.xraya || 0}</td>
-      </tr>
-      <tr>
-        <td class="text-start">ปริมาณน้ำตาลในเลือด</td>
-        <td class="text-center">${data.fbsn || 0}</td>
-        <td class="text-center">${data.fbsa || 0}</td>
-      </tr>
-      <tr>
-        <td class="text-start">ปริมาณไขมันในเลือด Cholesterol</td>
-        <td class="text-center">${data.choln || 0}</td>
-        <td class="text-center">${data.chola || 0}</td>
-      </tr>
-      <tr>
-        <td class="text-start">ปริมาณไขมันดีในเลือด</td>
-        <td class="text-center">${data.hdln || 0}</td>
-        <td class="text-center">${data.hdla || 0}</td>
-      </tr>
-      <tr>
-        <td class="text-start">ปริมาณไขมันไม่ดีในเลือด</td>
-        <td class="text-center">${data.ldln || 0}</td>
-        <td class="text-center">${data.ldla || 0}</td>
-      </tr>
-      <tr>
-        <td class="text-start">ปริมาณ Triglycerides</td>
-        <td class="text-center">${data.trin || 0}</td>
-        <td class="text-center">${data.tria || 0}</td>
-      </tr>
-      <tr>
-        <td class="text-start">การทำงานของตับ SGPT</td>
-        <td class="text-center">${data.sgptn || 0}</td>
-        <td class="text-center">${data.sgpta || 0}</td>
-      </tr>
-      <tr>
-        <td class="text-start">การทำงานของตับ SGOT</td>
-        <td class="text-center">${data.sgotn || 0}</td>
-        <td class="text-center">${data.sgota || 0}</td>
-      </tr>
-      <tr>
-        <td class="text-start">การทำงานของตับ Alk</td>
-        <td class="text-center">${data.alkn || 0}</td>
-        <td class="text-center">${data.alka || 0}</td>
-      </tr>
-      <tr>
-        <td class="text-start">การทำงานของไต BUN</td>
-        <td class="text-center">${data.bunn || 0}</td>
-        <td class="text-center">${data.buna || 0}</td>
-      </tr>
-      <tr>
-        <td class="text-start">การทำงานของไต Creatinine</td>
-        <td class="text-center">${data.crean || 0}</td>
-        <td class="text-center">${data.creaa || 0}</td>
-      </tr>
-      <tr>
-        <td class="text-start">ปริมาณกรด Uric ในเลือด</td>
-        <td class="text-center">${data.uricn || 0}</td>
-        <td class="text-center">${data.urica || 0}</td>
-      </tr>
-    `;
-  };
+    <tr>
+      <td class="text-start">ปัสสาวะแบบสมบูรณ์</td>
+      <td class="text-center">${data.urinenormal || 0}</td>
+      <td class="text-center">${data.urineab || 0}</td>
+    </tr>
 
-  const script = document.createElement("script");
+    <tr>
+      <td class="text-start">เอ็กซเรย์ปอด</td>
+      <td class="text-center">${data.xraynormal || 0}</td>
+      <td class="text-center">${data.xrayab || 0}</td>
+    </tr>
 
-  script.src = SUMMARY_URL
-    + "?selectedValue=" + encodeURIComponent(selectedValue)
-    + "&callback=handleSummary"
-    + "&t=" + Date.now();
+    <tr>
+      <td class="text-start">ปริมาณน้ำตาลในเลือด</td>
+      <td class="text-center">${data.fbsnormal || 0}</td>
+      <td class="text-center">${data.fbsab || 0}</td>
+    </tr>
 
-  script.onerror = function() {
-    resultDiv.innerHTML = `
-      <tr>
-        <td colspan="3" class="text-center text-danger">
-          โหลดข้อมูลตารางไม่สำเร็จ
-        </td>
-      </tr>
-    `;
-  };
+    <tr>
+      <td class="text-start">ปริมาณไขมันในเลือด Cholesterol</td>
+      <td class="text-center">${data.cholnormal || 0}</td>
+      <td class="text-center">${data.cholab || 0}</td>
+    </tr>
 
-  document.body.appendChild(script);
+    <tr>
+      <td class="text-start">ปริมาณกรด Uric ในเลือด</td>
+      <td class="text-center">${data.uricnormal || 0}</td>
+      <td class="text-center">${data.uricab || 0}</td>
+    </tr>
+  `;
 }
 
 function drawChart(data) {
