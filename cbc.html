@@ -500,28 +500,30 @@
     return root;
   }
 
-  async function exportPDF() {
+ async function exportPDF() {
   const report = buildPrintableReport();
   if (!report) return;
 
+  document.body.classList.add("exporting-pdf");
   document.body.appendChild(report);
 
-  // รอให้ browser วาดตารางก่อน
-  await new Promise(resolve => setTimeout(resolve, 800));
+  await new Promise(resolve => setTimeout(resolve, 1000));
 
   const opt = {
     margin: 0,
     filename: "รายงาน_CBC.pdf",
     image: {
       type: "jpeg",
-      quality: 0.98
+      quality: 1
     },
     html2canvas: {
       scale: 2,
       useCORS: true,
       backgroundColor: "#ffffff",
       scrollX: 0,
-      scrollY: 0
+      scrollY: 0,
+      windowWidth: report.scrollWidth,
+      windowHeight: report.scrollHeight
     },
     jsPDF: {
       unit: "mm",
@@ -529,17 +531,17 @@
       orientation: "landscape"
     },
     pagebreak: {
-      mode: ["css", "legacy"]
+      mode: ["css", "legacy"],
+      before: ".pdf-page-break"
     }
   };
 
-  html2pdf()
-    .set(opt)
-    .from(report)
-    .save()
-    .then(() => {
-      document.body.removeChild(report);
-    });
+  try {
+    await html2pdf().set(opt).from(report).save();
+  } finally {
+    report.remove();
+    document.body.classList.remove("exporting-pdf");
+  }
 }
   function showLoading(message = "Waiting for loading......") {
     const loading = document.getElementById("loading");
