@@ -12,8 +12,8 @@
 
   <title>รายงานผลตรวจสุขภาพทางอินเตอร์เน็ต</title>
 
-  <style>
-     body {
+ <style>
+    body {
       font-family: 'Sarabun', sans-serif;
       margin: 0;
     }
@@ -24,15 +24,15 @@
       height: 100vh;
     }
 
-     .sidebar {
-     position: fixed;
+    .sidebar {
+      position: fixed;
       width: 20%;
       background-color: rgb(225, 232, 236);
       color: teal;
       padding: 20px;
       border-right: 1px solid #023636;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.2),
-                  inset -2px 0 5px rgba(255,255,255,0.1);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2),
+        inset -2px 0 5px rgba(255, 255, 255, 0.1);
     }
 
     .print-area {
@@ -41,8 +41,9 @@
       color: teal;
       overflow-x: hidden;
       margin-left: 400px;
-  width: calc(100% - 400px);
+      width: calc(100% - 400px);
     }
+
     .content {
       width: 80%;
       padding: 20px;
@@ -214,171 +215,204 @@
         margin-bottom: 10px;
       }
     }
-
-    .pdf-export .noprint,
-    .pdf-export button,
-    .pdf-export .btn {
-      display: none !important;
-    }
-
-    .pdf-export .name-col {
-      white-space: nowrap !important;
-      min-width: 90px;
-    }
-
-    .pdf-export .doctor-col {
-      width: 230px !important;
-      min-width: 230px !important;
-      max-width: 230px !important;
-      white-space: normal !important;
-      word-break: break-word !important;
-      overflow-wrap: break-word !important;
-      line-height: 1.45 !important;
-      text-align: left !important;
-    }
-
-    .pdf-export {
-      width: 285mm !important;
-      max-width: 285mm !important;
-      padding: 0 !important;
-      color: #000 !important;
-      font-size: 8px !important;
-      background: #fff !important;
-    }
-
-    .pdf-page {
-      width: 285mm;
-      min-height: 190mm;
-      padding: 8mm;
-      background: #fff;
-      page-break-after: always;
-      box-sizing: border-box;
-    }
-
-    .pdf-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: #00796b;
-      font-size: 14px;
-      font-weight: 600;
-      border-bottom: 2px solid #00796b;
-      padding-bottom: 6px;
-      margin-bottom: 8px;
-    }
-
-    .pdf-page-no {
-      font-size: 11px;
-      color: #00796b;
-    }
-
-    .pdf-table {
-      width: 100%;
-      border-collapse: collapse !important;
-      table-layout: fixed !important;
-      font-size: 7.5px;
-    }
-
-    .pdf-table th,
-    .pdf-table td {
-      border: 1px solid #cfd8dc !important;
-      padding: 4px 3px !important;
-      line-height: 1.4 !important;
-      vertical-align: top;
-      text-align: center;
-    }
-
-    .pdf-table th {
-      background: #e6f7fb !important;
-      font-weight: 600;
-    }
-
-    .pdf-table .name-col {
-      width: 38mm;
-      white-space: nowrap;
-      text-align: left;
-    }
-
-    .pdf-table .doctor-col {
-      width: 58mm;
-      white-space: normal;
-      word-break: break-word;
-      overflow-wrap: break-word;
-      text-align: left;
-    }
-
-    .pdf-table .id-col {
-      width: 20mm;
-    }
-
-    .pdf-table .small-col {
-      width: 9mm;
-    }
-
-    .pdf-table .mid-col {
-      width: 13mm;
-    }
-
-    .pdf-export .noprint,
-    .pdf-export .btn,
-    .pdf-export .navbar {
-      display: none !important;
-    }
-
-    .pdf-only {
-      display: none;
-    }
-
-    .navbar {
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: stretch !important;
+/* ปรับปรุงการแสดงผลตารางบนหน้าเว็บ */
+#mainTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Sarabun', 'Noto Sans Thai', Arial, sans-serif;
 }
 
-.navbar h5 {
-  margin: 0;
+#mainTable th {
+  background-color: #2c5f6e !important;
+  color: white !important;
+  padding: 10px 8px !important;
   font-weight: 600;
-}
-
-.navbar .icon-link {
+  font-size: 13px;
   white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
-.text-danger-custom {
-  color: red !important;
-  font-weight: 600;
+#mainTable td {
+  padding: 8px 6px;
+  font-size: 13px;
+  border: 1px solid #c8d6dc;
 }
+
+#mainTable tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+#mainTable .text-danger-custom {
+  color: #c62828;
+  font-weight: 700;
+  background-color: #ffebee;
+}
+
+/* สำหรับการพิมพ์ PDF */
+@media print {
+  body.exporting-pdf * {
+    visibility: hidden;
+  }
+  
+  body.exporting-pdf .pdf-capture,
+  body.exporting-pdf .pdf-capture * {
+    visibility: visible;
+  }
+  
+  .pdf-capture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+}
+
+/* Responsive สำหรับหน้าจอเล็ก */
+@media (max-width: 768px) {
+  #mainTable {
+    font-size: 11px;
+  }
+  
+  #mainTable th,
+  #mainTable td {
+    padding: 5px 3px;
+  }
+}
+    .navbar {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: stretch !important;
+    }
+
+    .navbar h5 {
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .navbar .icon-link {
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
 
     .table-result {
-  border: 1px solid #000;
-  border-collapse: collapse;
-}
+      border: 1px solid #000;
+      border-collapse: collapse;
+    }
 
-.table-result th,
-.table-result td {
-  border: 1px solid #dee2e6;
-}.table-result {
-  border: 1px solid #000;
-  border-collapse: collapse;
-}
-
-.table-result th,
-.table-result td {
-  border: 1px solid #dee2e6;
-}
+    .table-result th,
+    .table-result td {
+      border: 1px solid #dee2e6;
+    }
 
     .sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 20%;
-  height: 100vh;
-  overflow-y: auto; /* เผื่อเมนูยาว */
-}
-  </style>
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 20%;
+      height: 100vh;
+      overflow-y: auto;
+
+      /* เผื่อเมนูยาว */
+      table {
+        table-layout: fixed;
+      }
+    }
+
+   
+    /* ... ส่วนอื่นไม่เปลี่ยน ... */
+
+    @media print {
+
+      body,
+      html {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+      }
+
+      .sidebar,
+      .noprint,
+      .btn,
+      .icon-link,
+      #loading,
+      .b-example-divider,
+      .logo-box {
+        display: none !important;
+      }
+
+      .wrapper {
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      .print-area {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 12px 15px !important;
+        background: white !important;
+        color: black !important;
+        box-sizing: border-box !important;
+      }
+
+      /* บังคับตารางให้เต็ม A4 แนวนอน */
+      .table-container,
+      .table-responsive,
+      .table {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: visible !important;
+      }
+
+      table,
+      #mainTable {
+        width: 100% !important;
+        max-width: 100% !important;
+        table-layout: fixed !important;
+        font-size: 9pt !important;
+        border-collapse: collapse !important;
+        word-wrap: break-word !important;
+      }
+
+      th, td {
+        border: 1px solid #aaa !important;
+        padding: 5px 4px !important;
+        font-size: 8pt !important;
+        text-align: center !important;
+        vertical-align: middle !important;
+      }
+
+      td:first-child, th:first-child {
+        width: 22mm !important;
+      }
+
+      td:nth-child(2), th:nth-child(2) {
+        width: 38mm !important;
+        text-align: left !important;
+      }
+
+      /* ป้องกันการตัดขอบ */
+      * {
+        box-shadow: none !important;
+        transform: none !important;
+      }
+
+      .navbar {
+        display: block !important;
+        background: white !important;
+        margin-bottom: 10px !important;
+      }
+
+      .navbar h5 {
+        font-size: 14pt !important;
+        margin-bottom: 5px !important;
+      }
+    }
+
+    /* ... ส่วนอื่นไม่เปลี่ยน ... */
+</style>
 </head>
 <body>
 
