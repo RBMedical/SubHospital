@@ -209,6 +209,35 @@
   background: #ffffff !important;
   color: #000 !important;
 }
+
+    .pdf-capture {
+  width: 1123px !important;
+  background: #fff !important;
+  font-family: "Sarabun", Arial, sans-serif !important;
+}
+
+.pdf-capture section {
+  width: 1123px !important;
+  min-height: 794px !important;
+  padding: 30px 36px !important;
+  box-sizing: border-box !important;
+  page-break-after: always;
+}
+
+.pdf-capture section:last-child {
+  page-break-after: auto;
+}
+
+.pdf-capture table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  table-layout: fixed !important;
+}
+
+.pdf-capture th,
+.pdf-capture td {
+  font-family: "Sarabun", Arial, sans-serif !important;
+}
   </style>
 </head>
 
@@ -411,8 +440,8 @@
     }
 
    const root = document.createElement("div");
-      root.className = "pdf-capture";
-       root.style.width = "297mm";
+     root.className = "pdf-capture";
+     root.style.width = "1123px";
         root.style.background = "#ffffff";
         root.style.fontFamily = "'Sarabun', sans-serif";
         root.style.color = "#16323f";
@@ -425,9 +454,9 @@
     for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
       const page = document.createElement("section");
 
-      page.style.width = "297mm";
-      page.style.minHeight = "210mm";
-      page.style.padding = "8mm 9mm 7mm";
+       page.style.width = "1123px";
+       page.style.minHeight = "794px";
+      page.style.padding = "30px 36px";
       page.style.boxSizing = "border-box";
       page.style.background = "#ffffff";
 
@@ -500,14 +529,19 @@
     return root;
   }
 
- async function exportPDF() {
+async function exportPDF() {
   const report = buildPrintableReport();
   if (!report) return;
 
   document.body.classList.add("exporting-pdf");
   document.body.appendChild(report);
 
-  await new Promise(resolve => setTimeout(resolve, 1000));
+  // รอให้ฟอนต์ Sarabun โหลดก่อน
+  if (document.fonts) {
+    await document.fonts.ready;
+  }
+
+  await new Promise(resolve => setTimeout(resolve, 800));
 
   const opt = {
     margin: 0,
@@ -522,17 +556,17 @@
       backgroundColor: "#ffffff",
       scrollX: 0,
       scrollY: 0,
-      windowWidth: report.scrollWidth,
+      windowWidth: 1123,
       windowHeight: report.scrollHeight
     },
     jsPDF: {
-      unit: "mm",
-      format: "a4",
-      orientation: "landscape"
+      unit: "px",
+      format: [1123, 794],
+      orientation: "landscape",
+      compress: true
     },
     pagebreak: {
-      mode: ["css", "legacy"],
-      before: ".pdf-page-break"
+      mode: ["css", "legacy"]
     }
   };
 
@@ -543,15 +577,6 @@
     document.body.classList.remove("exporting-pdf");
   }
 }
-  function showLoading(message = "Waiting for loading......") {
-    const loading = document.getElementById("loading");
-
-    if (loading) {
-      loading.style.display = "block";
-      loading.innerText = message;
-    }
-  }
-
   function hideLoading() {
     const loading = document.getElementById("loading");
 
