@@ -379,12 +379,7 @@
   </div>
 
     <div class="fs-6 ms-2 mt-2 mb-1">รายงานผลตรวจสุขภาพประจำปี</div>
-function exportPDF() {
-  // Hide sidebar before export
-  const sidebar = document.querySelector('.sidebar');
-  const sidebarOriginalDisplay = sidebar ? sidebar.style.display : 'visible';
-  if (sidebar) sidebar.style.display = 'none';
-
+  
      <div id="selectedValue" class="ms-2 mb-5 fs-6 fw-bold noprint"></div>
       <div class="b-example-divider"></div>
     <ul class="sidebar-menu">
@@ -402,12 +397,7 @@ function exportPDF() {
     
 <div class="navbar bg-body-tertiary px-2 mt-2 mb-3">
   <div class="d-flex w-100 align-items-center justify-content-between gap-3">
-  try {
-    const reportRoot = buildPrintableReport();
-    if (!reportRoot) {
-      throw new Error('Report could not be generated');
-    }
-
+    
     <!-- ซ้ายสุด: หัวข้อ + ตัวเลือก -->
     <div class="d-flex flex-column gap-2 flex-grow-1">
       <h5>ผลการตรวจทางเคมีในเลือด/blood chemistry(Chem)</h5>
@@ -429,35 +419,10 @@ function exportPDF() {
         </a>
       </div>
     </div>
-    document.body.appendChild(reportRoot);
-
+    
     <!-- ขวาสุด: ปุ่มทั้ง 2 -->
     <div class="d-flex gap-2 align-items-center flex-shrink-0">
-    const opt = {
-      margin: [5, 5, 5, 5],                    // margins: [top, left, bottom, right] in mm
-      filename: 'health_report.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { 
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff',
-        logging: false,
-        windowHeight: 1200
-      },
-      jsPDF: { 
-        unit: 'mm',
-        format: 'a4',
-        orientation: 'landscape',              // Landscape for wide tables
-        compress: true
-      },
-      pagebreak: { 
-        mode: ['css', 'legacy'],
-        before: ['section'],
-        after: ['section']
-      }
-    };
-
+    
       <a href="index.html" class="btn btn-outline-secondary">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
           <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
@@ -731,20 +696,6 @@ function exportPDF() {
           throw new Error("HTTP error: " + response.status);
         }
         return response.json();
-    html2pdf()
-      .set(opt)
-      .from(reportRoot)
-      .save()
-      .then(() => {
-        reportRoot.remove();
-        if (sidebar) sidebar.style.display = sidebarOriginalDisplay;
-        console.log('✅ PDF exported successfully');
-      })
-      .catch(error => {
-        console.error('❌ Error exporting PDF:', error);
-        reportRoot.remove();
-        if (sidebar) sidebar.style.display = sidebarOriginalDisplay;
-        alert('ไม่สามารถ export PDF ได้: ' + error.message);
       });
     }
 
@@ -865,4 +816,3 @@ function exportPDF() {
 </body>
 
 </html>
-  
