@@ -469,19 +469,20 @@
      <table id="mainTable" class="table table-bordered">
   <thead>
     <tr>
-      <th>ลำดับ</th>
-      <th>ชื่อ-สกุล</th>
-      <th>WBC</th>
-      <th>HGB</th>
-      <th>HCT</th>
-      <th>NEUT</th>
-      <th>LYMPH</th>
-      <th>MONO</th>
-      <th>EOS</th>
-      <th>BASO</th>
-      <th>PLT</th>
-      <th>MCV</th>
-      <th>ผลสรุป CBC</th>
+        <th class="text-center" style="min-width: 95px; max-width: 95px;">ลำดับ</th>
+      <th class="text-start" style="min-width: 200px; max-width: 200px;">ชื่อ-สกุล</th>
+      <th class="text-center" style="min-width:47px; max-width: 47px;">WBC</th>
+      <th class="text-center" style="min-width: 47px; max-width: 47px;">HGB</th>
+      <th class="text-center" style="min-width: 47px; max-width: 47px;">HCT</th>
+      <th class="text-center" style="min-width: 47px; max-width: 47px;">NEUT</th>
+     <th class="text-center" style="min-width: 47px; max-width: 47px;">LYMPH</th>
+      <th class="text-center" style="min-width: 47px; max-width: 47px;">MONO</th>
+      <th class="text-center" style="min-width: 47px; max-width: 47px;">EOS</th>
+     <th class="text-center" style="min-width: 47px; max-width: 47px;">BASO</th>
+      <th class="text-center" style="min-width: 47px; max-width: 47px;">PLT</th>
+      <th class="text-center" style="min-width: 47px; max-width: 47px;">MCV</th>
+      <th class="text-center" style="min-width: 95px; max-width: 95px;">ผลสรุป CBC</th>
+
     </tr>
   </thead>
   <tbody id="cbcresult">
@@ -1002,8 +1003,8 @@ async function exportPDF() {
 
             resultDiv1.innerHTML += `
               <tr>
-                <th class="text-center" scope="row" colspan="2">${row.register || ""}</th>
-                <td class="text-start" colspan="3">${row.name || ""}</td>
+                <th class="text-center" scope="row">${row.register || ""}</th>
+                <td class="text-start" >${row.name || ""}</td>
                 <td class="text-center">${row.bwbc || ""}</td>
                 <td class="text-center">${row.hemo || ""}</td>
                 <td class="text-center">${row.hema || ""}</td>
