@@ -295,26 +295,28 @@
     <span id="loading" class="fs-5 mt-2 mb-2"></span>
 
     <div class="table-container mt-3">
-      <table class="table table-result" id="mainTable">
-        <thead class="table-info">
-          <tr>
-            <th scope="col" colspan="2">รหัสประจำตัว</th>
-            <th scope="col" colspan="3">ชื่อ นามสกุล</th>
-            <th scope="col">WBC</th>
-            <th scope="col">HGB</th>
-            <th scope="col">HCT</th>
-            <th scope="col">NEUT</th>
-            <th scope="col">LYMPH</th>
-            <th scope="col">MONO</th>
-            <th scope="col">EOS</th>
-            <th scope="col">BASO</th>
-            <th scope="col">PLT</th>
-            <th scope="col">MCV</th>
-            <th scope="col">ผลตรวจ</th>
-          </tr>
-        </thead>
-        <tbody id="cbcresult"></tbody>
-      </table>
+     <table id="mainTable" class="table table-bordered">
+  <thead>
+    <tr>
+      <th>ลำดับ</th>
+      <th>ชื่อ-สกุล</th>
+      <th>WBC</th>
+      <th>HGB</th>
+      <th>HCT</th>
+      <th>NEUT</th>
+      <th>LYMPH</th>
+      <th>MONO</th>
+      <th>EOS</th>
+      <th>BASO</th>
+      <th>PLT</th>
+      <th>MCV</th>
+      <th>ผลสรุป CBC</th>
+    </tr>
+  </thead>
+  <tbody id="cbcresult">
+    <!-- ข้อมูลจะถูกเติมผ่าน JavaScript -->
+  </tbody>
+</table>
     </div>
 
   </div>
@@ -359,187 +361,332 @@
     cell.style.textOverflow = "ellipsis";
   }
 
-  function stylePrintableTable(table) {
-    table.style.width = "100%";
-    table.style.borderCollapse = "collapse";
-    table.style.tableLayout = "fixed";
-    table.style.fontSize = "8.4px";
-    table.style.color = "#16323f";
-    table.style.border = "1px solid #9fb3bf";
+ function stylePrintableTable(table, isForPrint = true) {
+  // ตั้งค่าตารางหลัก
+  table.style.width = "100%";
+  table.style.borderCollapse = "collapse";
+  table.style.tableLayout = "fixed"; // ใช้ fixed layout เพื่อควบคุมความกว้าง
+  table.style.fontSize = "9px";
+  table.style.fontFamily = "'Sarabun', 'Noto Sans Thai', Arial, sans-serif";
+  table.style.color = "#16323f";
+  table.style.border = "1px solid #9fb3bf";
+  table.style.backgroundColor = "#ffffff";
 
-    Array.from(table.querySelectorAll("th, td")).forEach(cell => {
-      cell.removeAttribute("style");
-      cell.style.border = "1px solid #9fb3bf";
-      cell.style.padding = "4px 5px";
-      cell.style.verticalAlign = "middle";
-      cell.style.textAlign = "center";
-      cell.style.lineHeight = "1.25";
-      cell.style.wordBreak = "break-word";
-      cell.style.overflowWrap = "break-word";
-    });
+  // กำหนดความกว้างของคอลัมน์ (หน่วยเป็น %)
+  const columnWidths = [
+    "5%",   // ลำดับ/register
+    "18%",  // ชื่อ-สกุล
+    "6%",   // WBC
+    "6%",   // HGB
+    "6%",   // HCT
+    "6%",   // NEUT
+    "6%",   // LYMPH
+    "6%",   // MONO
+    "6%",   // EOS
+    "6%",   // BASO
+    "6%",   // PLT
+    "6%",   // MCV
+    "7%",   // ผลสรุป CBC
+  ];
 
-    Array.from(table.querySelectorAll("thead th")).forEach(cell => {
-      cell.style.background = "#dbeaf1";
-      cell.style.color = "#183642";
-      cell.style.fontWeight = "700";
-      cell.style.fontSize = "8.2px";
-    });
-
-    Array.from(table.querySelectorAll("tbody tr")).forEach((row, rowIndex) => {
-      if (rowIndex % 2 === 1) {
-        row.style.background = "#f7fafc";
-      }
-
-      const cells = Array.from(row.children);
-
-      cells.forEach((cell, cellIndex) => {
-        if (cell.classList.contains("text-danger-custom")) {
-          cell.style.color = "#c62828";
-          cell.style.fontWeight = "700";
-        }
-
-        if (cellIndex === 0) {
-          cell.style.width = "24mm";
-          cell.style.whiteSpace = "nowrap";
-        }
-
-        if (cellIndex === 1) {
-          cell.style.width = "46mm";
-          cell.style.maxWidth = "46mm";
-          cell.style.textAlign = "left";
-          fitNameCell(cell);
-        }
-
-        if (cell.classList.contains("text-start")) {
-          cell.style.textAlign = "left";
-        }
-      });
-    });
+  // ใช้ colgroup เพื่อกำหนดความกว้างที่แน่นอน
+  let colgroup = table.querySelector("colgroup");
+  if (!colgroup) {
+    colgroup = document.createElement("colgroup");
+    table.insertBefore(colgroup, table.firstChild);
+  } else {
+    colgroup.innerHTML = "";
   }
+  
+  columnWidths.forEach(width => {
+    const col = document.createElement("col");
+    col.style.width = width;
+    colgroup.appendChild(col);
+  });
 
- function buildPrintableReport() {
+  // จัดสไตล์ header และ cells
+  const allCells = table.querySelectorAll("th, td");
+  allCells.forEach(cell => {
+    cell.style.border = "1px solid #9fb3bf";
+    cell.style.padding = "6px 4px";
+    cell.style.verticalAlign = "middle";
+    cell.style.lineHeight = "1.3";
+    cell.style.wordBreak = "break-word";
+    cell.style.overflowWrap = "break-word";
+  });
+
+  // Header cells
+  const headerCells = table.querySelectorAll("thead th");
+  headerCells.forEach(cell => {
+    cell.style.backgroundColor = "#2c5f6e";
+    cell.style.color = "#ffffff";
+    cell.style.fontWeight = "600";
+    cell.style.fontSize = "9px";
+    cell.style.textAlign = "center";
+    cell.style.padding = "8px 4px";
+  });
+
+  // Body cells จัดตำแหน่ง
+  const bodyRows = table.querySelectorAll("tbody tr");
+  bodyRows.forEach((row, rowIndex) => {
+    if (rowIndex % 2 === 1) {
+      row.style.backgroundColor = "#f5f8fa";
+    }
+    
+    const cells = row.querySelectorAll("td");
+    cells.forEach((cell, colIndex) => {
+      // คอลัมน์ชื่อ (index 1) ชิดซ้าย
+      if (colIndex === 1) {
+        cell.style.textAlign = "left";
+        // ปรับขนาดฟอนต์ตามความยาวข้อความ
+        const textLength = cell.textContent.trim().length;
+        let fontSize = 8.5;
+        if (textLength > 35) fontSize = 7;
+        else if (textLength > 28) fontSize = 7.5;
+        else if (textLength > 22) fontSize = 8;
+        cell.style.fontSize = fontSize + "px";
+        
+        // ตัดข้อความถ้ายาวเกิน
+        cell.style.whiteSpace = "nowrap";
+        cell.style.overflow = "hidden";
+        cell.style.textOverflow = "ellipsis";
+      } else {
+        cell.style.textAlign = "center";
+      }
+      
+      // จัดการค่าผิดปกติ
+      if (cell.classList.contains("text-danger-custom") || 
+          (cell.textContent && (cell.textContent.includes("ผิดปกติ") || 
+           cell.textContent.includes("สูง") || cell.textContent.includes("ต่ำ")))) {
+        cell.style.color = "#c62828";
+        cell.style.fontWeight = "700";
+        cell.style.backgroundColor = "#ffebee";
+      }
+    });
+  });
+}
+
+function buildPrintableReport() {
   const table = getPrintableTable();
-
   if (!table) {
     alert("ไม่พบตารางสำหรับส่งออก PDF");
     return null;
   }
 
   const tbody = table.querySelector("tbody");
-
   if (!tbody) {
     alert("ไม่พบข้อมูลในตาราง");
     return null;
   }
 
   const sourceRows = Array.from(tbody.querySelectorAll("tr"));
-
   if (sourceRows.length === 0) {
     alert("ยังไม่มีข้อมูลสำหรับส่งออก PDF");
     return null;
   }
 
+  // สร้าง container สำหรับ PDF ขนาด A4 Landscape (297mm x 210mm)
   const root = document.createElement("div");
   root.className = "pdf-capture";
-  root.style.width = "250mm";
-  root.style.background = "#ffffff";
-  root.style.fontFamily = "'Sarabun', Arial, sans-serif";
-  root.style.color = "#16323f";
+  root.style.width = "297mm";  // A4 Landscape width
+  root.style.minHeight = "210mm"; // A4 Landscape height
+  root.style.backgroundColor = "#ffffff";
+  root.style.fontFamily = "'Sarabun', 'Noto Sans Thai', Arial, sans-serif";
   root.style.margin = "0";
   root.style.padding = "0";
-  root.style.overflow = "visible";
+  root.style.position = "relative";
+  root.style.boxSizing = "border-box";
 
   const title = getPrintableTitle();
   const selectedValue = (document.getElementById("selectedValue")?.textContent || "").trim();
-  const printedAt = new Date().toLocaleString("th-TH");
+  const printedAt = new Date().toLocaleString("th-TH", {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
 
-  const rowsPerPage = getRowsPerPage(table);
+  // คำนวณจำนวนแถวต่อหน้า (A4 Landscape)
+  const rowsPerPage = 20; // จำนวนแถวที่เหมาะสมสำหรับ A4 Landscape
   const totalPages = Math.ceil(sourceRows.length / rowsPerPage);
 
   for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
-    const page = document.createElement("section");
-
-    page.style.width = "250mm";
-    page.style.minHeight = "180mm";
-    page.style.padding = "8mm 10mm 6mm 18mm";
+    const page = document.createElement("div");
+    page.style.width = "100%";
+    page.style.minHeight = "297mm"; // ความสูง A4 Landscape
+    page.style.padding = "12mm 12mm 10mm 12mm";
     page.style.boxSizing = "border-box";
-    page.style.background = "#ffffff";
-    page.style.overflow = "hidden";
-
+    page.style.backgroundColor = "#ffffff";
+    page.style.position = "relative";
+    
     if (pageIndex < totalPages - 1) {
       page.style.pageBreakAfter = "always";
       page.style.breakAfter = "page";
     }
 
+    // ===== HEADER =====
     const header = document.createElement("div");
     header.style.display = "flex";
     header.style.justifyContent = "space-between";
-    header.style.alignItems = "flex-start";
-    header.style.gap = "8mm";
-    header.style.marginBottom = "5mm";
+    header.style.alignItems = "flex-end";
+    header.style.marginBottom = "6mm";
     header.style.paddingBottom = "3mm";
-    header.style.borderBottom = "2px solid #3c6e71";
+    header.style.borderBottom = "2px solid #2c5f6e";
 
+    // Header ซ้าย
     const headerLeft = document.createElement("div");
-    headerLeft.style.flex = "1";
-    headerLeft.style.minWidth = "0";
-
     const titleEl = document.createElement("div");
     titleEl.textContent = title;
-    titleEl.style.fontSize = "15px";
+    titleEl.style.fontSize = "18px";
     titleEl.style.fontWeight = "700";
-    titleEl.style.color = "#183642";
-    titleEl.style.whiteSpace = "nowrap";
-    titleEl.style.overflow = "hidden";
-    titleEl.style.textOverflow = "ellipsis";
+    titleEl.style.color = "#1a4a5a";
+    titleEl.style.fontFamily = "'Sarabun', 'Noto Sans Thai', sans-serif";
     headerLeft.appendChild(titleEl);
 
     if (selectedValue) {
       const subtitleEl = document.createElement("div");
-      subtitleEl.textContent = selectedValue;
-      subtitleEl.style.marginTop = "2px";
-      subtitleEl.style.fontSize = "10px";
-      subtitleEl.style.color = "#4d6a79";
-      subtitleEl.style.whiteSpace = "nowrap";
+      subtitleEl.textContent = "ผู้ป่วย: " + selectedValue;
+      subtitleEl.style.marginTop = "3px";
+      subtitleEl.style.fontSize = "11px";
+      subtitleEl.style.color = "#5a7a85";
       headerLeft.appendChild(subtitleEl);
     }
 
+    // Header ขวา
     const headerRight = document.createElement("div");
     headerRight.style.textAlign = "right";
     headerRight.style.fontSize = "9.5px";
-    headerRight.style.color = "#4d6a79";
-    headerRight.style.minWidth = "35mm";
-    headerRight.innerHTML =
-      "<div>Page " + (pageIndex + 1) + " / " + totalPages + "</div>" +
-      "<div>" + printedAt + "</div>";
+    headerRight.style.color = "#5a7a85";
+    headerRight.innerHTML = `
+      <div>หน้าที่ ${pageIndex + 1} / ${totalPages}</div>
+      <div>พิมพ์เมื่อ ${printedAt}</div>
+    `;
 
     header.appendChild(headerLeft);
     header.appendChild(headerRight);
     page.appendChild(header);
 
-    const pageTable = table.cloneNode(false);
-    const headClone = table.querySelector("thead").cloneNode(true);
+    // ===== TABLE =====
+    // clone structure
+    const pageTable = document.createElement("table");
+    pageTable.style.width = "100%";
+    pageTable.style.borderCollapse = "collapse";
+    pageTable.style.tableLayout = "fixed";
+    
+    // clone thead
+    const originalHead = table.querySelector("thead");
+    if (originalHead) {
+      const headClone = originalHead.cloneNode(true);
+      pageTable.appendChild(headClone);
+    }
+    
+    // clone tbody with specific rows
     const bodyClone = document.createElement("tbody");
-
     const pageRows = sourceRows.slice(
       pageIndex * rowsPerPage,
       (pageIndex + 1) * rowsPerPage
     );
-
+    
     pageRows.forEach(row => {
       bodyClone.appendChild(row.cloneNode(true));
     });
-
-    pageTable.appendChild(headClone);
     pageTable.appendChild(bodyClone);
-
+    
+    // apply styles
     stylePrintableTable(pageTable);
-
     page.appendChild(pageTable);
+
+    // ===== FOOTER (optional) =====
+    if (pageIndex === totalPages - 1) {
+      const footer = document.createElement("div");
+      footer.style.marginTop = "6mm";
+      footer.style.paddingTop = "2mm";
+      footer.style.borderTop = "1px solid #d0dde3";
+      footer.style.fontSize = "8px";
+      footer.style.color = "#889ea8";
+      footer.style.textAlign = "center";
+      footer.innerHTML = "ระบบตรวจวิเคราะห์ผลเลือด CBC | สงวนลิขสิทธิ์";
+      page.appendChild(footer);
+    }
+    
     root.appendChild(page);
   }
 
   return root;
+}
+
+async function exportPDF() {
+  const report = buildPrintableReport();
+  if (!report) return;
+
+  // แสดง loading indicator
+  const loadingToast = document.createElement("div");
+  loadingToast.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #2c5f6e;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    z-index: 10000;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  `;
+  loadingToast.textContent = "กำลังสร้างไฟล์ PDF...";
+  document.body.appendChild(loadingToast);
+
+  document.body.classList.add("exporting-pdf");
+  report.style.position = "absolute";
+  report.style.top = "-9999px";
+  report.style.left = "0";
+  document.body.appendChild(report);
+
+  // รอให้ Sarabun font โหลด
+  if (document.fonts && document.fonts.ready) {
+    await document.fonts.ready;
+  }
+  
+  await new Promise(resolve => setTimeout(resolve, 500));
+
+  // ตั้งค่า html2pdf
+  const element = report;
+  const opt = {
+    margin: [0.3, 0.3, 0.3, 0.3], // top, right, bottom, left (หน่วยเป็น inch)
+    filename: `CBC_Report_${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.pdf`,
+    image: {
+      type: "jpeg",
+      quality: 0.98
+    },
+    html2canvas: {
+      scale: 2.5,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+      logging: false,
+      letterRendering: true
+    },
+    jsPDF: {
+      unit: "in",
+      format: "a4",
+      orientation: "landscape"
+    },
+    pagebreak: {
+      mode: ["css", "legacy"]
+    }
+  };
+
+  try {
+    await html2pdf().set(opt).from(element).save();
+  } catch (error) {
+    console.error("PDF Export Error:", error);
+    alert("เกิดข้อผิดพลาดในการสร้าง PDF: " + error.message);
+  } finally {
+    loadingToast.remove();
+    report.remove();
+    document.body.classList.remove("exporting-pdf");
+  }
 }
 
 async function exportPDF() {
