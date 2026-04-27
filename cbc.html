@@ -441,7 +441,7 @@
 
   const root = document.createElement("div");
   root.className = "pdf-capture";
-  root.style.width = "277mm";
+  root.style.width = "250mm";
   root.style.background = "#ffffff";
   root.style.fontFamily = "'Sarabun', Arial, sans-serif";
   root.style.color = "#16323f";
@@ -459,9 +459,9 @@
   for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
     const page = document.createElement("section");
 
-    page.style.width = "277mm";
-    page.style.minHeight = "190mm";
-    page.style.padding = "8mm 8mm 6mm";
+    page.style.width = "250mm";
+    page.style.minHeight = "180mm";
+    page.style.padding = "8mm 10mm 6mm 18mm";
     page.style.boxSizing = "border-box";
     page.style.background = "#ffffff";
     page.style.overflow = "hidden";
