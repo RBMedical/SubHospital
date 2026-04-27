@@ -577,6 +577,15 @@ async function exportPDF() {
     document.body.classList.remove("exporting-pdf");
   }
 }
+
+   function showLoading(message = "Waiting for loading......") {
+    const loading = document.getElementById("loading");
+
+    if (loading) {
+      loading.style.display = "block";
+      loading.innerText = message;
+    }
+  }
   function hideLoading() {
     const loading = document.getElementById("loading");
 
