@@ -25,21 +25,25 @@
       height: 100vh;
     }
 
-    .sidebar {
+      .sidebar {
+     position: fixed;
       width: 20%;
       background-color: rgb(225, 232, 236);
-      /* ไล่สีเพิ่มมิติ */
-      color: white;
+      color: teal;
       padding: 20px;
-
       border-right: 1px solid #023636;
-      /* ขอบด้านขวาให้ชัด */
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2),
-        inset -2px 0 5px rgba(255, 255, 255, 0.1);
-
-
+      box-shadow: 2px 0 10px rgba(0,0,0,0.2),
+                  inset -2px 0 5px rgba(255,255,255,0.1);
     }
 
+    .print-area {
+      width: 80%;
+      padding: 20px;
+      color: teal;
+      overflow-x: hidden;
+      margin-left: 400px;
+  width: calc(100% - 400px);
+    }
     .content {
       width: 80%;
       padding: 20px;
