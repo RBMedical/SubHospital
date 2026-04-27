@@ -52,8 +52,9 @@
 
     /* Table container */
     .table-container {
-      width: 90%;
-      margin: auto;
+     max-height: 400px;   /* ปรับความสูงได้ */
+  overflow-y: auto;
+  border: 1px solid #ddd;
     }
 
     .table-scroll {
@@ -403,7 +404,7 @@
 </div>
 </div>
 <span id="loading" class="fs-5 mt-2 mb-2"></span>
-    <table class="table table-result mt-3" id="mainTable">
+    <table class="table table-container table-result mt-3" id="mainTable">
       <thead class="table-info">
         <tr >
            <th scope="col" colspan="2" class="text-center">รหัสประจำตัว</th>
