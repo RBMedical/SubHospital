@@ -400,15 +400,13 @@
 
     const root = document.createElement("div");
     root.style.position = "fixed";
-    root.style.left = "0";
-    root.style.top = "0";
-    root.style.width = "297mm";
-    root.style.background = "#ffffff";
-    root.style.fontFamily = "'Sarabun', sans-serif";
-    root.style.color = "#16323f";
-    root.style.opacity = "0";   // ซ่อนไว้แทน
-    root.style.pointerEvents = "none";
-
+root.style.left = "0";
+root.style.top = "0";
+root.style.zIndex = "999999";
+root.style.width = "297mm";
+root.style.background = "#ffffff";
+root.style.fontFamily = "'Sarabun', sans-serif";
+root.style.color = "#16323f";
     const title = getPrintableTitle();
     const selectedValue = (document.getElementById("selectedValue")?.textContent || "").trim();
     const printedAt = new Date().toLocaleString("th-TH");
@@ -493,41 +491,46 @@
     return root;
   }
 
-  function exportPDF() {
+  async function exportPDF() {
   const report = buildPrintableReport();
   if (!report) return;
 
   document.body.appendChild(report);
 
-  // ⭐ สำคัญ: รอ DOM render ก่อน
-  setTimeout(() => {
+  // รอให้ browser วาดตารางก่อน
+  await new Promise(resolve => setTimeout(resolve, 800));
 
-    const opt = {
-      margin: 0,
-      filename: "รายงาน_CBC.pdf",
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: {
-        scale: 2,
-        useCORS: true,
-        scrollY: 0,
-        logging: false
-      },
-      jsPDF: {
-        unit: "mm",
-        format: "a4",
-        orientation: "landscape"
-      }
-    };
+  const opt = {
+    margin: 0,
+    filename: "รายงาน_CBC.pdf",
+    image: {
+      type: "jpeg",
+      quality: 0.98
+    },
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+      scrollX: 0,
+      scrollY: 0
+    },
+    jsPDF: {
+      unit: "mm",
+      format: "a4",
+      orientation: "landscape"
+    },
+    pagebreak: {
+      mode: ["css", "legacy"]
+    }
+  };
 
-    html2pdf()
-      .set(opt)
-      .from(report)
-      .save()
-      .then(() => {
-        document.body.removeChild(report);
-      });
-
-  }, 300); // ⭐ delay สำคัญมาก
+  html2pdf()
+    .set(opt)
+    .from(report)
+    .save()
+    .then(() => {
+      document.body.removeChild(report);
+    });
 }
   function showLoading(message = "Waiting for loading......") {
     const loading = document.getElementById("loading");
