@@ -197,6 +197,18 @@
         margin-bottom: 10px;
       }
     }
+
+    .exporting-pdf .wrapper {
+  display: none !important;
+}
+
+.pdf-capture {
+  display: block !important;
+  position: static !important;
+  width: 297mm !important;
+  background: #ffffff !important;
+  color: #000 !important;
+}
   </style>
 </head>
 
@@ -398,15 +410,12 @@
       return null;
     }
 
-    const root = document.createElement("div");
-    root.style.position = "fixed";
-root.style.left = "0";
-root.style.top = "0";
-root.style.zIndex = "999999";
-root.style.width = "297mm";
-root.style.background = "#ffffff";
-root.style.fontFamily = "'Sarabun', sans-serif";
-root.style.color = "#16323f";
+   const root = document.createElement("div");
+      root.className = "pdf-capture";
+       root.style.width = "297mm";
+        root.style.background = "#ffffff";
+        root.style.fontFamily = "'Sarabun', sans-serif";
+        root.style.color = "#16323f";
     const title = getPrintableTitle();
     const selectedValue = (document.getElementById("selectedValue")?.textContent || "").trim();
     const printedAt = new Date().toLocaleString("th-TH");
