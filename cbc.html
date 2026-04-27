@@ -417,117 +417,130 @@
     });
   }
 
-  function buildPrintableReport() {
-    const table = getPrintableTable();
+ function buildPrintableReport() {
+  const table = getPrintableTable();
 
-    if (!table) {
-      alert("ไม่พบตารางสำหรับส่งออก PDF");
-      return null;
-    }
-
-    const tbody = table.querySelector("tbody");
-
-    if (!tbody) {
-      alert("ไม่พบข้อมูลในตาราง");
-      return null;
-    }
-
-    const sourceRows = Array.from(tbody.querySelectorAll("tr"));
-
-    if (sourceRows.length === 0) {
-      alert("ยังไม่มีข้อมูลสำหรับส่งออก PDF");
-      return null;
-    }
-
-   const root = document.createElement("div");
-     root.className = "pdf-capture";
-     root.style.width = "1123px";
-        root.style.background = "#ffffff";
-        root.style.fontFamily = "'Sarabun', sans-serif";
-        root.style.color = "#16323f";
-    const title = getPrintableTitle();
-    const selectedValue = (document.getElementById("selectedValue")?.textContent || "").trim();
-    const printedAt = new Date().toLocaleString("th-TH");
-    const rowsPerPage = getRowsPerPage(table);
-    const totalPages = Math.ceil(sourceRows.length / rowsPerPage);
-
-    for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
-      const page = document.createElement("section");
-
-       page.style.width = "1123px";
-       page.style.minHeight = "794px";
-      page.style.padding = "30px 36px";
-      page.style.boxSizing = "border-box";
-      page.style.background = "#ffffff";
-
-      if (pageIndex < totalPages - 1) {
-        page.style.pageBreakAfter = "always";
-      }
-
-      const header = document.createElement("div");
-      header.style.display = "flex";
-      header.style.justifyContent = "space-between";
-      header.style.alignItems = "flex-start";
-      header.style.gap = "8mm";
-      header.style.marginBottom = "5mm";
-      header.style.paddingBottom = "3mm";
-      header.style.borderBottom = "2px solid #3c6e71";
-
-      const headerLeft = document.createElement("div");
-      headerLeft.style.flex = "1";
-
-      const titleEl = document.createElement("div");
-      titleEl.textContent = title;
-      titleEl.style.fontSize = "15px";
-      titleEl.style.fontWeight = "700";
-      titleEl.style.color = "#183642";
-      headerLeft.appendChild(titleEl);
-
-      if (selectedValue) {
-        const subtitleEl = document.createElement("div");
-        subtitleEl.textContent = selectedValue;
-        subtitleEl.style.marginTop = "2px";
-        subtitleEl.style.fontSize = "10px";
-        subtitleEl.style.color = "#4d6a79";
-        headerLeft.appendChild(subtitleEl);
-      }
-
-      const headerRight = document.createElement("div");
-      headerRight.style.textAlign = "right";
-      headerRight.style.fontSize = "9.5px";
-      headerRight.style.color = "#4d6a79";
-      headerRight.innerHTML =
-        "<div>Page " + (pageIndex + 1) + " / " + totalPages + "</div>" +
-        "<div>" + printedAt + "</div>";
-
-      header.appendChild(headerLeft);
-      header.appendChild(headerRight);
-      page.appendChild(header);
-
-      const pageTable = table.cloneNode(false);
-      const headClone = table.querySelector("thead").cloneNode(true);
-      const bodyClone = document.createElement("tbody");
-
-      const pageRows = sourceRows.slice(
-        pageIndex * rowsPerPage,
-        (pageIndex + 1) * rowsPerPage
-      );
-
-      pageRows.forEach(row => {
-        bodyClone.appendChild(row.cloneNode(true));
-      });
-
-      pageTable.appendChild(headClone);
-      pageTable.appendChild(bodyClone);
-
-      stylePrintableTable(pageTable);
-
-      page.appendChild(pageTable);
-      root.appendChild(page);
-    }
-
-    return root;
+  if (!table) {
+    alert("ไม่พบตารางสำหรับส่งออก PDF");
+    return null;
   }
+
+  const tbody = table.querySelector("tbody");
+
+  if (!tbody) {
+    alert("ไม่พบข้อมูลในตาราง");
+    return null;
+  }
+
+  const sourceRows = Array.from(tbody.querySelectorAll("tr"));
+
+  if (sourceRows.length === 0) {
+    alert("ยังไม่มีข้อมูลสำหรับส่งออก PDF");
+    return null;
+  }
+
+  const root = document.createElement("div");
+  root.className = "pdf-capture";
+  root.style.width = "277mm";
+  root.style.background = "#ffffff";
+  root.style.fontFamily = "'Sarabun', Arial, sans-serif";
+  root.style.color = "#16323f";
+  root.style.margin = "0";
+  root.style.padding = "0";
+  root.style.overflow = "visible";
+
+  const title = getPrintableTitle();
+  const selectedValue = (document.getElementById("selectedValue")?.textContent || "").trim();
+  const printedAt = new Date().toLocaleString("th-TH");
+
+  const rowsPerPage = getRowsPerPage(table);
+  const totalPages = Math.ceil(sourceRows.length / rowsPerPage);
+
+  for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
+    const page = document.createElement("section");
+
+    page.style.width = "277mm";
+    page.style.minHeight = "190mm";
+    page.style.padding = "8mm 8mm 6mm";
+    page.style.boxSizing = "border-box";
+    page.style.background = "#ffffff";
+    page.style.overflow = "hidden";
+
+    if (pageIndex < totalPages - 1) {
+      page.style.pageBreakAfter = "always";
+      page.style.breakAfter = "page";
+    }
+
+    const header = document.createElement("div");
+    header.style.display = "flex";
+    header.style.justifyContent = "space-between";
+    header.style.alignItems = "flex-start";
+    header.style.gap = "8mm";
+    header.style.marginBottom = "5mm";
+    header.style.paddingBottom = "3mm";
+    header.style.borderBottom = "2px solid #3c6e71";
+
+    const headerLeft = document.createElement("div");
+    headerLeft.style.flex = "1";
+    headerLeft.style.minWidth = "0";
+
+    const titleEl = document.createElement("div");
+    titleEl.textContent = title;
+    titleEl.style.fontSize = "15px";
+    titleEl.style.fontWeight = "700";
+    titleEl.style.color = "#183642";
+    titleEl.style.whiteSpace = "nowrap";
+    titleEl.style.overflow = "hidden";
+    titleEl.style.textOverflow = "ellipsis";
+    headerLeft.appendChild(titleEl);
+
+    if (selectedValue) {
+      const subtitleEl = document.createElement("div");
+      subtitleEl.textContent = selectedValue;
+      subtitleEl.style.marginTop = "2px";
+      subtitleEl.style.fontSize = "10px";
+      subtitleEl.style.color = "#4d6a79";
+      subtitleEl.style.whiteSpace = "nowrap";
+      headerLeft.appendChild(subtitleEl);
+    }
+
+    const headerRight = document.createElement("div");
+    headerRight.style.textAlign = "right";
+    headerRight.style.fontSize = "9.5px";
+    headerRight.style.color = "#4d6a79";
+    headerRight.style.minWidth = "35mm";
+    headerRight.innerHTML =
+      "<div>Page " + (pageIndex + 1) + " / " + totalPages + "</div>" +
+      "<div>" + printedAt + "</div>";
+
+    header.appendChild(headerLeft);
+    header.appendChild(headerRight);
+    page.appendChild(header);
+
+    const pageTable = table.cloneNode(false);
+    const headClone = table.querySelector("thead").cloneNode(true);
+    const bodyClone = document.createElement("tbody");
+
+    const pageRows = sourceRows.slice(
+      pageIndex * rowsPerPage,
+      (pageIndex + 1) * rowsPerPage
+    );
+
+    pageRows.forEach(row => {
+      bodyClone.appendChild(row.cloneNode(true));
+    });
+
+    pageTable.appendChild(headClone);
+    pageTable.appendChild(bodyClone);
+
+    stylePrintableTable(pageTable);
+
+    page.appendChild(pageTable);
+    root.appendChild(page);
+  }
+
+  return root;
+}
 
 async function exportPDF() {
   const report = buildPrintableReport();
