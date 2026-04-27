@@ -406,44 +406,44 @@ function renderSummaryTable(data) {
   resultDiv.innerHTML = `
     <tr>
       <td class="text-start">ดัชนีมวลกาย</td>
-      <td class="text-center">${data.bminormal || 0}</td>
-      <td class="text-center">${data.bmiab || 0}</td>
+      <td class="text-center">${data.bmin || 0}</td>
+      <td class="text-center">${data.bmia || 0}</td>
     </tr>
 
     <tr>
       <td class="text-start">ความสมบูรณ์ของเม็ดเลือด</td>
-      <td class="text-center">${data.cbcnormal || 0}</td>
-      <td class="text-center">${data.cbcab || 0}</td>
+      <td class="text-center">${data.cbcn || 0}</td>
+      <td class="text-center">${data.cbca || 0}</td>
     </tr>
 
     <tr>
       <td class="text-start">ปัสสาวะแบบสมบูรณ์</td>
-      <td class="text-center">${data.urinenormal || 0}</td>
-      <td class="text-center">${data.urineab || 0}</td>
+      <td class="text-center">${data.urinen || 0}</td>
+      <td class="text-center">${data.urinea|| 0}</td>
     </tr>
 
     <tr>
       <td class="text-start">เอ็กซเรย์ปอด</td>
-      <td class="text-center">${data.xraynormal || 0}</td>
-      <td class="text-center">${data.xrayab || 0}</td>
+      <td class="text-center">${data.xrayn || 0}</td>
+      <td class="text-center">${data.xraya || 0}</td>
     </tr>
 
     <tr>
       <td class="text-start">ปริมาณน้ำตาลในเลือด</td>
-      <td class="text-center">${data.fbsnormal || 0}</td>
-      <td class="text-center">${data.fbsab || 0}</td>
+      <td class="text-center">${data.fbsn || 0}</td>
+      <td class="text-center">${data.fbsa || 0}</td>
     </tr>
 
     <tr>
       <td class="text-start">ปริมาณไขมันในเลือด Cholesterol</td>
-      <td class="text-center">${data.cholnormal || 0}</td>
-      <td class="text-center">${data.cholab || 0}</td>
+      <td class="text-center">${data.choln || 0}</td>
+      <td class="text-center">${data.chola || 0}</td>
     </tr>
 
     <tr>
       <td class="text-start">ปริมาณกรด Uric ในเลือด</td>
-      <td class="text-center">${data.uricnormal || 0}</td>
-      <td class="text-center">${data.uricab || 0}</td>
+      <td class="text-center">${data.uricn || 0}</td>
+      <td class="text-center">${data.urica || 0}</td>
     </tr>
   `;
 }
@@ -452,23 +452,23 @@ function drawChart(data) {
   const labels = ["BMI", "CBC", "Urine", "X Ray", "Sugar", "Cholesterol", "Uric"];
 
   const normalData = [
-    Number(data.bminormal || 0),
-    Number(data.cbcnormal || 0),
-    Number(data.urinenormal || 0),
-    Number(data.xraynormal || 0),
-    Number(data.fbsnormal || 0),
-    Number(data.cholnormal || 0),
-    Number(data.uricnormal || 0)
+    Number(data.bmin || 0),
+    Number(data.cbcn || 0),
+    Number(data.urinen || 0),
+    Number(data.xrayn || 0),
+    Number(data.fbsn || 0),
+    Number(data.choln || 0),
+    Number(data.uricn || 0)
   ];
 
   const abnormalData = [
-    Number(data.bmiab || 0),
-    Number(data.cbcab || 0),
-    Number(data.urineab || 0),
-    Number(data.xrayab || 0),
-    Number(data.fbsab || 0),
-    Number(data.cholab || 0),
-    Number(data.uricab || 0)
+    Number(data.bmia || 0),
+    Number(data.cbca || 0),
+    Number(data.urinea || 0),
+    Number(data.xraya || 0),
+    Number(data.fbsa || 0),
+    Number(data.chola || 0),
+    Number(data.urica || 0)
   ];
 
   if (myChart !== null) {
