@@ -566,23 +566,23 @@ function drawChart(data) {
 
 function showMaxAbnormal(data) {
   const map = {
-    bmiab: "ดัชนีมวลกาย",
-    cbcab: "ความสมบูรณ์ของเม็ดเลือด",
-    urineab: "ตรวจปัสสาวะ",
-    xrayab: "เอ็กซเรย์ปอด",
-    fbsab: "ปริมาณน้ำตาลในเลือด",
-    cholab: "ปริมาณไขมันในเลือด",
-    uricab: "ปริมาณกรดยูริค"
+    bmia: "ดัชนีมวลกาย",
+    cbca: "ความสมบูรณ์ของเม็ดเลือด",
+    urinea: "ตรวจปัสสาวะ",
+    xraya: "เอ็กซเรย์ปอด",
+    fbsa: "ปริมาณน้ำตาลในเลือด",
+    chola: "ปริมาณไขมันในเลือด",
+    urica: "ปริมาณกรดยูริค"
   };
 
   const values = {
-    bmiab: Number(data.bmiab || 0),
-    cbcab: Number(data.cbcab || 0),
-    urineab: Number(data.urineab || 0),
-    xrayab: Number(data.xrayab || 0),
-    fbsab: Number(data.fbsab || 0),
-    cholab: Number(data.cholab || 0),
-    uricab: Number(data.uricab || 0)
+    bmiab: Number(data.bmia || 0),
+    cbcab: Number(data.cbca || 0),
+    urineab: Number(data.urinea || 0),
+    xrayab: Number(data.xraya || 0),
+    fbsab: Number(data.fbsa || 0),
+    cholab: Number(data.chola || 0),
+    uricab: Number(data.urica || 0)
   };
 
   let maxKey = null;
