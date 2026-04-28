@@ -469,7 +469,7 @@
      <table id="mainTable" class="table table-bordered">
   <thead>
     <tr>
-        <th class="text-center" style="min-width: 95px; max-width: 95px;">ลำดับ</th>
+        <th class="text-center" style="min-width: 95px; max-width: 95px;">HN</th>
       <th class="text-start" style="min-width: 200px; max-width: 200px;">ชื่อ-สกุล</th>
       <th class="text-center" style="min-width:47px; max-width: 47px;">WBC</th>
       <th class="text-center" style="min-width: 47px; max-width: 47px;">HGB</th>
@@ -1003,7 +1003,7 @@ async function exportPDF() {
 
             resultDiv1.innerHTML += `
               <tr>
-                <th class="text-center" scope="row">${row.register || ""}</th>
+                <th class="text-center">${row.register || ""}</th>
                 <td class="text-start" >${row.name || ""}</td>
                 <td class="text-center">${row.bwbc || ""}</td>
                 <td class="text-center">${row.hemo || ""}</td>
