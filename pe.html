@@ -426,13 +426,24 @@
 
 <body>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const fullname = localStorage.getItem("fullname") || "";
+  const el = document.getElementById("fullname");
+
+  if (el) {
+    el.textContent = fullname;
+  }
+});
+</script>
   <div class="wrapper">
 
     <!-- Sidebar -->
-    <div class="sidebar" style="font-family: sarabun; color: teal;">
-      <div class="logo-box">
-        <img src="pic/Logo.png" alt="logo">
-      </div>
+   <div class="sidebar">
+    <div id="fullname" class="fs-2 ms-2 mt-2 mb-3"></div>
+    <div class="logo-box">
+      <img src="pic/Logo.png" alt="logo">
+    </div>
 
       <div class="fs-6 ms-2 mt-2 mb-1">รายงานผลตรวจสุขภาพประจำปี</div>
 
