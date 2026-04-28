@@ -458,7 +458,7 @@
       <h5>ผลการตรวจทางเคมีในเลือด/blood chemistry(Chem)</h5>
       
       <div class="d-flex gap-3">
-        <a class="icon-link text-decoration-none " href="chem.html">
+        <a class="icon-link text-decoration-none " href="#">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle" viewBox="0 0 16 16">
             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
           </svg>
@@ -857,55 +857,24 @@
 
                 resultDiv1.innerHTML += `
                 <tr>
-                <td class="text-center">${row.register || ""}</td>
+                < <td class="text-center">${row.register || ""}</td>
                   <td class="text-start">${row.name || ""}</td>
+                  <td class="text-center">${row.color || ""}</td>
+                  <td class="text-center">${row.appe || ""}</td>
+                  <td class="text-center">${row.spec || ""}</td>
+                  <td class="text-center">${row.ph || ""}</td>
+                   <td class="text-center">${row.protain || ""}</td>
+                  <td class="text-center">${row.glu || ""}</td>
                  
-                    <td class="text-center ${isAbnormal(row.fbsr) ? 'text-danger-custom' : ''}">
-      ${row.fbsr || ""}
+                 <td class="text-center">${row.urbc ? row.urbc + " cells/HPF" : ""}</td>
+                  <td class="text-center">${row.uwbc ? row.uwbc + " cells/HPF" : ""}</td>
+                 <td class="text-center">${row.bac || ""}</td>
+                  <td class="text-center">${row.epi ? row.epi + " cells/HPF" : ""}</td>
+                 <td class="text-center ${isAbnormal(row.urine) ? 'text-danger-custom' : ''}">
+      ${row.urine || ""}
     </td>
-
-    <td class="text-center ${isAbnormal(row.cholr) ? 'text-danger-custom' : ''}">
-      ${row.cholr || ""}
-    </td>
-
-    <td class="text-center ${isAbnormal(row.hdlr) ? 'text-danger-custom' : ''}">
-      ${row.hdlr || ""}
-    </td>
-
-    <td class="text-center ${isAbnormal(row.ldlr) ? 'text-danger-custom' : ''}">
-      ${row.ldlr || ""}
-    </td>
-
-    <td class="text-center ${isAbnormal(row.trir) ? 'text-danger-custom' : ''}">
-      ${row.trir || ""}
-    </td>
-
-    <td class="text-center ${isAbnormal(row.sgptr) ? 'text-danger-custom' : ''}">
-      ${row.sgptr || ""}
-    </td>
-
-    <td class="doctor-col ${isAbnormal(row.sgotr) ? 'text-danger-custom' : ''}">
-      ${row.sgotr || ""}
-    </td>
-     <td class="text-center ${isAbnormal(row.alkr) ? 'text-danger-custom' : ''}">
-      ${row.alkr || ""}
-    </td>
-
-    <td class="text-center ${isAbnormal(row.bunr) ? 'text-danger-custom' : ''}">
-      ${row.bunr || ""}
-    </td>
-
-    <td class="text-center ${isAbnormal(row.crer) ? 'text-danger-custom' : ''}">
-      ${row.crer || ""}
-    </td>
-
-    <td class="text-center ${isAbnormal(row.uricv) ? 'text-danger-custom' : ''}">
-      ${row.uricv || ""}
-    </td>
-
-    <td class="doctor-col ${isAbnormal(row.hbr) ? 'text-danger-custom' : ''}">
-      ${row.hbr || ""}
-    </td>
+                  <td class="text-center">${row.amp || ""}</td>
+                  <td class="text-center">${row.preg || ""}</td>
                 </tr>
               `;
               }
