@@ -12,7 +12,7 @@
 
   <title>รายงานผลตรวจสุขภาพทางอินเตอร์เน็ต</title>
 
-   <style>
+  <style>
     body {
       font-family: 'Sarabun', sans-serif;
       margin: 0;
@@ -467,21 +467,21 @@
    <table class="table table-result mt-3" id="mainTable">
       <thead class="table-info">
         <tr >
-          <th scope="col" colspan="2" class="text-center">รหัสประจำตัว</th>
-          <th scope="col" colspan="3" class="text-center">ชื่อ นามสกุล</th>
-          <th scope="col" class="text-center">color</th>
-          <th scope="col" class="text-center">Tran</th>
-          <th scope="col" class="text-center">Sp.Grav</th>
-          <th scope="col" class="text-center">Ph</th>
-          <th scope="col" class="text-center">Protain</th>
-          <th scope="col" class="text-center">Glu</th>
-          <th scope="col" class="text-center">RBC</th>
-          <th scope="col" class="text-center">WBC</th>
-          <th scope="col" class="text-center">Bac</th>
-          <th scope="col" class="text-center">Epi</th>
-          <th scope="col" class="text-center">ผลตรวจ</th>
-          <th scope="col" class="text-center">Amp</th>
-          <th scope="col" class="text-center">Preg</th>
+          <th scope="col" class="text-center" style="min-width: 95px; max-width: 95px;">ID</th>
+          <th scope="col" class="text-start" style="min-width: 255px; max-width: 255px;">ชื่อ นามสกุล</th>
+          <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px;">color</th>
+          <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px;">Tran</th>
+          <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px;">Sp.Grav</th>
+          <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px;">Ph</th>
+          <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px;">Protain</th>
+          <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px;">Glu</th>
+          <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px;">RBC</th>
+          <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px;">WBC</th>
+          <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px;">Bac</th>
+          <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px;">Epi</th>
+          <th scope="col" class="text-center" style="min-width: 95px; max-width: 95px;">ผลตรวจ</th>
+          <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px;">Amp</th>
+          <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px;">Preg</th>
         </tr>
       </thead>
       <tbody id="cbcresult"></tbody>
@@ -796,8 +796,8 @@ function exportPDF() {
 
               resultDiv1.innerHTML += `
                 <tr>
-                  <th class="text-center" scope="row" colspan="2">${row.register || ""}</th>
-                  <td class="text-start" colspan="3">${row.name || ""}</td>
+                  <th class="text-center">${row.register || ""}</th>
+                  <td class="text-start">${row.name || ""}</td>
                   <td class="text-center">${row.color || ""}</td>
                   <td class="text-center">${row.appe || ""}</td>
                   <td class="text-center">${row.spec || ""}</td>
