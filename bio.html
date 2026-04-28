@@ -417,11 +417,20 @@
 </style>
 </head>
 <body>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const fullname = localStorage.getItem("fullname") || "";
+  const el = document.getElementById("fullname");
 
-<div class="wrapper">
+  if (el) {
+    el.textContent = fullname;
+  }
+});
+</script>
+  <div class="wrapper">
 
-  <!-- Sidebar -->
-<div class="sidebar">
+    <!-- Sidebar -->
+   <div class="sidebar">
     <div id="fullname" class="fs-2 ms-2 mt-2 mb-3"></div>
     <div class="logo-box">
       <img src="pic/Logo.png" alt="logo">
