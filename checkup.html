@@ -311,7 +311,7 @@
                               <div class="col-10">
                             <div class="ms-3">
                                 <p class="mb-2">จำนวนผู้เข้ารับการตรวจ</p>
-                                <h6 class="mb-0"></h6>
+                                <h6 id="countaccept" class="mb-0"></h6>
                               </div>
                              </div>
                           
@@ -371,11 +371,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+  <script>
+const BASE_URL = "https://script.google.com/macros/s/XXXXXXXXXXXX/exec";
+
+function loadCountAccept() {
+  const selectedValue =
+    localStorage.getItem("selectedCustomer") ||
+    localStorage.getItem("selectedDropdownValue") ||
+    "";
+
+  if (!selectedValue) {
+    document.getElementById("countaccept").innerText = "ไม่พบข้อมูล";
+    return;
+  }
+
+  fetch(`${BASE_URL}?action=countAccept&id=${encodeURIComponent(selectedValue)}`)
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("countaccept").innerText = data.count;
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById("countaccept").innerText = "Error";
+    });
+}
+
+
 function getSelectedValue() {
   return localStorage.getItem("selectedCustomer") || "";
 }
 
 function loadData() {
+ 
   const selectedValue = getSelectedValue();
 
   document.getElementById("selectedValue").innerText = selectedValue;
@@ -394,7 +421,8 @@ function loadData() {
 
   drawChart(data);
   showMaxAbnormal(data);
-  renderSummaryTable(data); // ✅ ใช้อันนี้แทน
+  renderSummaryTable(data);
+    loadCountAccept();// ✅ ใช้อันนี้แทน
 };
 
   const script = document.createElement("script");
