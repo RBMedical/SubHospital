@@ -623,7 +623,7 @@
   const selectedValue = (document.getElementById("selectedValue")?.textContent || "").trim();
   const printedAt = new Date().toLocaleString("th-TH");
 
-  const ROWS_PER_PAGE = 42;
+  const ROWS_PER_PAGE = 26;
   const totalPages = Math.ceil(rows.length / ROWS_PER_PAGE);
 
   for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
