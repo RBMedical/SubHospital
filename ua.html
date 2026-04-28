@@ -623,7 +623,7 @@
   const selectedValue = (document.getElementById("selectedValue")?.textContent || "").trim();
   const printedAt = new Date().toLocaleString("th-TH");
 
-  const ROWS_PER_PAGE = 25;
+  const ROWS_PER_PAGE = 42;
   const totalPages = Math.ceil(rows.length / ROWS_PER_PAGE);
 
   for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
@@ -631,12 +631,13 @@
     const page = document.createElement("div");
 
     // 🔥 margin 4 ด้าน (ปรับตรงนี้ได้เลย)
-    page.style.padding = "10mm 12mm 10mm 18mm"; 
-    // top right bottom left
+   if (pageIndex < totalPages - 1) {
+  page.style.pageBreakAfter = "always";
+} else {
+  page.style.pageBreakAfter = "auto";
+}
 
-    page.style.pageBreakAfter = "always";
-    page.style.width = "100%";
-    page.style.boxSizing = "border-box";
+page.style.padding = "4mm 8mm 4mm 8mm";
 
     // header
     const header = document.createElement("div");
