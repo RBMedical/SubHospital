@@ -617,42 +617,51 @@
 
 
       function buildPrintableReport() {
-        const table = getPrintableTable();
-        if (!table) return null;
+  const table = getPrintableTable();
+  if (!table) return null;
 
-        const tbody = table.querySelector("tbody");
-        if (!tbody) return null;
+  const tbody = table.querySelector("tbody");
+  if (!tbody) return null;
 
-        const rows = Array.from(tbody.querySelectorAll("tr"));
-        if (rows.length === 0) return null;
+  const rows = Array.from(tbody.querySelectorAll("tr"));
+  if (rows.length === 0) return null;
 
-        const root = document.createElement("div");
-        root.style.width = "100%";
-        root.style.fontFamily = "'Sarabun', sans-serif";
+  const root = document.createElement("div");
 
-        const title = getPrintableTitle();
-        const selectedValue = (document.getElementById("selectedValue")?.textContent || "").trim();
-        const printedAt = new Date().toLocaleString("th-TH");
+  // 🔥 คุม layout ให้ตรง PDF
+  root.style.width = "100%";
+  root.style.maxWidth = "1123px";   // A4 landscape
+  root.style.margin = "0 auto";
+  root.style.fontFamily = "'Sarabun', sans-serif";
+  root.style.background = "#fff";
 
-        // 🔥 กำหนดจำนวนแถวต่อหน้า (ปรับได้)
-        const ROWS_PER_PAGE = 25;
+  const title = getPrintableTitle();
+  const selectedValue = (document.getElementById("selectedValue")?.textContent || "").trim();
+  const printedAt = new Date().toLocaleString("th-TH");
 
-        const totalPages = Math.ceil(rows.length / ROWS_PER_PAGE);
+  const ROWS_PER_PAGE = 25;
+  const totalPages = Math.ceil(rows.length / ROWS_PER_PAGE);
 
-        for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
+  for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
 
-          const page = document.createElement("div");
-          page.style.pageBreakAfter = "always";
-          page.style.padding = "4mm 0";
+    const page = document.createElement("div");
 
-          // header
-          const header = document.createElement("div");
-          header.style.display = "flex";
-          header.style.justifyContent = "space-between";
-          header.style.borderBottom = "2px solid #3c6e71";
-          header.style.marginBottom = "5mm";
+    // 🔥 margin 4 ด้าน (ปรับตรงนี้ได้เลย)
+    page.style.padding = "10mm 12mm 10mm 18mm"; 
+    // top right bottom left
 
-          header.innerHTML = `
+    page.style.pageBreakAfter = "always";
+    page.style.width = "100%";
+    page.style.boxSizing = "border-box";
+
+    // header
+    const header = document.createElement("div");
+    header.style.display = "flex";
+    header.style.justifyContent = "space-between";
+    header.style.borderBottom = "2px solid #3c6e71";
+    header.style.marginBottom = "5mm";
+
+    header.innerHTML = `
       <div>
         <div style="font-size:14px;font-weight:700;">${title}</div>
         <div style="font-size:10px;">${selectedValue}</div>
@@ -663,32 +672,35 @@
       </div>
     `;
 
-          page.appendChild(header);
+    page.appendChild(header);
 
-          // table
-          const pageTable = table.cloneNode(false);
-          const headClone = table.querySelector("thead").cloneNode(true);
-          const bodyClone = document.createElement("tbody");
+    // table
+    const pageTable = table.cloneNode(false);
+    const headClone = table.querySelector("thead").cloneNode(true);
+    const bodyClone = document.createElement("tbody");
 
-          const start = pageIndex * ROWS_PER_PAGE;
-          const end = start + ROWS_PER_PAGE;
+    const start = pageIndex * ROWS_PER_PAGE;
+    const end = start + ROWS_PER_PAGE;
 
-          rows.slice(start, end).forEach(row => {
-            bodyClone.appendChild(row.cloneNode(true));
-          });
+    rows.slice(start, end).forEach(row => {
+      bodyClone.appendChild(row.cloneNode(true));
+    });
 
-          pageTable.appendChild(headClone);
-          pageTable.appendChild(bodyClone);
+    pageTable.appendChild(headClone);
+    pageTable.appendChild(bodyClone);
 
-          stylePrintableTable(pageTable);
+    // 🔥 สำคัญ: fix layout ไม่ให้เอียง
+    pageTable.style.width = "100%";
+    pageTable.style.tableLayout = "fixed";
 
-          page.appendChild(pageTable);
+    stylePrintableTable(pageTable);
 
-          root.appendChild(page);
-        }
+    page.appendChild(pageTable);
+    root.appendChild(page);
+  }
 
-        return root;
-      }
+  return root;
+}
       function printReport() {
         const reportRoot = buildPrintableReport();
         if (!reportRoot) {
