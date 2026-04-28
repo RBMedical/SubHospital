@@ -506,6 +506,24 @@
     </div>
     <div id="pdfReport" class="pdf-only"></div>
     <script>
+      function exportXCEL() {
+  const table = document.getElementById("mainTable");
+
+  if (!table) {
+    alert("ไม่พบตารางสำหรับส่งออก Excel");
+    return;
+  }
+
+  const workbook = XLSX.utils.book_new();
+
+  const worksheet = XLSX.utils.table_to_sheet(table, {
+    raw: true
+  });
+
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Report");
+
+  XLSX.writeFile(workbook, "รายงานผลตรวจสุขภาพ.xlsx");
+}
       const BASE_URL = "https://script.google.com/macros/s/AKfycbxIFqg_sVoBadGiZijEkpghbLBNUiYMO9Zz_5eXxZ_JPSp457PnhJwPCRqTg_Qe8REQPA/exec";
 
 
