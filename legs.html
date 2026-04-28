@@ -857,24 +857,20 @@
 
                 resultDiv1.innerHTML += `
                 <tr>
-                < <td class="text-center">${row.register || ""}</td>
+                 <td class="text-center">${row.register || ""}</th>
                   <td class="text-start">${row.name || ""}</td>
-                  <td class="text-center">${row.color || ""}</td>
-                  <td class="text-center">${row.appe || ""}</td>
-                  <td class="text-center">${row.spec || ""}</td>
-                  <td class="text-center">${row.ph || ""}</td>
-                   <td class="text-center">${row.protain || ""}</td>
-                  <td class="text-center">${row.glu || ""}</td>
-                 
-                 <td class="text-center">${row.urbc ? row.urbc + " cells/HPF" : ""}</td>
-                  <td class="text-center">${row.uwbc ? row.uwbc + " cells/HPF" : ""}</td>
-                 <td class="text-center">${row.bac || ""}</td>
-                  <td class="text-center">${row.epi ? row.epi + " cells/HPF" : ""}</td>
-                 <td class="text-center ${isAbnormal(row.urine) ? 'text-danger-custom' : ''}">
-      ${row.urine || ""}
-    </td>
-                  <td class="text-center">${row.amp || ""}</td>
-                  <td class="text-center">${row.preg || ""}</td>
+                  <td style="font-size: 0.6rem;" class="text-center">${row.fbsv ? row.fbsv + "mg/dL" : ""}</td>
+                  <td style="font-size: 0.6rem;" class="text-center">${row.cholv ? row.cholv + "mg/dL" : ""}</td>
+                 <td style="font-size: 0.6rem;" class="text-center">${row.hdlv? row.hdlv + "mg/dL" : ""}</td>
+                  <td style="font-size: 0.6rem;"class="text-center">${row.ldlv? row.ldlv + "mg/dL" : ""}</td>
+                 <td style="font-size: 0.6rem;" class="text-center">${row.triv? row.triv + "mg/dL" : ""}</td>
+                  <td style="font-size: 0.6rem;" class="text-center">${row.sgptv? row.sgptv + "U/L" : ""}</td>
+                  <td style="font-size: 0.6rem;" class="text-center">${row.sgotv? row.sgotv + "U/L" : ""}</td>
+                   <td style="font-size: 0.6rem;" class="text-center">${row.alkv? row.alkv + "U/L" : ""}</td>
+                  <td style="font-size: 0.6rem;" class="text-center">${row.bunv? row.bunv + "mg/dL" : ""}</td>
+                  <td style="font-size: 0.6rem;" class="text-center">${row.creav? row.creav + "mg/dL" : ""}</td>
+                   <td style="font-size: 0.6rem;" class="text-center">${row.uricr? row.uricr + "mg/dL" : ""}</td>
+                  <td style="font-size: 0.6rem;" class="text-center">${row.hbv || ""}</td>
                 </tr>
               `;
               }
