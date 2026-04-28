@@ -467,18 +467,18 @@
     <table class="table table-result mt-3" >
       <thead class="table-info">
         <tr >
-          <th scope="col" colspan="2" class="text-center">รหัสประจำตัว</th>
-          <th scope="col" colspan="3" class="text-center">ชื่อ นามสกุล</th>
-          <th scope="col" class="text-center">อายุ</th>
-          <th scope="col" class="text-center">เพศ</th>
-          <th scope="col" class="text-center">น้ำหนัก</th>
-          <th scope="col" class="text-center">ส่วนสูง</th>
-          <th scope="col" class="text-center">Spirometry</th>
-          <th scope="col" class="text-center">สายตา(อาชีวอนามัย)</th>
-          <th scope="col" class="text-center">Audiogram</th>
-          <th scope="col" class="text-center">กล้ามเนื้อมือและแขน</th>
-          <th scope="col" class="text-center">แรงเหยียดขา</th>
-          <th scope="col" class="text-center">แรงเหยียดหลัง</th>
+          <th scope="col"  class="text-center" style="min-width: 95px; max-width: 95px;">รหัสประจำตัว</th>
+          <th scope="col" class="text-center" style="min-width: 265px; max-width: 265px;">ชื่อ นามสกุล</th>
+          <th scope="col" class="text-center" style="min-width: 60px; max-width: 60px;">อายุ</th>
+          <th scope="col" class="text-center" style="min-width: 60px; max-width: 60px;">เพศ</th>
+          <th scope="col" class="text-center"  style="min-width: 60px; max-width: 60px;">หนัก</th>
+          <th scope="col" class="text-center"  style="min-width: 60px; max-width: 60px;">ส่วนสูง</th>
+          <th scope="col" class="text-center"  style="min-width: 60px; max-width: 60px;">Spirometry</th>
+          <th scope="col" class="text-center"  style="min-width: 60px; max-width: 60px;">สายตา(อาชีวอนามัย)</th>
+          <th scope="col" class="text-center"  style="min-width: 60px; max-width: 60px;">Audiogram</th>
+          <th scope="col" class="text-center"  style="min-width: 60px; max-width: 60px;">กล้ามเนื้อมือและแขน</th>
+          <th scope="col" class="text-center"  style="min-width: 60px; max-width: 60px;">แรงเหยียดขา</th>
+          <th scope="col" class="text-center"  style="min-width: 60px; max-width: 60px;">แรงเหยียดหลัง</th>
         </tr>
       </thead>
       <tbody id="cbcresult"></tbody>
@@ -785,8 +785,8 @@ function showLoading(message = "Waiting for loading......") {
 
               resultDiv1.innerHTML += `
                 <tr>
-                   <th class="text-center" scope="row" colspan="2">${row.register || ""}</th>
-                  <td  class="text-start" colspan="3">${row.name || ""}</td>
+                   <td class="text-center" >${row.register || ""}</td>
+                  <td  class="text-start" >${row.name || ""}</td>
                   <td class="text-center">${row.age || ""}</td>
                   <td class="text-center">${row.sex || ""}</td>
                   <td class="text-center">${row.waigh || ""}</td>
