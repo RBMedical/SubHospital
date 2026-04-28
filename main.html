@@ -229,7 +229,7 @@
         // selectedValue = UserDetail[1] และต้องตรงกับ Main[67]
         localStorage.setItem("selectedCustomer", selectedValue);
         localStorage.setItem("selectedDropdownValue", selectedValue);
-
+        localStorage.setItem("fullname", String(user.fullname || "").trim());
         hideLoading();
         window.location.href = "checkup.html";
       })
