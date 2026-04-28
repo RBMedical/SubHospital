@@ -483,7 +483,7 @@
     <table class="table table-result mt-3" id="mainTable">
       <thead class="table-info">
         <tr >
-           <th class="text-center" style="min-width: 47px; max-width: 47px;">รหัสประจำตัว</th>
+           <th class="text-center" style="min-width: 47px; max-width: 47px;">ID</th>
               <th class="text-center" style="min-width: 265px; max-width: 265px;">ชื่อ นามสกุล</th>
 
               <th class="text-center" style="min-width: 47px; max-width: 47px;">FBS</th>
@@ -812,8 +812,8 @@ function exportPDF() {
 
               resultDiv1.innerHTML += `
                 <tr>
-                <th class="text-center" scope="row" colspan="2">${row.register || ""}</th>
-                  <td class="text-start" colspan="3">${row.name || ""}</td>
+                <th class="text-center">${row.register || ""}</th>
+                  <td class="text-start">${row.name || ""}</td>
                  
                     <td class="text-center ${isAbnormal(row.fbsr) ? 'text-danger-custom' : ''}">
       ${row.fbsr || ""}
