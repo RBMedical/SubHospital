@@ -860,11 +860,11 @@ page.style.padding = "4mm 8mm 4mm 8mm";
                   <td class="text-center">${row.ph || ""}</td>
                    <td class="text-center">${row.protain || ""}</td>
                   <td class="text-center">${row.glu || ""}</td>
-                 
-                 <td class="text-center">${row.urbc ? row.urbc + " cells/HPF" : ""}</td>
-                  <td class="text-center">${row.uwbc ? row.uwbc + " cells/HPF" : ""}</td>
-                 <td class="text-center">${row.bac || ""}</td>
-                  <td class="text-center">${row.epi ? row.epi + " cells/HPF" : ""}</td>
+                   <td class="text-center">${row.urbc || ""}</td>
+                    <td class="text-center">${row.uwbc || ""}</td>
+                    <td class="text-center">${row.bac || ""}</td>
+                     <td class="text-center">${row.epi || ""}</td>
+        
                  <td class="text-center ${isAbnormal(row.urine) ? 'text-danger-custom' : ''}">
       ${row.urine || ""}
     </td>
