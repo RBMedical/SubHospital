@@ -381,13 +381,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-const ABNORMAL_URL = "https://script.google.com/macros/s/AKfycbymEWp73vARNy80POBX7bH_quFwrAS6Y61FhiXyhYoFz0jLs56y3ae7OFs2r3iz-UVZ2w/exec";
+const NORMAL_URL = "https://script.google.com/macros/s/AKfycbymEWp73vARNy80POBX7bH_quFwrAS6Y61FhiXyhYoFz0jLs56y3ae7OFs2r3iz-UVZ2w/exec";
 
 function loadAbnormalCount() {
   const selectedValue = localStorage.getItem("selectedCustomer") || "";
 
   fetch(
-    ABNORMAL_URL +
+    NORMAL_URL +
     "?selectedValue=" +
     encodeURIComponent(selectedValue)
   )
