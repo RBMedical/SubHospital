@@ -900,7 +900,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <td class="text-center" style="font-size: 0.6rem;">${row.bas || ""}</td>
                 <td class="text-center" style="font-size: 0.6rem;">${row.plat || ""}</td>
                 <td class="text-center" style="font-size: 0.6rem;">${row.mcv || ""}</td>
-                <td class="text-center ${isAbnormal(row.cbc) ? 'text-danger-custom' : ''}">
+                <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.cbc) ? 'text-danger-custom' : ''}">
                   ${row.cbc || ""}
                 </td>
               </tr>
