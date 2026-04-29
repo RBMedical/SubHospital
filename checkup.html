@@ -407,11 +407,11 @@ function loadData() {
     showMaxAbnormal(data);
     renderSummaryTable(data);
 
-    const countAcceptEl = document.getElementById("countaccept");
-    if (countAcceptEl) {
-      countAcceptEl.textContent = data.matchedRows || 0;
-    }
-  };
+const countAcceptEl = document.getElementById("countaccept");
+if (countAcceptEl) {
+  countAcceptEl.textContent =
+    Number(data.bmin || 0) + Number(data.bmia || 0);
+}
 
   const script = document.createElement("script");
   script.src = GAS_URL
