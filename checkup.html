@@ -418,7 +418,7 @@ if (countAcceptEl) {
     + "?id=" + encodeURIComponent(selectedValue)
     + "&callback=handleData"
     + "&t=" + Date.now();
-
+  }
   script.onerror = function () {
     if (loadingEl) loadingEl.innerText = "โหลดข้อมูลกราฟไม่สำเร็จ";
   };
