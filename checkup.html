@@ -345,7 +345,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <i class="fa fa-chart-pie fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2"></p>
-                                <h6 class="mb-0"></h6>
+                                <div id="follow" class="mb-0"></div>
                             </div>
                         </div>
                     </div>
@@ -381,31 +381,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+const ABNORMAL_URL = "https://script.google.com/macros/s/AKfycbymEWp73vARNy80POBX7bH_quFwrAS6Y61FhiXyhYoFz0jLs56y3ae7OFs2r3iz-UVZ2w/exec";
 
-const BASE_URL = "https://script.google.com/macros/s/AKfycbxlcgN7ho7hX23smgNKD5gHc-4x36Vu_Ozt4156op5idn7C3iyxqvtuMH_6m9olqNQIjQ/exec";
+function loadAbnormalCount() {
+  const selectedValue = localStorage.getItem("selectedCustomer") || "";
 
-function loadCountAccept() {
-  const selectedValue =
-    localStorage.getItem("selectedCustomer") ||
-    localStorage.getItem("selectedDropdownValue") ||
-    "";
-
-  if (!selectedValue) {
-    document.getElementById("countaccept").innerText = "ไม่พบข้อมูล";
-    return;
-  }
-
-  fetch(`${BASE_URL}?action=countAccept&id=${encodeURIComponent(selectedValue)}`)
+  fetch(
+    ABNORMAL_URL +
+    "?selectedValue=" +
+    encodeURIComponent(selectedValue)
+  )
     .then(res => res.json())
     .then(data => {
-      document.getElementById("countaccept").innerText = data.count;
+      document.getElementById("follow").textContent =
+        data.countFollow || 0;
     })
     .catch(err => {
-      console.error(err);
-      document.getElementById("countaccept").innerText = "Error";
+      console.error("abnormal error:", err);
+      document.getElementById("follow").textContent = "0";
     });
 }
 
+document.addEventListener("DOMContentLoaded", loadAbnormalCount);
+
+ 
 
 function getSelectedValue() {
   return localStorage.getItem("selectedCustomer") || "";
@@ -611,6 +610,28 @@ function drawChart(data) {
     }
   });
 }
+
+  const ABNORMAL_URL = "https://script.google.com/macros/s/AKfycbymEWp73vARNy80POBX7bH_quFwrAS6Y61FhiXyhYoFz0jLs56y3ae7OFs2r3iz-UVZ2w/exec";
+
+function loadAbnormalCount() {
+  const selectedValue = localStorage.getItem("selectedCustomer") || "";
+
+  fetch(
+    ABNORMAL_URL +
+    "?selectedValue=" +
+    encodeURIComponent(selectedValue)
+  )
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("countFollow").textContent =
+        data.countFollow || 0;
+    })
+    .catch(err => {
+      console.error("abnormal error:", err);
+      document.getElementById("countFollow").textContent = "0";
+    });
+}
+
 
 function showMaxAbnormal(data) {
   const map = {
