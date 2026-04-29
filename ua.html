@@ -890,22 +890,22 @@ page.style.padding = "4mm 8mm 4mm 8mm";
                 <tr>
                   <td class="text-center">${row.register || ""}</td>
                   <td class="text-start">${row.name || ""}</td>
-                  <td class="text-center">${row.color || ""}</td>
-                  <td class="text-center">${row.appe || ""}</td>
-                  <td class="text-center">${row.spec || ""}</td>
-                  <td class="text-center">${row.ph || ""}</td>
-                   <td class="text-center">${row.protain || ""}</td>
-                  <td class="text-center">${row.glu || ""}</td>
-                   <td class="text-center">${row.urbc || ""}</td>
-                    <td class="text-center">${row.uwbc || ""}</td>
-                    <td class="text-center">${row.bac || ""}</td>
-                     <td class="text-center">${row.epi || ""}</td>
+                  <td class="text-center" style="font-size: 0.6rem;">${row.color || ""}</td>
+                  <td class="text-center"  style="font-size: 0.6rem;">${row.appe || ""}</td>
+                  <td class="text-center"  style="font-size: 0.6rem;">${row.spec || ""}</td>
+                  <td class="text-center"  style="font-size: 0.6rem;">${row.ph || ""}</td>
+                   <td class="text-center"  style="font-size: 0.6rem;">${row.protain || ""}</td>
+                  <td class="text-center"  style="font-size: 0.6rem;">${row.glu || ""}</td>
+                   <td class="text-center"  style="font-size: 0.6rem;">${row.urbc || ""}</td>
+                    <td class="text-center"  style="font-size: 0.6rem;">${row.uwbc || ""}</td>
+                    <td class="text-center"  style="font-size: 0.6rem;">${row.bac || ""}</td>
+                     <td class="text-center"  style="font-size: 0.6rem;">${row.epi || ""}</td>
         
-                 <td class="text-center ${isAbnormal(row.urine) ? 'text-danger-custom' : ''}">
+                 <td  style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.urine) ? 'text-danger-custom' : ''}">
       ${row.urine || ""}
     </td>
-                  <td class="text-center">${row.amp || ""}</td>
-                  <td class="text-center">${row.preg || ""}</td>
+                  <td class="text-center"  style="font-size: 0.6rem;">${row.amp || ""}</td>
+                  <td class="text-center"  style="font-size: 0.6rem;">${row.preg || ""}</td>
                 </tr>
               `;
               }
