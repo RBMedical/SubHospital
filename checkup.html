@@ -369,70 +369,56 @@ document.addEventListener("DOMContentLoaded", function () {
  </div>
  </div>
 </div>
+
 <script>
 const GAS_URL = "https://script.google.com/macros/s/AKfycbw5NJkIYjArCw0yFu91j6Qd6n1v_UesWH4AO_SkkK9NdgoqiGgy_J_qO6HzKQw1D2kJtg/exec";
 
-const SUMMARY_URL = "https://script.google.com/macros/s/AKfycbwiQz2lt8DRhth8P3Z58PLnVagv4P7j_q9zKKZ6ksQm72y58h3rq5Tb_UCH6oOwKyr2Iw/exec";
+const ABNORMAL_URL = "https://script.google.com/macros/s/AKfycbymEWp73vARNy80POBX7bH_quFwrAS6Y61FhiXyhYoFz0jLs56y3ae7OFs2r3iz-UVZ2w/exec";
 
 let myChart = null;
 
 document.addEventListener("DOMContentLoaded", function () {
+  const fullname = localStorage.getItem("fullname") || "";
+  const fullnameEl = document.getElementById("fullname");
+  if (fullnameEl) fullnameEl.textContent = fullname;
+
   loadData();
-
+  loadAbnormalCount();
 });
-
-const NORMAL_URL = "https://script.google.com/macros/s/AKfycbymEWp73vARNy80POBX7bH_quFwrAS6Y61FhiXyhYoFz0jLs56y3ae7OFs2r3iz-UVZ2w/exec";
-
-function loadAbnormalCount() {
-  const selectedValue = localStorage.getItem("selectedCustomer") || "";
-
-  fetch(
-    NORMAL_URL +
-    "?selectedValue=" +
-    encodeURIComponent(selectedValue)
-  )
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById("follow").textContent =
-        data.countFollow || 0;
-    })
-    .catch(err => {
-      console.error("abnormal error:", err);
-      document.getElementById("follow").textContent = "0";
-    });
-}
-
-document.addEventListener("DOMContentLoaded", loadAbnormalCount);
-
- 
 
 function getSelectedValue() {
   return localStorage.getItem("selectedCustomer") || "";
 }
 
 function loadData() {
- 
   const selectedValue = getSelectedValue();
 
-  document.getElementById("selectedValue").innerText = selectedValue;
+  const selectedEl = document.getElementById("selectedValue");
+  const loadingEl = document.getElementById("loading");
+
+  if (selectedEl) selectedEl.innerText = selectedValue;
 
   if (!selectedValue) {
-    document.getElementById("loading").innerText = "ไม่พบค่า selectedCustomer ใน localStorage";
+    if (loadingEl) loadingEl.innerText = "ไม่พบค่า selectedCustomer ใน localStorage";
     return;
   }
 
-  document.getElementById("loading").innerText = "กำลังโหลดข้อมูล...";
+  if (loadingEl) loadingEl.innerText = "กำลังโหลดข้อมูล...";
 
- window.handleData = function (data) {
-  document.getElementById("loading").innerText = "";
+  window.handleData = function (data) {
+    if (loadingEl) loadingEl.innerText = "";
 
-  console.log("ข้อมูล =", data);
+    console.log("ข้อมูล =", data);
 
-  drawChart(data);
-  showMaxAbnormal(data);
-  renderSummaryTable(data);
-    loadCountAccept();// ✅ ใช้อันนี้แทน
-};
+    drawChart(data);
+    showMaxAbnormal(data);
+    renderSummaryTable(data);
+
+    const countAcceptEl = document.getElementById("countaccept");
+    if (countAcceptEl) {
+      countAcceptEl.textContent = data.matchedRows || 0;
+    }
+  };
 
   const script = document.createElement("script");
   script.src = GAS_URL
@@ -441,94 +427,115 @@ function loadData() {
     + "&t=" + Date.now();
 
   script.onerror = function () {
-    document.getElementById("loading").innerText = "โหลดข้อมูลกราฟไม่สำเร็จ";
+    if (loadingEl) loadingEl.innerText = "โหลดข้อมูลกราฟไม่สำเร็จ";
   };
 
   document.body.appendChild(script);
 }
 
+function loadAbnormalCount() {
+  const selectedValue = getSelectedValue();
+
+  fetch(
+    ABNORMAL_URL +
+    "?selectedValue=" +
+    encodeURIComponent(selectedValue) +
+    "&t=" + Date.now()
+  )
+    .then(res => res.json())
+    .then(data => {
+      const followEl = document.getElementById("follow");
+      if (followEl) {
+        followEl.textContent = data.countFollow || 0;
+      }
+    })
+    .catch(err => {
+      console.error("abnormal error:", err);
+
+      const followEl = document.getElementById("follow");
+      if (followEl) {
+        followEl.textContent = "0";
+      }
+    });
+}
+
 function renderSummaryTable(data) {
   const resultDiv = document.getElementById("allew");
+  if (!resultDiv) return;
 
   resultDiv.innerHTML = `
     <tr>
-      <td class="text-start ms-5">ดัชนีมวลกาย / BMI</td>
+      <td class="text-start">ดัชนีมวลกาย / BMI</td>
       <td class="text-center">${data.bmin || 0}</td>
       <td class="text-center">${data.bmia || 0}</td>
     </tr>
-
     <tr>
-      <td class="text-start ms-5">ความสมบูรณ์ของเม็ดเลือด / Complete Blood Count</td>
+      <td class="text-start">ความสมบูรณ์ของเม็ดเลือด / Complete Blood Count</td>
       <td class="text-center">${data.cbcn || 0}</td>
       <td class="text-center">${data.cbca || 0}</td>
     </tr>
-
     <tr>
-      <td class="text-start ms-5">ปัสสาวะแบบสมบูรณ์ / Urinalysis</td>
+      <td class="text-start">ปัสสาวะแบบสมบูรณ์ / Urinalysis</td>
       <td class="text-center">${data.urinen || 0}</td>
-      <td class="text-center">${data.urinea|| 0}</td>
+      <td class="text-center">${data.urinea || 0}</td>
     </tr>
-
     <tr>
-      <td class="text-start ms-5">เอ็กซเรย์ปอด / Chest X-Ray</td>
+      <td class="text-start">เอ็กซเรย์ปอด / Chest X-Ray</td>
       <td class="text-center">${data.xrayn || 0}</td>
       <td class="text-center">${data.xraya || 0}</td>
     </tr>
-
     <tr>
-      <td class="text-start ms-5">ปริมาณน้ำตาลในเลือด /ฺ Glucose</td>
+      <td class="text-start">ปริมาณน้ำตาลในเลือด / Glucose</td>
       <td class="text-center">${data.fbsn || 0}</td>
       <td class="text-center">${data.fbsa || 0}</td>
     </tr>
-
     <tr>
       <td class="text-start">ปริมาณไขมันในเลือด / Cholesterol</td>
       <td class="text-center">${data.choln || 0}</td>
       <td class="text-center">${data.chola || 0}</td>
     </tr>
-
-   <tr>
-      <td class="text-start ms-5">ปริมาณไขมันดีในเลือด / HDL </td>
+    <tr>
+      <td class="text-start">ปริมาณไขมันดีในเลือด / HDL</td>
       <td class="text-center">${data.hdln || 0}</td>
       <td class="text-center">${data.hdla || 0}</td>
-    </tr> 
+    </tr>
     <tr>
-      <td class="text-start ms-5">ปริมาณไขมันไม่ดีในเลือด / LDL</td>
+      <td class="text-start">ปริมาณไขมันไม่ดีในเลือด / LDL</td>
       <td class="text-center">${data.ldln || 0}</td>
       <td class="text-center">${data.ldla || 0}</td>
     </tr>
     <tr>
-      <td class="text-start ms-5">ปริมาณไตรกลีเซอไรด์ / Triglycerides</td>
+      <td class="text-start">ปริมาณไตรกลีเซอไรด์ / Triglycerides</td>
       <td class="text-center">${data.trin || 0}</td>
       <td class="text-center">${data.tria || 0}</td>
     </tr>
-     <tr>
-      <td class="text-start ms-5">การทำงานของตับ / SGPT</td>
+    <tr>
+      <td class="text-start">การทำงานของตับ / SGPT</td>
       <td class="text-center">${data.sgptn || 0}</td>
       <td class="text-center">${data.sgpta || 0}</td>
     </tr>
-        <tr>
-      <td class="text-start ms-5">การทำงานของตับ / SGOT</td>
+    <tr>
+      <td class="text-start">การทำงานของตับ / SGOT</td>
       <td class="text-center">${data.sgotn || 0}</td>
       <td class="text-center">${data.sgota || 0}</td>
     </tr>
-       <tr>
+    <tr>
       <td class="text-start">การทำงานของตับ / Alkaline Phosphatase</td>
       <td class="text-center">${data.alkn || 0}</td>
       <td class="text-center">${data.alka || 0}</td>
     </tr>
-       <tr>
-      <td class="text-start ms-5">การทำงานของไต / BUN</td>
+    <tr>
+      <td class="text-start">การทำงานของไต / BUN</td>
       <td class="text-center">${data.bunn || 0}</td>
-      <td class="text-center">${data.nemba || 0}</td>
+      <td class="text-center">${data.buna || 0}</td>
     </tr>
-       <tr>
-      <td class="text-start ms-5">การทำงานของไต / Creatinin</td>
+    <tr>
+      <td class="text-start">การทำงานของไต / Creatinine</td>
       <td class="text-center">${data.crean || 0}</td>
       <td class="text-center">${data.creaa || 0}</td>
     </tr>
     <tr>
-      <td class="text-start ms-5">ปริมาณกรดยูริคในเลือด / Uric Acid</td>
+      <td class="text-start">ปริมาณกรดยูริคในเลือด / Uric Acid</td>
       <td class="text-center">${data.uricn || 0}</td>
       <td class="text-center">${data.urica || 0}</td>
     </tr>
@@ -562,7 +569,10 @@ function drawChart(data) {
     myChart.destroy();
   }
 
-  const ctx = document.getElementById("myChart").getContext("2d");
+  const canvas = document.getElementById("myChart");
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
 
   myChart = new Chart(ctx, {
     type: "line",
@@ -611,28 +621,6 @@ function drawChart(data) {
   });
 }
 
-  const ABNORMAL_URL = "https://script.google.com/macros/s/AKfycbymEWp73vARNy80POBX7bH_quFwrAS6Y61FhiXyhYoFz0jLs56y3ae7OFs2r3iz-UVZ2w/exec";
-
-function loadAbnormalCount() {
-  const selectedValue = localStorage.getItem("selectedCustomer") || "";
-
-  fetch(
-    ABNORMAL_URL +
-    "?selectedValue=" +
-    encodeURIComponent(selectedValue)
-  )
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById("countFollow").textContent =
-        data.countFollow || 0;
-    })
-    .catch(err => {
-      console.error("abnormal error:", err);
-      document.getElementById("countFollow").textContent = "0";
-    });
-}
-
-
 function showMaxAbnormal(data) {
   const map = {
     bmia: "ดัชนีมวลกาย",
@@ -665,13 +653,14 @@ function showMaxAbnormal(data) {
   }
 
   const resultText = maxValue > 0 ? map[maxKey] : "ไม่พบค่าผิดปกติ";
+  const maxBox = document.getElementById("maxabnormal");
+  if (!maxBox) return;
 
-  document.getElementById("maxabnormal").innerHTML = `
+  maxBox.innerHTML = `
     <div class="rounded d-flex align-items-center justify-content-between p-4" style="background-color: lightseagreen;">
       <div class="col-2">
         <img id="sick" src="pic/sick.png">
       </div>
-
       <div class="col-10">
         <div class="ms-3 text-light">
           <p class="mb-2">ผิดปกติสูงสุด</p>
@@ -687,6 +676,7 @@ function exportPDF() {
   window.print();
 }
 </script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
