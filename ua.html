@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 
 <head>
@@ -754,7 +754,7 @@ document.addEventListener("DOMContentLoaded", function () {
         </tr>
         </thead>
         <tbody id="cbcresult"></tbody>
-      </table>1
+      </table>
     </div>
     <div id="pdfReport" class="pdf-only"></div>
     <script>
@@ -820,59 +820,74 @@ document.addEventListener("DOMContentLoaded", function () {
       function stylePrintableTable(table) {
         const totalCols = table.querySelectorAll("thead th").length;
 
-        // reset style ก่อน
+        table.style.width = "100%";
+        table.style.maxWidth = "100%";
+        table.style.tableLayout = "fixed";
+        table.style.borderCollapse = "collapse";
+
         Array.from(table.querySelectorAll("th, td")).forEach(cell => {
           cell.removeAttribute("style");
           cell.style.border = "1px solid #9fb3bf";
-          cell.style.padding = "4px 5px";
+          cell.style.padding = "2px 3px";
           cell.style.verticalAlign = "middle";
           cell.style.textAlign = "center";
-          cell.style.lineHeight = "1.25";
+          cell.style.lineHeight = "1.05";
+          cell.style.boxSizing = "border-box";
+          cell.style.fontSize = "6.4pt";
+          cell.style.wordBreak = "break-word";
+          cell.style.overflowWrap = "break-word";
+          cell.style.whiteSpace = "normal";
+          cell.style.pageBreakInside = "auto";
+          cell.style.breakInside = "auto";
         });
 
-        // header style
         Array.from(table.querySelectorAll("thead th")).forEach(cell => {
           cell.style.background = "#dbeaf1";
           cell.style.fontWeight = "700";
-          cell.style.fontSize = "9pt";
+          cell.style.fontSize = "6.6pt";
+          cell.style.lineHeight = "1.05";
         });
 
-        // 🔥 กำหนด % ใหม่ (ต้องอยู่หลัง reset)
+        /*
+          ปรับความกว้างแบบยืดหยุ่นสำหรับตาราง UA 15 คอลัมน์:
+          คอลัมน์ 1 = 8%
+          คอลัมน์ 2 = 18%
+          คอลัมน์ที่เหลือแบ่งเท่า ๆ กัน เพื่อให้เต็ม 100%
+        */
         const col1Width = 8;
-        const col2Width = 20;
-        const col14Width = 30;
+        const col2Width = 18;
         const remain = 100 - col1Width - col2Width;
-        const otherWidth = remain / (totalCols - 2);
+        const otherWidth = remain / Math.max(totalCols - 2, 1);
 
         const headers = table.querySelectorAll("thead th");
-
         headers.forEach((th, i) => {
           if (i === 0) th.style.width = col1Width + "%";
           else if (i === 1) th.style.width = col2Width + "%";
           else th.style.width = otherWidth + "%";
         });
 
-        // 🔥 apply width ให้ td ด้วย (ตัวนี้คุณยังไม่ได้ทำ)
         const rows = table.querySelectorAll("tbody tr");
-
         rows.forEach(row => {
-          const cells = row.children;
+          row.style.pageBreakInside = "auto";
+          row.style.breakInside = "auto";
 
+          const cells = row.children;
           for (let i = 0; i < cells.length; i++) {
             if (i === 0) cells[i].style.width = col1Width + "%";
             else if (i === 1) cells[i].style.width = col2Width + "%";
             else cells[i].style.width = otherWidth + "%";
-          }
-        });
 
-        // 🔥 บังคับคอลัมน์ชื่อ
-        rows.forEach(row => {
-          const cell = row.children[1];
-          if (cell) {
-            cell.style.whiteSpace = "nowrap";
-            cell.style.overflow = "hidden";
-            cell.style.textOverflow = "ellipsis";
-            cell.style.textAlign = "left";
+            cells[i].style.pageBreakInside = "auto";
+            cells[i].style.breakInside = "auto";
+          }
+
+          const nameCell = row.children[1];
+          if (nameCell) {
+            nameCell.style.whiteSpace = "nowrap";
+            nameCell.style.overflow = "hidden";
+            nameCell.style.textOverflow = "ellipsis";
+            nameCell.style.textAlign = "left";
+            nameCell.style.fontSize = "6.2pt";
           }
         });
       }
@@ -891,9 +906,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const root = document.createElement("div");
 
-  // 🔥 คุม layout ให้ตรง PDF
   root.style.width = "100%";
-  root.style.maxWidth = "1123px";   // A4 landscape
+  root.style.maxWidth = "1123px";
   root.style.margin = "0 auto";
   root.style.fontFamily = "'Sarabun', sans-serif";
   root.style.background = "#fff";
@@ -902,65 +916,40 @@ document.addEventListener("DOMContentLoaded", function () {
   const selectedValue = (document.getElementById("selectedValue")?.textContent || "").trim();
   const printedAt = new Date().toLocaleString("th-TH");
 
-  const ROWS_PER_PAGE = 25;
-  const totalPages = Math.ceil(rows.length / ROWS_PER_PAGE);
+  const report = document.createElement("div");
+  report.style.padding = "4mm 6mm 4mm 6mm";
+  report.style.width = "100%";
+  report.style.boxSizing = "border-box";
 
-  for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
+  const header = document.createElement("div");
+  header.style.display = "flex";
+  header.style.justifyContent = "space-between";
+  header.style.borderBottom = "1px solid #3c6e71";
+  header.style.marginBottom = "2mm";
+  header.style.breakAfter = "avoid";
+  header.style.pageBreakAfter = "avoid";
 
-    const page = document.createElement("div");
+  header.innerHTML = `
+    <div>
+      <div style="font-size:11px;font-weight:700;">${title}</div>
+      <div style="font-size:8px;">${selectedValue}</div>
+    </div>
+    <div style="font-size:7px;text-align:right;">
+      ${printedAt}
+    </div>
+  `;
 
-    // 🔥 margin 4 ด้าน (ปรับตรงนี้ได้เลย)
-    page.style.padding = "10mm 12mm 10mm 18mm"; 
-    // top right bottom left
+  report.appendChild(header);
 
-    page.style.pageBreakAfter = "always";
-    page.style.width = "100%";
-    page.style.boxSizing = "border-box";
+  const pageTable = table.cloneNode(true);
+  pageTable.style.width = "100%";
+  pageTable.style.tableLayout = "fixed";
+  pageTable.style.borderCollapse = "collapse";
 
-    // header
-    const header = document.createElement("div");
-    header.style.display = "flex";
-    header.style.justifyContent = "space-between";
-    header.style.borderBottom = "2px solid #3c6e71";
-    header.style.marginBottom = "5mm";
+  stylePrintableTable(pageTable);
 
-    header.innerHTML = `
-      <div>
-        <div style="font-size:14px;font-weight:700;">${title}</div>
-        <div style="font-size:10px;">${selectedValue}</div>
-      </div>
-      <div style="font-size:9px;text-align:right;">
-        Page ${pageIndex + 1} / ${totalPages}<br>
-        ${printedAt}
-      </div>
-    `;
-
-    page.appendChild(header);
-
-    // table
-    const pageTable = table.cloneNode(false);
-    const headClone = table.querySelector("thead").cloneNode(true);
-    const bodyClone = document.createElement("tbody");
-
-    const start = pageIndex * ROWS_PER_PAGE;
-    const end = start + ROWS_PER_PAGE;
-
-    rows.slice(start, end).forEach(row => {
-      bodyClone.appendChild(row.cloneNode(true));
-    });
-
-    pageTable.appendChild(headClone);
-    pageTable.appendChild(bodyClone);
-
-    // 🔥 สำคัญ: fix layout ไม่ให้เอียง
-    pageTable.style.width = "100%";
-    pageTable.style.tableLayout = "fixed";
-
-    stylePrintableTable(pageTable);
-
-    page.appendChild(pageTable);
-    root.appendChild(page);
-  }
+  report.appendChild(pageTable);
+  root.appendChild(report);
 
   return root;
 }
@@ -998,7 +987,7 @@ document.addEventListener("DOMContentLoaded", function () {
       <style>
   @page {
     size: A4 landscape;
-    margin: 12mm 10mm; /* 👈 บน/ล่าง 12mm, ซ้าย/ขวา 10mm */
+    margin: 4mm 6mm 4mm 6mm;
   }
 
   body {
@@ -1014,16 +1003,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
   th, td {
     border: 1px solid #999;
-    padding: 4px;
-    font-size: 10pt;
+    padding: 2px 3px;
+    font-size: 6.4pt;
+    line-height: 1.05;
+    box-sizing: border-box;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   thead {
     display: table-header-group;
   }
 
-  tr {
-    page-break-inside: avoid;
+  tfoot {
+    display: table-footer-group;
+  }
+
+  tr, td, th {
+    page-break-inside: auto;
+    break-inside: auto;
+  }
+
+  body, table {
+    orphans: 1;
+    widows: 1;
   }
 </style>
     </head>
