@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="th">
 
 <head>
@@ -11,7 +11,9 @@
   <!-- Sarabun Font -->
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+ 
+  
   <title>รายงานผลตรวจสุขภาพทางอินเตอร์เน็ต</title>
 
   <style>
@@ -25,6 +27,33 @@
     .wrapper {
       display: flex;
       height: 100vh;
+    }
+
+     .nav-title {
+      max-width: 760px;
+    }
+
+    .nav-kicker {
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--brand);
+    }
+
+    .nav-title h1 {
+      margin: 0;
+      font-size: clamp(24px, 3vw, 36px);
+      line-height: 1.06;
+      color: var(--brand-deep);
+    }
+
+    .nav-title p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
     }
 
     .sidebar {
@@ -418,35 +447,225 @@
         margin-bottom: 5px !important;
       }
     }
- .nav-title {
-      max-width: 760px;
-    }
-
-    .nav-kicker {
-      margin: 0 0 8px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--brand);
-    }
-
-    .nav-title h1 {
-      margin: 0;
-      font-size: clamp(24px, 3vw, 36px);
-      line-height: 1.06;
-      color: var(--brand-deep);
-    }
-
-    .nav-title p {
-      margin: 10px 0 0;
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 14px;
-    }
 
     /* ... ส่วนอื่นไม่เปลี่ยน ... */
   </style>
+    <style>
+.menu {
+  font-family: "Sarabun", sans-serif;
+  width: 260px;
+  padding: 12px;
+  background: #eef6f7;
+  border-radius: 14px;
+  font-size: 0.75rem;
+}
+
+.menu ul {
+ list-style: none;
+  padding-left: 0;   /* ❗ ตัดระยะซ้ายออกทั้งหมด */
+  margin: 0;
+}
+
+.menu ul ul {
+  padding-left: 15px;
+}
+
+.menu li {
+  margin: 4px 0;
+}
+
+.menu-label,
+.menu a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  color: #123;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.menu-label:hover,
+.menu a:hover {
+  background: #d8f3f1;
+  color: #006b66;
+}
+.menu > ul > li {
+  padding-left: 0;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #d9eeee;
+  color: #00796b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.child-menu {
+  display: none;
+}
+
+.child-menu.open {
+  display: block;
+}
+
+/* หน้าปัจจุบัน */
+.menu a.active {
+  background: linear-gradient(135deg, #00a99d, #00897b);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0, 137, 123, 0.28);
+}
+
+.menu a.active::before {
+  content: "●";
+  font-size: 9px;
+  color: white;
+}
+</style>
+<style>
+  @font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  font-stretch: normal;
+  src: url(https://fonts.gstatic.com/s/opensans/v44/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsiH0B4gaVc.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: normal;
+  src: url(https://fonts.gstatic.com/s/opensans/v44/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0B4gaVc.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: normal;
+  src: url(https://fonts.gstatic.com/s/opensans/v44/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1x4gaVc.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: normal;
+  src: url(https://fonts.gstatic.com/s/opensans/v44/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsg-1x4gaVc.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  font-stretch: normal;
+  src: url(https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWuaabVmUiA8.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: normal;
+  src: url(https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWubEbVmUiA8.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: normal;
+  src: url(https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWub2bVmUiA8.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: normal;
+  src: url(https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWuYjalmUiA8.ttf) format('truetype');
+}
+body {
+  padding: 20px;
+  font-family: "open sans";
+  color: #555;
+}
+label {
+  font-weight: 600;
+}
+.nav-container {
+  background: #45596c;
+  font-size: 13px;
+}
+.nav-container ul {
+  margin: 0;
+  padding: 0;
+}
+.nav-container ul > li {
+  list-style: none;
+}
+.nav-container ul > li a.nav-quick-step {
+  color: inherit;
+  font-size: 10pt;
+}
+.nav-container ul > li a.nav-quick-step:hover {
+  color: #999;
+  cursor: pointer;
+  text-decoration: none;
+}
+.nav-container .panel {
+  background: transparent;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+}
+.nav-container .panel .list-group-item {
+  color: #a7b1c2;
+  text-decoration: none;
+  margin-left: 14px;
+  background: transparent;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  font-weight: 600;
+}
+.nav-container .panel .list-group-item:hover {
+  color: #fff;
+}
+.nav-container .panel .list-group-item:active,
+.nav-container .panel .list-group-item:focus {
+  color: #fff !important;
+}
+.nav-container .panel .list-group-item > i.fa {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav-container .panel .list-group-item[aria-expanded="true"] > i.fa:before {
+  content: "\f107";
+}
+.nav-container .panel .list-group-item[aria-expanded="false"] > i.fa:before {
+  content: "\f104";
+}
+.nav-container .panel.active {
+  border-left: #19aa8d 4px solid;
+  background: #0e2133;
+}
+.nav-container .panel.active .list-group-item {
+  margin-left: 10px;
+}
+.nav-container .panel.active .list-group-item.active {
+  color: #fff;
+}
+.nav-container .panel .list-group-subnav {
+  padding-left: 20px;
+}
+
+</style>
 </head>
 
 <body>
@@ -474,14 +693,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       <div id="selectedValue" class="ms-2 mb-5 fs-6 fw-bold noprint"></div>
       <div class="b-example-divider"></div>
-      <ul class="sidebar-menu">
-        <a href="checkup.html" class="menu-item nav-link mt-3 ">Dashboard</a>
-        <a href="pe.html" class="menu-item nav-link mt-3">ตรวจร่างกายทั่วไป</a>
-        <a href="cbc.html" class="menu-item nav-link mt-3">ค่าความสมบูรณ์ของเม็ดเลือด</a>
-        <a href="chem.html" class="menu-item nav-link mt-3">ผลตรวจเลือดทางเคมี</a>
-        <a href="ua.html" class="menu-item nav-link mt-3 active">ผลตรวจปัสสาวะแบบสมบูรณ์</a>
-        <a href="bio.html" class="menu-item nav-link mt-3">ผลทดสอบทางชีวอนามัย</a>
-      </ul>
+     <div id="dynamicMenu" class="menu mt-5"></div>
     </div>
 
     <!-- Content -->
@@ -494,7 +706,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <!-- ซ้ายสุด -->
          <div class="nav-title">
                 <p class="nav-kicker">Urinalysis</p>
-                <h1>ผลตรวจปัสสาวะทั่วไป</h1>
+                <h1>ตรวจปัสสาวะทั่วไป</h1>
                
               </div>
           <!-- ขวาสุด -->
@@ -518,12 +730,12 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
 
 
-  </div>
-</div>
-<span id="loading" class="fs-5 mt-2 mb-2"></span>
-     <table class="table table-result mt-3" id="mainTable">
-      <thead class="table-info">
-        <tr >
+        </div>
+      </div>
+      <span id="loading" class="fs-5 mt-2 mb-2"></span>
+      <table class="table table-result mt-3" id="mainTable">
+        <thead class="table-info">
+         <tr >
           <th scope="col" class="text-center" style="min-width: 95px; max-width: 95px;">ID</th>
           <th scope="col" class="text-start" style="min-width: 255px; max-width: 255px;">ชื่อ นามสกุล</th>
           <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px; font-size: 0.6rem;">color</th>
@@ -540,13 +752,13 @@ document.addEventListener("DOMContentLoaded", function () {
           <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px; font-size: 0.6rem;">Amp</th>
           <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px; font-size: 0.6rem;">Preg</th>
         </tr>
-      </thead>
-      <tbody id="cbcresult"></tbody>
-    </table>
-  </div>
+        </thead>
+        <tbody id="cbcresult"></tbody>
+      </table>1
+    </div>
+    <div id="pdfReport" class="pdf-only"></div>
     <script>
-
-      function exportXCEL() {
+            function exportXCEL() {
   const table = document.getElementById("mainTable");
 
   if (!table) {
@@ -564,7 +776,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   XLSX.writeFile(workbook, "รายงานผลตรวจสุขภาพ.xlsx");
 }
-      const BASE_URL = "https://script.google.com/macros/s/AKfycbxIFqg_sVoBadGiZijEkpghbLBNUiYMO9Zz_5eXxZ_JPSp457PnhJwPCRqTg_Qe8REQPA/exec";
+      const BASE_URL = "https://script.google.com/macros/s/AKfycbyu4Kmme23JgjjgkjisdrCOHzRM3y7uevSvn_GnBw-Q_2wiVZEhQD0uAYSlPJHLhNfRKw/exec";
 
 
       function getPrintableTable() {
@@ -650,7 +862,6 @@ document.addEventListener("DOMContentLoaded", function () {
             if (i === 0) cells[i].style.width = col1Width + "%";
             else if (i === 1) cells[i].style.width = col2Width + "%";
             else cells[i].style.width = otherWidth + "%";
-            if (i === 4) cells[i].style.fontSize = "6px";
           }
         });
 
@@ -667,7 +878,8 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
 
-      function buildPrintableReport() {
+    
+   function buildPrintableReport() {
   const table = getPrintableTable();
   if (!table) return null;
 
@@ -690,7 +902,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const selectedValue = (document.getElementById("selectedValue")?.textContent || "").trim();
   const printedAt = new Date().toLocaleString("th-TH");
 
-  const ROWS_PER_PAGE = 23;
+  const ROWS_PER_PAGE = 25;
   const totalPages = Math.ceil(rows.length / ROWS_PER_PAGE);
 
   for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
@@ -698,13 +910,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const page = document.createElement("div");
 
     // 🔥 margin 4 ด้าน (ปรับตรงนี้ได้เลย)
-   if (pageIndex < totalPages - 1) {
-  page.style.pageBreakAfter = "always";
-} else {
-  page.style.pageBreakAfter = "auto";
-}
+    page.style.padding = "10mm 12mm 10mm 18mm"; 
+    // top right bottom left
 
-page.style.padding = "4mm 8mm 4mm 8mm";
+    page.style.pageBreakAfter = "always";
+    page.style.width = "100%";
+    page.style.boxSizing = "border-box";
 
     // header
     const header = document.createElement("div");
@@ -916,9 +1127,8 @@ page.style.padding = "4mm 8mm 4mm 8mm";
             data.forEach(row => {
               if (String(row.customer || "").trim() === selectedValue) {
                 found = true;
-
                 resultDiv1.innerHTML += `
-                <tr>
+               <tr>
                   <td class="text-center">${row.register || ""}</td>
                   <td class="text-start">${row.name || ""}</td>
                   <td class="text-center" style="font-size: 0.6rem;">${row.color || ""}</td>
@@ -942,7 +1152,7 @@ page.style.padding = "4mm 8mm 4mm 8mm";
               }
             });
 
-            if (!found && resultDiv1) {
+           if (!found && resultDiv1) {
               resultDiv1.innerHTML = `
               <tr>
                 <td colspan="17" class="text-center text-danger">ไม่พบข้อมูลของผู้ใช้ที่เลือก</td>
@@ -968,8 +1178,149 @@ page.style.padding = "4mm 8mm 4mm 8mm";
       }
 
       document.addEventListener("DOMContentLoaded", loadAllRecords);
-    </script>
 
+
+    </script>
+<script>
+const menuData = [
+  { text: "Dashboard", link: "checkup.html"},
+  { text: "ตรวจร่างกายทั่วไป", link: "pe.html" },
+  { text: "ตรวจปัสสาวะทั่วไป", link: "ua.html" },
+  { text: "เอกซเรย์ทรวงอก", link: "xray.html" },
+  { text: "ตรวจคลื่นไฟฟ้าหัวใจ", link: "ekg.html" },
+
+  {
+    text: "ผลตรวจทางห้องปฏิบัติการ",
+    open: false,
+    children: [
+      { text: "ค่าความสมบูรณ์ของเม็ดเลือด", link: "cbc.html" },
+      { text: "ค่าน้ำตาลในเลือด", link: "fbs.html" },
+      {
+        text: "ปริมาณไขมันในเลือด",
+        open: false,
+        children: [
+          { text: "คอเลสเตอรอล(Cholesterol)", link: "chol.html" },
+          { text: "ไขมันดี(HDL)", link: "hdl.html" },
+          { text: "ไขมันเสีย(LDL)", link: "ldl.html" },
+          { text: "ไตรกลีเซอไรด์ (Triglyceride)", link: "tri.html" }
+        ]
+      },
+      {
+        text: "การทำงานของตับ",
+        open: false,
+        children: [
+          { text: "SGPT", link: "sgpt.html" },
+          { text: "SGOT", link: "sgot.html" },
+          { text: "Alkaline Phosphatase", link: "alp.html" }
+        ]
+      },
+      {
+        text: "การทำงานของไต",
+        open: false,
+        children: [
+          { text: "BUN", link: "bun.html" },
+          { text: "Creatinin", link: "crea.html" },
+          { text: "อัตราการกรองไต(eGFR)", link: "egfr.html" }
+        ]
+      },
+      { text: "ปริมาณกรดยูริคในเลือด(โรคเก๊าท์)", link: "uric.html" }
+    ]
+  },
+
+  {
+    text: "ผลทดสอบด้านอาชีวอนามัย",
+    open: false,
+    children: [
+      { text: "สมรรถภาพทางการได้ยิน(Audiogram)", link: "ear.html" },
+      { text: "สมรรถภาพความจุปอด(Spirometry)", link: "spiro.html" },
+      { text: "สมรรถภาพการมองเห็น (Occupational Vision Test)", link: "eyes.html" },
+      { text: "สมรรถภาพกล้ามเนื้อมือ", link: "hand.html" },
+      { text: "สมรรถภาพกล้ามเนื้อแรงเหยียดขาและหลัง", link: "lb.html" }
+    ]
+  }
+];
+
+function createMenu(items) {
+  const ul = document.createElement("ul");
+
+  items.forEach(item => {
+    const li = document.createElement("li");
+
+    if (item.children && item.children.length > 0) {
+      const label = document.createElement("span");
+      label.className = "menu-label";
+
+      const icon = document.createElement("span");
+      icon.className = "icon";
+      icon.textContent = item.open ? "−" : "+";
+
+      label.appendChild(icon);
+      label.appendChild(document.createTextNode(item.text));
+
+      const childMenu = createMenu(item.children);
+      childMenu.className = "child-menu";
+
+      if (item.open) {
+        childMenu.classList.add("open");
+      }
+
+      label.onclick = function () {
+        childMenu.classList.toggle("open");
+
+        if (childMenu.classList.contains("open")) {
+          icon.textContent = "−";
+        } else {
+          icon.textContent = "+";
+        }
+      };
+
+      li.appendChild(label);
+      li.appendChild(childMenu);
+
+    } else {
+      const a = document.createElement("a");
+a.href = item.link;
+a.textContent = item.text; // ✅ แสดงเฉพาะชื่อ
+li.appendChild(a);
+    }
+
+    ul.appendChild(li);
+  });
+
+  return ul;
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const menuBox = document.getElementById("dynamicMenu");
+  if (!menuBox) return;
+
+  menuBox.innerHTML = "";
+  menuBox.appendChild(createMenu(menuData));
+
+  const currentPage = window.location.pathname.split("/").pop() || "xray.html";
+  menuBox.querySelectorAll("a").forEach(a => {
+    const hrefPage = a.getAttribute("href");
+    if (hrefPage === currentPage) {
+      a.classList.add("active");
+
+      let parent = a.parentElement;
+      while (parent && parent !== menuBox) {
+        if (parent.classList && parent.classList.contains("child-menu")) {
+          parent.classList.add("open");
+
+          const label = parent.previousElementSibling;
+          if (label) {
+            const icon = label.querySelector(".icon");
+            if (icon) icon.textContent = "−";
+          }
+        }
+        parent = parent.parentElement;
+      }
+    }
+  });
+});
+
+</script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
 </body>
