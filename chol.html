@@ -909,18 +909,15 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         // 🔥 กำหนด % ใหม่ (ต้องอยู่หลัง reset)
-       const widths = [8, 22, 3, 22, 10, 10, 25];
-
-headers.forEach((th, i) => {
-  th.style.width = widths[i] + "%";
-});
-
-rows.forEach(row => {
-  const cells = row.children;
-  for (let i = 0; i < cells.length; i++) {
-    cells[i].style.width = widths[i] + "%";
-  }
-});
+        const col0Width = 8;
+        const col1Width = 20;
+        const col2Width = 3;
+        const col3Width = 20;
+        const col4Width = 8;
+        const col5Width = 8;
+         const col6Width = 33;
+        const remain = 100 - col1Width - col2Width;
+        const otherWidth = remain / (totalCols - 2);
 
         const headers = table.querySelectorAll("thead th");
 
