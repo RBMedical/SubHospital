@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 
 <head>
@@ -984,9 +984,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const root = document.createElement("div");
 
-  // 🔥 คุม layout ให้ตรง PDF
   root.style.width = "100%";
-  root.style.maxWidth = "1123px";   // A4 landscape
+  root.style.maxWidth = "1123px";
   root.style.margin = "0 auto";
   root.style.fontFamily = "'Sarabun', sans-serif";
   root.style.background = "#fff";
@@ -995,65 +994,40 @@ document.addEventListener("DOMContentLoaded", function () {
   const selectedValue = (document.getElementById("selectedValue")?.textContent || "").trim();
   const printedAt = new Date().toLocaleString("th-TH");
 
-  const ROWS_PER_PAGE = 18;
-  const totalPages = Math.ceil(rows.length / ROWS_PER_PAGE);
+  const report = document.createElement("div");
+  report.style.padding = "10mm 12mm 10mm 18mm";
+  report.style.width = "100%";
+  report.style.boxSizing = "border-box";
 
-  for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
+  const header = document.createElement("div");
+  header.style.display = "flex";
+  header.style.justifyContent = "space-between";
+  header.style.borderBottom = "2px solid #3c6e71";
+  header.style.marginBottom = "5mm";
+  header.style.breakAfter = "avoid";
+  header.style.pageBreakAfter = "avoid";
 
-    const page = document.createElement("div");
+  header.innerHTML = `
+    <div>
+      <div style="font-size:14px;font-weight:700;">${title}</div>
+      <div style="font-size:10px;">${selectedValue}</div>
+    </div>
+    <div style="font-size:9px;text-align:right;">
+      ${printedAt}
+    </div>
+  `;
 
-    // 🔥 margin 4 ด้าน (ปรับตรงนี้ได้เลย)
-    page.style.padding = "10mm 12mm 10mm 18mm"; 
-    // top right bottom left
+  report.appendChild(header);
 
-    page.style.pageBreakAfter = "always";
-    page.style.width = "100%";
-    page.style.boxSizing = "border-box";
+  const pageTable = table.cloneNode(true);
+  pageTable.style.width = "100%";
+  pageTable.style.tableLayout = "fixed";
+  pageTable.style.borderCollapse = "collapse";
 
-    // header
-    const header = document.createElement("div");
-    header.style.display = "flex";
-    header.style.justifyContent = "space-between";
-    header.style.borderBottom = "2px solid #3c6e71";
-    header.style.marginBottom = "5mm";
+  stylePrintableTable(pageTable);
 
-    header.innerHTML = `
-      <div>
-        <div style="font-size:14px;font-weight:700;">${title}</div>
-        <div style="font-size:10px;">${selectedValue}</div>
-      </div>
-      <div style="font-size:9px;text-align:right;">
-        Page ${pageIndex + 1} / ${totalPages}<br>
-        ${printedAt}
-      </div>
-    `;
-
-    page.appendChild(header);
-
-    // table
-    const pageTable = table.cloneNode(false);
-    const headClone = table.querySelector("thead").cloneNode(true);
-    const bodyClone = document.createElement("tbody");
-
-    const start = pageIndex * ROWS_PER_PAGE;
-    const end = start + ROWS_PER_PAGE;
-
-    rows.slice(start, end).forEach(row => {
-      bodyClone.appendChild(row.cloneNode(true));
-    });
-
-    pageTable.appendChild(headClone);
-    pageTable.appendChild(bodyClone);
-
-    // 🔥 สำคัญ: fix layout ไม่ให้เอียง
-    pageTable.style.width = "100%";
-    pageTable.style.tableLayout = "fixed";
-
-    stylePrintableTable(pageTable);
-
-    page.appendChild(pageTable);
-    root.appendChild(page);
-  }
+  report.appendChild(pageTable);
+  root.appendChild(report);
 
   return root;
 }
@@ -1116,8 +1090,18 @@ document.addEventListener("DOMContentLoaded", function () {
     display: table-header-group;
   }
 
+  tfoot {
+    display: table-footer-group;
+  }
+
   tr {
     page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  td, th {
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
 </style>
     </head>
