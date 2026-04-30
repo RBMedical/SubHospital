@@ -909,11 +909,18 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         // 🔥 กำหนด % ใหม่ (ต้องอยู่หลัง reset)
-        const col1Width = 8;
-        const col2Width = 20;
-        const col14Width = 30;
-        const remain = 100 - col1Width - col2Width;
-        const otherWidth = remain / (totalCols - 2);
+       const widths = [8, 22, 3, 22, 10, 10, 25];
+
+headers.forEach((th, i) => {
+  th.style.width = widths[i] + "%";
+});
+
+rows.forEach(row => {
+  const cells = row.children;
+  for (let i = 0; i < cells.length; i++) {
+    cells[i].style.width = widths[i] + "%";
+  }
+});
 
         const headers = table.querySelectorAll("thead th");
 
@@ -1207,7 +1214,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   <td class="text-center" style="font-size: 0.60rem;">${row.depart || ""}</td>
                   <td class="text-center" style="font-size: 0.60rem;">${row.id || ""}</td>
                   <td class="text-center" style="font-size: 0.60rem;">${row.result || ""}</td>
-                  <td class="text-start" style="font-size: 0.60rem;">${row.summary || ""}</td>
+                  <td class="text-center" style="font-size: 0.60rem;">${row.summary || ""}</td>
               
               
    
