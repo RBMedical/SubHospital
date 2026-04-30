@@ -666,6 +666,80 @@ label {
 }
 
 </style>
+
+<style>
+/* =========================================================
+   FIX: ให้มี scroll bar เฉพาะในตารางเท่านั้น
+   ========================================================= */
+html,
+body {
+  height: 100%;
+  overflow: hidden !important;
+}
+
+.wrapper {
+  height: 100vh !important;
+  overflow: hidden !important;
+}
+
+.sidebar {
+  height: 100vh !important;
+  overflow-y: auto !important;
+}
+
+.print-area {
+  height: 100vh !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.navbar {
+  flex: 0 0 auto !important;
+}
+
+#loading {
+  flex: 0 0 auto !important;
+}
+
+.table-scroll-only {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: auto !important;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.table-scroll-only #mainTable {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.table-scroll-only thead th {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 20 !important;
+}
+
+@media print {
+  html,
+  body,
+  .wrapper,
+  .print-area,
+  .table-scroll-only {
+    height: auto !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  .table-scroll-only {
+    border: none !important;
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -733,7 +807,8 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
       </div>
       <span id="loading" class="fs-5 mt-2 mb-2"></span>
-      <table class="table table-result mt-3" id="mainTable">
+      <div class="table-scroll-only mt-3">
+      <table class="table table-result" id="mainTable">
         <thead class="table-info">
           <tr>
             <th scope="col" class="text-center" style="min-width: 95px; max-width: 95px;">HN</th>
@@ -750,6 +825,7 @@ document.addEventListener("DOMContentLoaded", function () {
         </thead>
         <tbody id="cbcresult"></tbody>
       </table>
+      </div>
     </div>
     <div id="pdfReport" class="pdf-only"></div>
     <script>
