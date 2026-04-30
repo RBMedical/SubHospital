@@ -1206,7 +1206,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   <td class="text-center" style="font-size: 0.60rem;">${row.xrayage || ""}</td>
                   <td class="text-center" style="font-size: 0.60rem;">${row.xraydep || ""}</td>
                   <td class="text-center" style="font-size: 0.60rem;">${row.xrayid || ""}</td>
-                  <td class="text-center" style="font-size: 0.60rem;">${row.xrayresult || ""}</td>
+                  <td style="font-size: 0.6rem;" class="text-center">${row.xrayresult? row.xrayresult + "mg/dL" : ""}</td>
                   <td class="text-center" style="font-size: 0.60rem;">${row.xraysummary || ""}</td>
               
               
