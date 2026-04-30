@@ -746,9 +746,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px; font-size: 0.6rem;">BMI</th>
             <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px; font-size: 0.6rem;">BP</th>
             <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px; font-size: 0.6rem;">Pause</th>
-            <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px; font-size: 0.6rem;">EKG</th>
-            <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px; font-size: 0.6rem;">Urine</th>
-            <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px; font-size: 0.6rem;">X Ray</th>
+        
             <th scope="col" class="text-doctor-col" style="min-width: 250px; max-width: 250px; font-size: 0.6rem;">ความเห็นแพทย์</th>
           </tr>
         </thead>
@@ -1138,17 +1136,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   <td class="text-center" style="font-size: 0.60rem;">${row.bmiv || ""}</td>
                   <td class="text-center" style="font-size: 0.60rem;">${row.bp || ""}</td>
                   <td class="text-center" style="font-size: 0.60rem;">${row.pause || ""}</td>
-                  <td class="text-center ${isAbnormal(row.ekg) ? 'text-danger-custom' : ''}">
-      ${row.ekg || ""}
-    </td>
-
-    <td style="font-size: 0.60rem;" class="text-center ${isAbnormal(row.urine) ? 'text-danger-custom' : ''}">
-      ${row.urine || ""}
-    </td>
-
-    <td style="font-size: 0.60rem;" class="text-center ${isAbnormal(row.xray) ? 'text-danger-custom' : ''}">
-      ${row.xray || ""}
-    </td>
+             
                   <td style="font-size: 0.60rem;"  class="text-start">${row.doctor || ""}</td>
                 </tr>
               `;
