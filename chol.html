@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="th">
 
 <head>
@@ -889,65 +889,83 @@ document.addEventListener("DOMContentLoaded", function () {
         cell.style.textOverflow = "ellipsis";
       }
       function stylePrintableTable(table) {
-        const totalCols = table.querySelectorAll("thead th").length;
+        /*
+          PDF column widths:
+          Col 1 = 8%
+          Col 2 = 20%
+          Col 3 = 5%
+          Col 4 = 20%
+          Col 5 = 8%
+          Col 6 = 8%
+          Col 7 = remaining 31%
+        */
+        const widths = [8, 20, 5, 20, 8, 8, 31];
+
+        table.style.width = "100%";
+        table.style.maxWidth = "100%";
+        table.style.tableLayout = "fixed";
+        table.style.borderCollapse = "collapse";
 
         // reset style ก่อน
         Array.from(table.querySelectorAll("th, td")).forEach(cell => {
           cell.removeAttribute("style");
           cell.style.border = "1px solid #9fb3bf";
-          cell.style.padding = "4px 5px";
+          cell.style.padding = "3px 4px";
           cell.style.verticalAlign = "middle";
           cell.style.textAlign = "center";
-          cell.style.lineHeight = "1.25";
+          cell.style.lineHeight = "1.18";
+          cell.style.boxSizing = "border-box";
+          cell.style.fontSize = "7.5pt";
+          cell.style.wordBreak = "break-word";
+          cell.style.overflowWrap = "break-word";
         });
 
         // header style
-        Array.from(table.querySelectorAll("thead th")).forEach(cell => {
+        Array.from(table.querySelectorAll("thead th")).forEach((cell, i) => {
           cell.style.background = "#dbeaf1";
           cell.style.fontWeight = "700";
-          cell.style.fontSize = "9pt";
-        });
-
-        // 🔥 กำหนด % ใหม่ (ต้องอยู่หลัง reset)
-        const col0Width = 8;
-        const col1Width = 20;
-        const col2Width = 3;
-        const col3Width = 20;
-        const col4Width = 8;
-        const col5Width = 8;
-         const col6Width = 33;
-        const remain = 100 - col1Width - col2Width;
-        const otherWidth = remain / (totalCols - 2);
-
-        const headers = table.querySelectorAll("thead th");
-
-        headers.forEach((th, i) => {
-          if (i === 0) th.style.width = col1Width + "%";
-          else if (i === 1) th.style.width = col2Width + "%";
-          else th.style.width = otherWidth + "%";
-        });
-
-        // 🔥 apply width ให้ td ด้วย (ตัวนี้คุณยังไม่ได้ทำ)
-        const rows = table.querySelectorAll("tbody tr");
-
-        rows.forEach(row => {
-          const cells = row.children;
-
-          for (let i = 0; i < cells.length; i++) {
-            if (i === 0) cells[i].style.width = col1Width + "%";
-            else if (i === 1) cells[i].style.width = col2Width + "%";
-            else cells[i].style.width = otherWidth + "%";
+          cell.style.fontSize = "7.5pt";
+          cell.style.whiteSpace = "normal";
+          cell.style.textAlign = "center";
+          if (widths[i]) {
+            cell.style.width = widths[i] + "%";
+            cell.style.maxWidth = widths[i] + "%";
           }
         });
 
-        // 🔥 บังคับคอลัมน์ชื่อ
-        rows.forEach(row => {
-          const cell = row.children[1];
-          if (cell) {
-            cell.style.whiteSpace = "nowrap";
-            cell.style.overflow = "hidden";
-            cell.style.textOverflow = "ellipsis";
-            cell.style.textAlign = "left";
+        // apply width ให้ td
+        Array.from(table.querySelectorAll("tbody tr")).forEach(row => {
+          Array.from(row.children).forEach((cell, i) => {
+            if (widths[i]) {
+              cell.style.width = widths[i] + "%";
+              cell.style.maxWidth = widths[i] + "%";
+            }
+          });
+
+          // คอลัมน์ที่ 2: ชื่อ นามสกุล
+          const nameCell = row.children[1];
+          if (nameCell) {
+            nameCell.style.textAlign = "left";
+            nameCell.style.whiteSpace = "nowrap";
+            nameCell.style.overflow = "hidden";
+            nameCell.style.textOverflow = "ellipsis";
+            nameCell.style.fontSize = "7.2pt";
+          }
+
+          // คอลัมน์ที่ 4: แผนก
+          const depCell = row.children[3];
+          if (depCell) {
+            depCell.style.whiteSpace = "normal";
+            depCell.style.fontSize = "7pt";
+          }
+
+          // คอลัมน์ที่ 7: ผลสรุป ให้ตัดบรรทัดได้ แต่ไม่ใหญ่เกินไป
+          const summaryCell = row.children[6];
+          if (summaryCell) {
+            summaryCell.style.textAlign = "left";
+            summaryCell.style.whiteSpace = "normal";
+            summaryCell.style.fontSize = "6.8pt";
+            summaryCell.style.lineHeight = "1.12";
           }
         });
       }
@@ -977,7 +995,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const selectedValue = (document.getElementById("selectedValue")?.textContent || "").trim();
   const printedAt = new Date().toLocaleString("th-TH");
 
-  const ROWS_PER_PAGE = 25;
+  const ROWS_PER_PAGE = 18;
   const totalPages = Math.ceil(rows.length / ROWS_PER_PAGE);
 
   for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
@@ -1089,8 +1107,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   th, td {
     border: 1px solid #999;
-    padding: 4px;
-    font-size: 10pt;
+    padding: 3px 4px;
+    font-size: 7.5pt;
+    box-sizing: border-box;
   }
 
   thead {
