@@ -780,8 +780,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <!-- ซ้ายสุด -->
          <div class="nav-title">
                 <p class="nav-kicker">High-Density Lipoprotein (HDL)</p>
-                <h1>ผลตรวจหาปริมาณไขมันดีในเลือด                  
-                </h1>
+                <h1>ผลตรวจหาปริมาณไขมันดีในเลือด </h1>
                
               </div>
           <!-- ขวาสุด -->
@@ -818,7 +817,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <th scope="col" class="text-center" style="min-width: 200px; max-width: 200px; font-size: 0.6rem;">แผนก</th>
             <th scope="col" class="text-center" style="min-width: 95px; max-width: 95px; font-size: 0.6rem;">รหัสพนักงาน</th>
             <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px; font-size: 0.6rem;">ผลตรวจ</th>
-            <th scope="col" class="text-start" style="min-width: 100px; max-width: 100px; font-size: 0.6rem;">ผลสรุป</th>
+            <th scope="col" class="text-center" style="min-width: 100px; max-width: 100px; font-size: 0.6rem;">ผลสรุป</th>
            
            
             
@@ -890,61 +889,83 @@ document.addEventListener("DOMContentLoaded", function () {
         cell.style.textOverflow = "ellipsis";
       }
       function stylePrintableTable(table) {
-        const totalCols = table.querySelectorAll("thead th").length;
+        /*
+          PDF column widths:
+          Col 1 = 8%
+          Col 2 = 20%
+          Col 3 = 5%
+          Col 4 = 20%
+          Col 5 = 8%
+          Col 6 = 8%
+          Col 7 = remaining 31%
+        */
+        const widths = [8, 20, 5, 20, 8, 8, 31];
+
+        table.style.width = "100%";
+        table.style.maxWidth = "100%";
+        table.style.tableLayout = "fixed";
+        table.style.borderCollapse = "collapse";
 
         // reset style ก่อน
         Array.from(table.querySelectorAll("th, td")).forEach(cell => {
           cell.removeAttribute("style");
           cell.style.border = "1px solid #9fb3bf";
-          cell.style.padding = "4px 5px";
+          cell.style.padding = "3px 4px";
           cell.style.verticalAlign = "middle";
           cell.style.textAlign = "center";
-          cell.style.lineHeight = "1.25";
+          cell.style.lineHeight = "1.18";
+          cell.style.boxSizing = "border-box";
+          cell.style.fontSize = "7.5pt";
+          cell.style.wordBreak = "break-word";
+          cell.style.overflowWrap = "break-word";
         });
 
         // header style
-        Array.from(table.querySelectorAll("thead th")).forEach(cell => {
+        Array.from(table.querySelectorAll("thead th")).forEach((cell, i) => {
           cell.style.background = "#dbeaf1";
           cell.style.fontWeight = "700";
-          cell.style.fontSize = "9pt";
-        });
-
-        // 🔥 กำหนด % ใหม่ (ต้องอยู่หลัง reset)
-        const col1Width = 8;
-        const col2Width = 20;
-        const col14Width = 30;
-        const remain = 100 - col1Width - col2Width;
-        const otherWidth = remain / (totalCols - 2);
-
-        const headers = table.querySelectorAll("thead th");
-
-        headers.forEach((th, i) => {
-          if (i === 0) th.style.width = col1Width + "%";
-          else if (i === 1) th.style.width = col2Width + "%";
-          else th.style.width = otherWidth + "%";
-        });
-
-        // 🔥 apply width ให้ td ด้วย (ตัวนี้คุณยังไม่ได้ทำ)
-        const rows = table.querySelectorAll("tbody tr");
-
-        rows.forEach(row => {
-          const cells = row.children;
-
-          for (let i = 0; i < cells.length; i++) {
-            if (i === 0) cells[i].style.width = col1Width + "%";
-            else if (i === 1) cells[i].style.width = col2Width + "%";
-            else cells[i].style.width = otherWidth + "%";
+          cell.style.fontSize = "7.5pt";
+          cell.style.whiteSpace = "normal";
+          cell.style.textAlign = "center";
+          if (widths[i]) {
+            cell.style.width = widths[i] + "%";
+            cell.style.maxWidth = widths[i] + "%";
           }
         });
 
-        // 🔥 บังคับคอลัมน์ชื่อ
-        rows.forEach(row => {
-          const cell = row.children[1];
-          if (cell) {
-            cell.style.whiteSpace = "nowrap";
-            cell.style.overflow = "hidden";
-            cell.style.textOverflow = "ellipsis";
-            cell.style.textAlign = "left";
+        // apply width ให้ td
+        Array.from(table.querySelectorAll("tbody tr")).forEach(row => {
+          Array.from(row.children).forEach((cell, i) => {
+            if (widths[i]) {
+              cell.style.width = widths[i] + "%";
+              cell.style.maxWidth = widths[i] + "%";
+            }
+          });
+
+          // คอลัมน์ที่ 2: ชื่อ นามสกุล
+          const nameCell = row.children[1];
+          if (nameCell) {
+            nameCell.style.textAlign = "left";
+            nameCell.style.whiteSpace = "nowrap";
+            nameCell.style.overflow = "hidden";
+            nameCell.style.textOverflow = "ellipsis";
+            nameCell.style.fontSize = "7.2pt";
+          }
+
+          // คอลัมน์ที่ 4: แผนก
+          const depCell = row.children[3];
+          if (depCell) {
+            depCell.style.whiteSpace = "normal";
+            depCell.style.fontSize = "7pt";
+          }
+
+          // คอลัมน์ที่ 7: ผลสรุป ให้ตัดบรรทัดได้ แต่ไม่ใหญ่เกินไป
+          const summaryCell = row.children[6];
+          if (summaryCell) {
+            summaryCell.style.textAlign = "left";
+            summaryCell.style.whiteSpace = "normal";
+            summaryCell.style.fontSize = "6.8pt";
+            summaryCell.style.lineHeight = "1.12";
           }
         });
       }
@@ -963,9 +984,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const root = document.createElement("div");
 
-  // 🔥 คุม layout ให้ตรง PDF
   root.style.width = "100%";
-  root.style.maxWidth = "1123px";   // A4 landscape
+  root.style.maxWidth = "1123px";
   root.style.margin = "0 auto";
   root.style.fontFamily = "'Sarabun', sans-serif";
   root.style.background = "#fff";
@@ -974,65 +994,40 @@ document.addEventListener("DOMContentLoaded", function () {
   const selectedValue = (document.getElementById("selectedValue")?.textContent || "").trim();
   const printedAt = new Date().toLocaleString("th-TH");
 
-  const ROWS_PER_PAGE = 25;
-  const totalPages = Math.ceil(rows.length / ROWS_PER_PAGE);
+  const report = document.createElement("div");
+  report.style.padding = "18mm 12mm 12mm 18mm";
+  report.style.width = "100%";
+  report.style.boxSizing = "border-box";
 
-  for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
+  const header = document.createElement("div");
+  header.style.display = "flex";
+  header.style.justifyContent = "space-between";
+  header.style.borderBottom = "2px solid #3c6e71";
+  header.style.marginBottom = "5mm";
+  header.style.breakAfter = "avoid";
+  header.style.pageBreakAfter = "avoid";
 
-    const page = document.createElement("div");
+  header.innerHTML = `
+    <div>
+      <div style="font-size:14px;font-weight:700;">${title}</div>
+      <div style="font-size:10px;">${selectedValue}</div>
+    </div>
+    <div style="font-size:9px;text-align:right;">
+      ${printedAt}
+    </div>
+  `;
 
-    // 🔥 margin 4 ด้าน (ปรับตรงนี้ได้เลย)
-    page.style.padding = "10mm 12mm 10mm 18mm"; 
-    // top right bottom left
+  report.appendChild(header);
 
-    page.style.pageBreakAfter = "always";
-    page.style.width = "100%";
-    page.style.boxSizing = "border-box";
+  const pageTable = table.cloneNode(true);
+  pageTable.style.width = "100%";
+  pageTable.style.tableLayout = "fixed";
+  pageTable.style.borderCollapse = "collapse";
 
-    // header
-    const header = document.createElement("div");
-    header.style.display = "flex";
-    header.style.justifyContent = "space-between";
-    header.style.borderBottom = "2px solid #3c6e71";
-    header.style.marginBottom = "5mm";
+  stylePrintableTable(pageTable);
 
-    header.innerHTML = `
-      <div>
-        <div style="font-size:14px;font-weight:700;">${title}</div>
-        <div style="font-size:10px;">${selectedValue}</div>
-      </div>
-      <div style="font-size:9px;text-align:right;">
-        Page ${pageIndex + 1} / ${totalPages}<br>
-        ${printedAt}
-      </div>
-    `;
-
-    page.appendChild(header);
-
-    // table
-    const pageTable = table.cloneNode(false);
-    const headClone = table.querySelector("thead").cloneNode(true);
-    const bodyClone = document.createElement("tbody");
-
-    const start = pageIndex * ROWS_PER_PAGE;
-    const end = start + ROWS_PER_PAGE;
-
-    rows.slice(start, end).forEach(row => {
-      bodyClone.appendChild(row.cloneNode(true));
-    });
-
-    pageTable.appendChild(headClone);
-    pageTable.appendChild(bodyClone);
-
-    // 🔥 สำคัญ: fix layout ไม่ให้เอียง
-    pageTable.style.width = "100%";
-    pageTable.style.tableLayout = "fixed";
-
-    stylePrintableTable(pageTable);
-
-    page.appendChild(pageTable);
-    root.appendChild(page);
-  }
+  report.appendChild(pageTable);
+  root.appendChild(report);
 
   return root;
 }
@@ -1070,7 +1065,7 @@ document.addEventListener("DOMContentLoaded", function () {
       <style>
   @page {
     size: A4 landscape;
-    margin: 12mm 10mm; /* 👈 บน/ล่าง 12mm, ซ้าย/ขวา 10mm */
+    margin: 20mm 10mm 12mm 10mm;
   }
 
   body {
@@ -1086,16 +1081,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
   th, td {
     border: 1px solid #999;
-    padding: 4px;
-    font-size: 10pt;
+    padding: 3px 4px;
+    font-size: 7.5pt;
+    box-sizing: border-box;
   }
 
   thead {
     display: table-header-group;
   }
 
+  tfoot {
+    display: table-footer-group;
+  }
+
   tr {
     page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  td, th {
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
 </style>
     </head>
