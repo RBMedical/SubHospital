@@ -1203,18 +1203,18 @@ document.addEventListener("DOMContentLoaded", function () {
             let found = false;
 
             data.forEach(row => {
-              if (String(row.customer || "").trim() === selectedValue) {
+              if (String(row.zraydr || "").trim() === selectedValue) {
                 found = true;
 
                 resultDiv1.innerHTML += `
                 <tr >
-                 <td class="id-col" style="font-size: 0.75rem;">${row.hn || ""}</td>
-                   <td class="text-start" style="font-size: 0.75rem;">${row.name || ""}</td>
-                  <td class="text-center" style="font-size: 0.60rem;">${row.age || ""}</td>
-                  <td class="text-center" style="font-size: 0.60rem;">${row.depart || ""}</td>
-                  <td class="text-center" style="font-size: 0.60rem;">${row.id || ""}</td>
-                  <td class="text-center" style="font-size: 0.60rem;">${row.result || ""}</td>
-                  <td class="text-start" style="font-size: 0.60rem;">${row.summary || ""}</td>
+                 <td class="id-col" style="font-size: 0.75rem;">${row.xrayhn || ""}</td>
+                   <td class="text-start" style="font-size: 0.75rem;">${row.xrayname || ""}</td>
+                  <td class="text-center" style="font-size: 0.60rem;">${row.xrayage || ""}</td>
+                  <td class="text-center" style="font-size: 0.60rem;">${row.xraydepart || ""}</td>
+                  <td class="text-center" style="font-size: 0.60rem;">${row.xrayid || ""}</td>
+                  <td class="text-center" style="font-size: 0.60rem;">${row.xrayresult || ""}</td>
+                  <td class="text-start" style="font-size: 0.60rem;">${row.xraysummary || ""}</td>
               
               
    
