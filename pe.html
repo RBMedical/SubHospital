@@ -667,81 +667,174 @@ label {
 
 </style>
 
-<!-- FIX: ให้มี Scrollbar เฉพาะในตารางเท่านั้น -->
-<style id="table-only-scroll-fix-style">
+
+
+
+<!-- FINAL FIX: scrollbar เฉพาะในตาราง + ตารางสูงเต็มพื้นที่หน้าจอ -->
+<style id="final-table-scrollbar-only-fix">
   html,
   body {
     width: 100% !important;
     height: 100% !important;
     margin: 0 !important;
-    overflow: hidden !important;
-  }
-
-  .wrapper {
-    height: 100vh !important;
-    overflow: hidden !important;
-  }
-
-  .print-area {
-    height: 100vh !important;
+    padding: 0 !important;
     overflow: hidden !important;
     box-sizing: border-box !important;
   }
 
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box !important;
+  }
+
+  .wrapper {
+    width: 100% !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    overflow: hidden !important;
+  }
+
+  .sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 20% !important;
+    height: 100vh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  .print-area,
+  .container-md.print-area {
+    margin-left: 20% !important;
+    width: 80% !important;
+    max-width: none !important;
+    height: 100vh !important;
+    min-height: 0 !important;
+    padding: 28px 34px 24px 34px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    color: teal !important;
+  }
+
+  .print-area > .navbar {
+    flex: 0 0 auto !important;
+    margin-top: 0 !important;
+    margin-bottom: 14px !important;
+    border-radius: 0 !important;
+  }
+
+  #loading {
+    flex: 0 0 auto !important;
+    min-height: 0 !important;
+    margin: 0 0 8px 0 !important;
+  }
+
+  .table-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    min-height: 0 !important;
+    flex: 1 1 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+
   .table-scroll,
+  .table-responsive,
   .table-only-scroll-fix {
     width: 100% !important;
     max-width: 100% !important;
-    height: calc(100vh - 190px) !important;
-    max-height: calc(100vh - 190px) !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    flex: 1 1 auto !important;
     overflow: auto !important;
-    border: 1px solid #dee2e6 !important;
+    border: 1px solid #c8d6dc !important;
     border-radius: 10px !important;
     background: #ffffff !important;
+    box-shadow: 0 8px 22px rgba(16, 84, 92, 0.08) !important;
   }
 
-  #mainTable {
+  .print-area > .table-scroll,
+  .print-area > .table-responsive,
+  .print-area > .table-only-scroll-fix {
+    flex: 1 1 auto !important;
+  }
+
+  #mainTable,
+  .table-scroll > table,
+  .table-responsive > table,
+  .table-only-scroll-fix > table {
     width: 100% !important;
-    margin-bottom: 0 !important;
+    max-width: none !important;
+    margin: 0 !important;
     border-collapse: collapse !important;
+    table-layout: auto !important;
   }
 
   #mainTable thead th {
     position: sticky !important;
     top: 0 !important;
-    z-index: 20 !important;
+    z-index: 50 !important;
+    background-color: #2c5f6e !important;
+    color: #ffffff !important;
+    box-shadow: 0 1px 0 #c8d6dc !important;
+  }
+
+  #mainTable th,
+  #mainTable td {
+    vertical-align: middle !important;
+  }
+
+  @media (max-width: 992px) {
+    .sidebar {
+      width: 260px !important;
+    }
+
+    .print-area,
+    .container-md.print-area {
+      margin-left: 260px !important;
+      width: calc(100% - 260px) !important;
+      padding: 18px !important;
+    }
   }
 
   @media print {
     html,
-    body,
+    body {
+      height: auto !important;
+      overflow: visible !important;
+      padding: 0 !important;
+    }
+
     .wrapper,
     .print-area,
+    .container-md.print-area,
+    .table-container,
     .table-scroll,
+    .table-responsive,
     .table-only-scroll-fix {
       height: auto !important;
       max-height: none !important;
+      min-height: 0 !important;
+      display: block !important;
       overflow: visible !important;
+      box-shadow: none !important;
     }
 
-    .table-scroll,
-    .table-only-scroll-fix {
-      border: none !important;
-      border-radius: 0 !important;
+    .print-area,
+    .container-md.print-area {
+      margin-left: 0 !important;
+      width: 100% !important;
+      padding: 12px 15px !important;
     }
   }
 </style>
-<script id="table-only-scroll-fix-script">
-  document.addEventListener("DOMContentLoaded", function () {
-    const table = document.getElementById("mainTable");
-    if (!table || table.closest(".table-only-scroll-fix")) return;
-
-    const wrapper = document.createElement("div");
-    wrapper.className = "table-scroll table-only-scroll-fix";
-    table.parentNode.insertBefore(wrapper, table);
-    wrapper.appendChild(table);
-  });
-</script>
 
 </head>
 
@@ -810,6 +903,7 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
       </div>
       <span id="loading" class="fs-5 mt-2 mb-2"></span>
+      <div class="table-scroll table-only-scroll-fix">
       <table class="table table-result mt-3" id="mainTable">
         <thead class="table-info">
           <tr>
@@ -829,6 +923,7 @@ document.addEventListener("DOMContentLoaded", function () {
         </thead>
         <tbody id="cbcresult"></tbody>
       </table>
+      </div>
     </div>
     <div id="pdfReport" class="pdf-only"></div>
     <script>
@@ -1035,83 +1130,6 @@ document.addEventListener("DOMContentLoaded", function () {
           alert("Unable to open print preview.");
           return;
         }
-
-<!-- FIX: ให้มี Scrollbar เฉพาะในตารางเท่านั้น -->
-<style id="table-only-scroll-fix-style">
-  html,
-  body {
-    width: 100% !important;
-    height: 100% !important;
-    margin: 0 !important;
-    overflow: hidden !important;
-  }
-
-  .wrapper {
-    height: 100vh !important;
-    overflow: hidden !important;
-  }
-
-  .print-area {
-    height: 100vh !important;
-    overflow: hidden !important;
-    box-sizing: border-box !important;
-  }
-
-  .table-scroll,
-  .table-only-scroll-fix {
-    width: 100% !important;
-    max-width: 100% !important;
-    height: calc(100vh - 190px) !important;
-    max-height: calc(100vh - 190px) !important;
-    overflow: auto !important;
-    border: 1px solid #dee2e6 !important;
-    border-radius: 10px !important;
-    background: #ffffff !important;
-  }
-
-  #mainTable {
-    width: 100% !important;
-    margin-bottom: 0 !important;
-    border-collapse: collapse !important;
-  }
-
-  #mainTable thead th {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 20 !important;
-  }
-
-  @media print {
-    html,
-    body,
-    .wrapper,
-    .print-area,
-    .table-scroll,
-    .table-only-scroll-fix {
-      height: auto !important;
-      max-height: none !important;
-      overflow: visible !important;
-    }
-
-    .table-scroll,
-    .table-only-scroll-fix {
-      border: none !important;
-      border-radius: 0 !important;
-    }
-  }
-</style>
-<script id="table-only-scroll-fix-script">
-  document.addEventListener("DOMContentLoaded", function () {
-    const table = document.getElementById("mainTable");
-    if (!table || table.closest(".table-only-scroll-fix")) return;
-
-    const wrapper = document.createElement("div");
-    wrapper.className = "table-scroll table-only-scroll-fix";
-    table.parentNode.insertBefore(wrapper, table);
-    wrapper.appendChild(table);
-  });
-</script>
-
         printWindow.document.write("<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>Print Report</title></head><body style=\"margin:0;background:#fff;\">" + reportRoot.innerHTML + "</body></html>");
         printWindow.document.close();
         printWindow.focus();
@@ -1178,83 +1196,6 @@ document.addEventListener("DOMContentLoaded", function () {
     break-inside: auto;
   }
 </style>
-
-<!-- FIX: ให้มี Scrollbar เฉพาะในตารางเท่านั้น -->
-<style id="table-only-scroll-fix-style">
-  html,
-  body {
-    width: 100% !important;
-    height: 100% !important;
-    margin: 0 !important;
-    overflow: hidden !important;
-  }
-
-  .wrapper {
-    height: 100vh !important;
-    overflow: hidden !important;
-  }
-
-  .print-area {
-    height: 100vh !important;
-    overflow: hidden !important;
-    box-sizing: border-box !important;
-  }
-
-  .table-scroll,
-  .table-only-scroll-fix {
-    width: 100% !important;
-    max-width: 100% !important;
-    height: calc(100vh - 190px) !important;
-    max-height: calc(100vh - 190px) !important;
-    overflow: auto !important;
-    border: 1px solid #dee2e6 !important;
-    border-radius: 10px !important;
-    background: #ffffff !important;
-  }
-
-  #mainTable {
-    width: 100% !important;
-    margin-bottom: 0 !important;
-    border-collapse: collapse !important;
-  }
-
-  #mainTable thead th {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 20 !important;
-  }
-
-  @media print {
-    html,
-    body,
-    .wrapper,
-    .print-area,
-    .table-scroll,
-    .table-only-scroll-fix {
-      height: auto !important;
-      max-height: none !important;
-      overflow: visible !important;
-    }
-
-    .table-scroll,
-    .table-only-scroll-fix {
-      border: none !important;
-      border-radius: 0 !important;
-    }
-  }
-</style>
-<script id="table-only-scroll-fix-script">
-  document.addEventListener("DOMContentLoaded", function () {
-    const table = document.getElementById("mainTable");
-    if (!table || table.closest(".table-only-scroll-fix")) return;
-
-    const wrapper = document.createElement("div");
-    wrapper.className = "table-scroll table-only-scroll-fix";
-    table.parentNode.insertBefore(wrapper, table);
-    wrapper.appendChild(table);
-  });
-</script>
-
     </head>
 
     <body>
