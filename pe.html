@@ -1240,20 +1240,12 @@ document.addEventListener("DOMContentLoaded", function () {
           printWindow.print();
         }, 500);
       }
-      function showLoading(message = "Waiting for loading......") {
-        const loading = document.getElementById("loading");
-        if (loading) {
-          loading.style.display = "block";
-          loading.innerText = message;
-        }
+      function showLoading() {
+        document.getElementById("loading").style.display = "flex";
       }
 
       function hideLoading() {
-        const loading = document.getElementById("loading");
-        if (loading) {
-          loading.innerText = "";
-          loading.style.display = "none";
-        }
+        document.getElementById("loading").style.display = "none";
       }
 
       function fetchJson(url) {
