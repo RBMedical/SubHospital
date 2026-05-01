@@ -666,6 +666,83 @@ label {
 }
 
 </style>
+
+<!-- FIX: ให้มี Scrollbar เฉพาะในตารางเท่านั้น -->
+<style id="table-only-scroll-fix-style">
+  html,
+  body {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .wrapper {
+    height: 100vh !important;
+    overflow: hidden !important;
+  }
+
+  .print-area {
+    height: 100vh !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  .table-scroll,
+  .table-only-scroll-fix {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: calc(100vh - 190px) !important;
+    max-height: calc(100vh - 190px) !important;
+    overflow: auto !important;
+    border: 1px solid #dee2e6 !important;
+    border-radius: 10px !important;
+    background: #ffffff !important;
+  }
+
+  #mainTable {
+    width: 100% !important;
+    margin-bottom: 0 !important;
+    border-collapse: collapse !important;
+  }
+
+  #mainTable thead th {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 20 !important;
+  }
+
+  @media print {
+    html,
+    body,
+    .wrapper,
+    .print-area,
+    .table-scroll,
+    .table-only-scroll-fix {
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+    }
+
+    .table-scroll,
+    .table-only-scroll-fix {
+      border: none !important;
+      border-radius: 0 !important;
+    }
+  }
+</style>
+<script id="table-only-scroll-fix-script">
+  document.addEventListener("DOMContentLoaded", function () {
+    const table = document.getElementById("mainTable");
+    if (!table || table.closest(".table-only-scroll-fix")) return;
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "table-scroll table-only-scroll-fix";
+    table.parentNode.insertBefore(wrapper, table);
+    wrapper.appendChild(table);
+  });
+</script>
+
 </head>
 
 <body>
@@ -969,6 +1046,83 @@ document.addEventListener("DOMContentLoaded", function () {
           alert("Unable to open print preview.");
           return;
         }
+
+<!-- FIX: ให้มี Scrollbar เฉพาะในตารางเท่านั้น -->
+<style id="table-only-scroll-fix-style">
+  html,
+  body {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .wrapper {
+    height: 100vh !important;
+    overflow: hidden !important;
+  }
+
+  .print-area {
+    height: 100vh !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  .table-scroll,
+  .table-only-scroll-fix {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: calc(100vh - 190px) !important;
+    max-height: calc(100vh - 190px) !important;
+    overflow: auto !important;
+    border: 1px solid #dee2e6 !important;
+    border-radius: 10px !important;
+    background: #ffffff !important;
+  }
+
+  #mainTable {
+    width: 100% !important;
+    margin-bottom: 0 !important;
+    border-collapse: collapse !important;
+  }
+
+  #mainTable thead th {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 20 !important;
+  }
+
+  @media print {
+    html,
+    body,
+    .wrapper,
+    .print-area,
+    .table-scroll,
+    .table-only-scroll-fix {
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+    }
+
+    .table-scroll,
+    .table-only-scroll-fix {
+      border: none !important;
+      border-radius: 0 !important;
+    }
+  }
+</style>
+<script id="table-only-scroll-fix-script">
+  document.addEventListener("DOMContentLoaded", function () {
+    const table = document.getElementById("mainTable");
+    if (!table || table.closest(".table-only-scroll-fix")) return;
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "table-scroll table-only-scroll-fix";
+    table.parentNode.insertBefore(wrapper, table);
+    wrapper.appendChild(table);
+  });
+</script>
+
         printWindow.document.write("<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>Print Report</title></head><body style=\"margin:0;background:#fff;\">" + reportRoot.innerHTML + "</body></html>");
         printWindow.document.close();
         printWindow.focus();
@@ -1021,6 +1175,83 @@ document.addEventListener("DOMContentLoaded", function () {
     page-break-inside: avoid;
   }
 </style>
+
+<!-- FIX: ให้มี Scrollbar เฉพาะในตารางเท่านั้น -->
+<style id="table-only-scroll-fix-style">
+  html,
+  body {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .wrapper {
+    height: 100vh !important;
+    overflow: hidden !important;
+  }
+
+  .print-area {
+    height: 100vh !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  .table-scroll,
+  .table-only-scroll-fix {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: calc(100vh - 190px) !important;
+    max-height: calc(100vh - 190px) !important;
+    overflow: auto !important;
+    border: 1px solid #dee2e6 !important;
+    border-radius: 10px !important;
+    background: #ffffff !important;
+  }
+
+  #mainTable {
+    width: 100% !important;
+    margin-bottom: 0 !important;
+    border-collapse: collapse !important;
+  }
+
+  #mainTable thead th {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 20 !important;
+  }
+
+  @media print {
+    html,
+    body,
+    .wrapper,
+    .print-area,
+    .table-scroll,
+    .table-only-scroll-fix {
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+    }
+
+    .table-scroll,
+    .table-only-scroll-fix {
+      border: none !important;
+      border-radius: 0 !important;
+    }
+  }
+</style>
+<script id="table-only-scroll-fix-script">
+  document.addEventListener("DOMContentLoaded", function () {
+    const table = document.getElementById("mainTable");
+    if (!table || table.closest(".table-only-scroll-fix")) return;
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "table-scroll table-only-scroll-fix";
+    table.parentNode.insertBefore(wrapper, table);
+    wrapper.appendChild(table);
+  });
+</script>
+
     </head>
 
     <body>
