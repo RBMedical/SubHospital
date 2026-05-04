@@ -841,7 +841,7 @@ label {
   padding-left: 20px;
   width: 100vw;
   height: 100vh;
-  ิbackground-color: transparent !important;
+  background-color: transparent !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -866,20 +866,23 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 </script>
+ <nav class="navbar navbar-expand-lg bg-body-tertiary">
+   <div class="d-flex w-100 align-items-center justify-content-between">
+ <div class="nav-title">
+                <p  id="fullname" class="nav-kicker"></p>
+                  <div class="logo-box">
+                <img src="pic/Logo.png" alt="logo">
+                </div>
+        </div>
+        <div id="selectedValue" class="ms-2 me-5 mb-5 fs-6 fw-bold noprint"></div>
+   </div>
+    </nav>
   <div class="wrapper">
 
     <!-- Sidebar -->
    <div class="sidebar">
-    <div id="fullname" class="fs-2 ms-2 mt-2 mb-3"></div>
-    <div class="logo-box">
-      <img src="pic/Logo.png" alt="logo">
-    </div>
-
-      <div class="fs-6 ms-2 mt-2 mb-1">รายงานผลตรวจสุขภาพประจำปี</div>
-
-      <div id="selectedValue" class="ms-2 mb-5 fs-6 fw-bold noprint"></div>
-      <div class="b-example-divider"></div>
-     <div id="dynamicMenu" class="menu mt-5"></div>
+  
+     <div id="dynamicMenu" class="menu"></div>
     </div>
 
     <!-- Content -->
