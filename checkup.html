@@ -1294,7 +1294,12 @@ function showMaxAbnormal(data) {
     xraya: "เอ็กซเรย์ปอด",
     fbsa: "ปริมาณน้ำตาลในเลือด",
     chola: "ปริมาณไขมันในเลือด",
-    urica: "ปริมาณกรดยูริค"
+    urica: "ปริมาณกรดยูริค",
+    sgpta: "การทำงานของตับ(SGPT)",
+    sgota: "การทำงานของตับ(SGOT)",
+    buna: "การทำงานของไต(BUN)",
+    creaa: "การทำงานของไต(Creatinin)",
+    alka: "การทำงานของไต(Alk)"
   };
 
   const values = {
@@ -1304,7 +1309,12 @@ function showMaxAbnormal(data) {
     xraya: Number(data.xraya || 0),
     fbsa: Number(data.fbsa || 0),
     chola: Number(data.chola || 0),
-    urica: Number(data.urica || 0)
+    urica: Number(data.urica || 0),
+    buna: Number(data.buna || 0),
+    creaa: Number(data.creaa || 0),
+    sgpta: Number(data.sgpta || 0),
+    sgota: Number(data.sgota || 0),
+    alka: Number(data.alka || 0)
   };
 
   let maxKey = null;
