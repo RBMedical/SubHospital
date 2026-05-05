@@ -1152,7 +1152,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const text = String(value).trim();
 
-        return text === "ผิดปกติ" || text.includes("สูง");
+        return text === "ผิดปกติ" || text.includes("H");
       }
 
       function loadAllRecords() {
@@ -1217,7 +1217,9 @@ document.addEventListener("DOMContentLoaded", function () {
                   <td class="text-center" style="font-size: 0.60rem;">${row.xrayage || ""}</td>
                   <td class="text-center" style="font-size: 0.60rem;">${row.xraydepart || ""}</td>
                   <td class="text-center" style="font-size: 0.60rem;">${row.xrayid || ""}</td>
-                  <td style="font-size: 0.6rem;" class="text-center">${row.xrayresult? row.xrayresult + "mg/dL" : ""}</td>
+                <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.xrayresult) ? 'text-danger-custom' : ''}">
+  ${row.xrayresult ? `${row.xrayresult} mg/dL` : ""}
+</td>
                   <td class="text-start" style="font-size: 0.60rem;">${row.xraysummary || ""}</td>
               
               
