@@ -1151,7 +1151,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const text = String(value).trim();
 
-        return text === "ผิดปกติ" || text.includes("สูง");
+        return text === "ผิดปกติ" || text.includes("H");
       }
 
       function loadAllRecords() {
@@ -1216,7 +1216,9 @@ document.addEventListener("DOMContentLoaded", function () {
                   <td class="text-center" style="font-size: 0.60rem;">${row.age || ""}</td>
                   <td class="text-center" style="font-size: 0.60rem;">${row.depart || ""}</td>
                   <td class="text-center" style="font-size: 0.60rem;">${row.id || ""}</td>
-                 <td style="font-size: 0.6rem;" class="text-center">${row.result? row.result + "U/L" : ""}</td>
+                <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.result) ? 'text-danger-custom' : ''}">
+  ${row.result ? `${row.result} U/L` : ""}
+</td>
                   <td class="text-start" style="font-size: 0.60rem;">${row.summary || ""}</td>
               
               
