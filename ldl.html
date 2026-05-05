@@ -1152,6 +1152,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
         return text === "ผิดปกติ" || text.includes("สูง");
       }
+      
+        function isAbnormal(value) {
+        if (!value) return false;
+
+        const text = String(value).trim();
+
+        return text === "ผิดปกติ" || text.includes("H");
+      }
 
       function loadAllRecords() {
         const resultDiv1 = document.getElementById("cbcresult");
@@ -1215,7 +1223,9 @@ document.addEventListener("DOMContentLoaded", function () {
                   <td class="text-center" style="font-size: 0.60rem;">${row.age || ""}</td>
                   <td class="text-center" style="font-size: 0.60rem;">${row.depart || ""}</td>
                   <td class="text-center" style="font-size: 0.60rem;">${row.id || ""}</td>
-                   <td style="font-size: 0.6rem;" class="text-center">${row.result? row.result + "mg/dL" : ""}</td>
+                  <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.result) ? 'text-danger-custom' : ''}">
+  ${row.result ? `${row.result} mg/dL` : ""}
+</td>
                   <td class="text-start" style="font-size: 0.60rem;">${row.summary || ""}</td>
               
               
