@@ -1266,7 +1266,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const text = String(value).trim();
 
-        return text === "ผิดปกติ" || text.includes("สูง");
+        return text === "ผิดปกติ" || text.includes("H");
       }
 
       function loadAllRecords() {
@@ -1333,8 +1333,12 @@ document.addEventListener("DOMContentLoaded", function () {
                   <td class="text-center" style="font-size: 0.60rem;">${row.tall || ""}</td>
                   <td class="text-center" style="font-size: 0.60rem;">${row.bg || ""}</td>
                   <td class="text-center" style="font-size: 0.60rem;">${row.bmiv || ""}</td>
-                  <td class="text-center" style="font-size: 0.60rem;">${row.bp || ""}</td>
-                  <td class="text-center" style="font-size: 0.60rem;">${row.pause || ""}</td>
+                  <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.bp) ? 'text-danger-custom' : ''}">
+  ${row.bp ? `${row.bp} mmHg` : ""}
+</td>
+                  <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.pause) ? 'text-danger-custom' : ''}">
+  ${row.pause ? `${row.pause} bpm` : ""}
+</td>
              
                   <td style="font-size: 0.60rem;"  class="text-start">${row.doctor || ""}</td>
                 </tr>
