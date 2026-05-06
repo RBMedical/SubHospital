@@ -1200,50 +1200,57 @@ document.addEventListener("DOMContentLoaded", function () {
 
       <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
 
-      <style>
-  @page {
-    size: A4 landscape;
-    margin: 8mm 10mm 8mm 10mm;
-  }
+    <style>
+@page {
+  size: A4 landscape;
+  margin: 8mm 10mm 8mm 10mm;
+}
 
-  body {
-    font-family: 'Sarabun', sans-serif;
-    margin: 0;
-  }
+body {
+  font-family: 'Sarabun', sans-serif;
+  margin: 0;
+}
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
-  }
+ table {
+  width: 100%;
+  border-collapse: collapse;
+   border-top: 2px solid #3c6e71;
+  table-layout: fixed;
+}
 
-  th, td {
-    border: 1px solid #999;
-    padding: 3px 4px;
-    font-size: 7pt;
-    box-sizing: border-box;
-    line-height: 1.15;
-    word-break: break-word;
-    overflow-wrap: break-word;
-  }
+th, td {
+  border: 1px solid #999;
+  padding: 3px 4px;
+  font-size: 7pt;
+  box-sizing: border-box;
+  line-height: 1.15;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
 
-  thead {
-    display: table-header-group;
-  }
+/* 🔥 FIX เส้นหัวตารางหาย */
+thead {
+  display: table-header-group;
+}
 
-  tfoot {
-    display: table-footer-group;
-  }
+thead tr:first-child th {
+  border-top: 2px solid #3c6e71 !important;
+}
 
-  tr {
-    page-break-inside: auto;
-    break-inside: auto;
-  }
+thead th {
+  border-bottom: 2px solid #3c6e71 !important;
+}
 
-  td, th {
-    page-break-inside: auto;
-    break-inside: auto;
-  }
+/* ป้องกัน row แตก */
+tr {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+td, th {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
 </style>
     </head>
 
