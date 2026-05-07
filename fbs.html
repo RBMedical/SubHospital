@@ -492,41 +492,136 @@
     }
 
     function stylePrintableTable(table) {
-      Array.from(table.querySelectorAll("th, td")).forEach(cell => {
-        cell.style.border = "1px solid #9fb3bf";
-        cell.style.padding = "4px 5px";
-        cell.style.verticalAlign = "middle";
-        cell.style.textAlign = "center";
-        cell.style.lineHeight = "1.2";
-        cell.style.wordBreak = "break-word";
-      });
 
-      Array.from(table.querySelectorAll("thead th")).forEach(cell => {
-        cell.style.background = "#dbeaf1";
-        cell.style.fontWeight = "700";
-        cell.style.fontSize = "9pt";
-      });
+  table.style.width = "100%";
+  table.style.borderCollapse = "collapse";
+  table.style.tableLayout = "fixed";
 
-      const widths = [8, 23, 6, 22, 12, 12, 17];
-      const headers = table.querySelectorAll("thead th");
+  /*
+    คอลัมน์ใหม่
 
-      headers.forEach((th, i) => {
-        th.style.width = (widths[i] || 10) + "%";
-      });
+    1 = 5%
+    2 = 15%
+    3 = 5%
+    4 = 15%
+    5 = 5%
+    6 = 5%
+    7 = ที่เหลือ = 50%
+  */
 
-      table.querySelectorAll("tbody tr").forEach(row => {
-        Array.from(row.children).forEach((cell, i) => {
-          cell.style.width = (widths[i] || 10) + "%";
-        });
+  const widths = [
+    "5%",
+    "15%",
+    "5%",
+    "15%",
+    "5%",
+    "5%",
+    "50%"
+  ];
 
-        if (row.children[1]) {
-          row.children[1].style.textAlign = "left";
-          row.children[1].style.whiteSpace = "nowrap";
-          row.children[1].style.overflow = "hidden";
-          row.children[1].style.textOverflow = "ellipsis";
-        }
-      });
+  // ลบ colgroup เดิม
+  const oldColgroup = table.querySelector("colgroup");
+  if (oldColgroup) {
+    oldColgroup.remove();
+  }
+
+  // สร้าง colgroup ใหม่
+  const colgroup = document.createElement("colgroup");
+
+  widths.forEach(width => {
+    const col = document.createElement("col");
+    col.style.width = width;
+    colgroup.appendChild(col);
+  });
+
+  table.prepend(colgroup);
+
+  // style ทุก cell
+  Array.from(table.querySelectorAll("th, td")).forEach(cell => {
+
+    cell.style.border = "1px solid #9fb3bf";
+
+    cell.style.padding = "3px 4px";
+
+    // 🔥 ขนาดตัวอักษรเท่าหน้าอื่น
+    cell.style.fontSize = "7pt";
+
+    cell.style.lineHeight = "1.15";
+
+    cell.style.boxSizing = "border-box";
+
+    cell.style.verticalAlign = "middle";
+
+    cell.style.textAlign = "center";
+
+    cell.style.wordBreak = "break-word";
+
+    cell.style.overflowWrap = "break-word";
+  });
+
+  // HEADER
+  Array.from(table.querySelectorAll("thead th")).forEach(cell => {
+
+    cell.style.background = "#dbeaf1";
+
+    cell.style.fontWeight = "700";
+
+    // 🔥 ขนาด header เท่าหน้าอื่น
+    cell.style.fontSize = "7pt";
+
+    cell.style.textAlign = "center";
+  });
+
+  // BODY
+  table.querySelectorAll("tbody tr").forEach(row => {
+
+    // คอลัมน์ 2 = ชื่อ
+    const nameCell = row.children[1];
+
+    if (nameCell) {
+
+      nameCell.style.textAlign = "left";
+
+      nameCell.style.whiteSpace = "nowrap";
+
+      nameCell.style.overflow = "hidden";
+
+      nameCell.style.textOverflow = "ellipsis";
+
+      nameCell.style.fontSize = "6.8pt";
     }
+
+    // คอลัมน์ 4
+    const deptCell = row.children[3];
+
+    if (deptCell) {
+
+      deptCell.style.textAlign = "left";
+
+      deptCell.style.fontSize = "6.8pt";
+
+      deptCell.style.lineHeight = "1.05";
+    }
+
+    // คอลัมน์ 7 = ข้อความยาว
+    const resultCell = row.children[6];
+
+    if (resultCell) {
+
+      resultCell.style.textAlign = "left";
+
+      resultCell.style.whiteSpace = "normal";
+
+      resultCell.style.fontSize = "6.5pt";
+
+      resultCell.style.lineHeight = "1.08";
+
+      resultCell.style.wordBreak = "break-word";
+
+      resultCell.style.overflowWrap = "break-word";
+    }
+  });
+}
 
     function buildPrintableReport() {
       const table = getPrintableTable();
@@ -675,15 +770,17 @@
             table {
               width: 100%;
               border-collapse: collapse;
-              table-layout: fixed;
+             
             }
 
-            th,
-            td {
-              border: 1px solid #999;
-              padding: 4px;
-              font-size: 10pt;
-            }
+          th,
+td {
+  border: 1px solid #999;
+  padding: 3px 4px;
+  font-size: 7pt;
+  line-height: 1.15;
+  box-sizing: border-box;
+}
 
             thead {
               display: table-header-group;
