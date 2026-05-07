@@ -889,7 +889,7 @@ td {
                   <td style="font-size: 0.6rem;>${escapeHtml(row.xraydep)}</td>
                   <td style="font-size: 0.6rem;>${escapeHtml(row.xrayid)}</td>
                   <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.xrayresult) ? 'text-danger-custom' : ''}">
-  ${row.xrayresult ? `${row.result} mg/dL` : ""}
+  ${row.xrayresult ? `${row.xrayresult} mg/dL` : ""}
 </td>
 
                   <td class="text-start" > ${escapeHtml(row.xraysummary)}</td>
