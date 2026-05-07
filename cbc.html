@@ -1245,7 +1245,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const text = String(value).trim();
 
-        return text === "ผิดปกติ" || text.includes("สูง");
+        return text === "ผิดปกติ" || text.includes("H");
       }
 
       function loadAllRecords() {
@@ -1306,16 +1306,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 <tr >
                  <td class="text-center">${row.register || ""}</td>
                 <td class="text-start" >${row.name || ""}</td>
-                <td class="text-center" style="font-size: 0.6rem;">${row.bwbc || ""}</td>
-                <td class="text-center" style="font-size: 0.6rem;">${row.hemo || ""}</td>
-                <td class="text-center" style="font-size: 0.6rem;">${row.hema || ""}</td>
-                <td class="text-center" style="font-size: 0.6rem;">${row.neu || ""}</td>
-                <td class="text-center" style="font-size: 0.6rem;">${row.lym || ""}</td>
-                <td class="text-center" style="font-size: 0.6rem;">${row.mono || ""}</td>
-                <td class="text-center" style="font-size: 0.6rem;">${row.eos || ""}</td>
-                <td class="text-center" style="font-size: 0.6rem;">${row.bas || ""}</td>
-                <td class="text-center" style="font-size: 0.6rem;">${row.plat || ""}</td>
-                <td class="text-center" style="font-size: 0.6rem;">${row.mcv || ""}</td>
+               
+                 <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.bwbc) ? 'text-danger-custom' : ''}"> ${row.bwbc || ""} </td>
+                <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.hemo) ? 'text-danger-custom' : ''}"> ${row.hemo || ""} </td>
+                <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.hema) ? 'text-danger-custom' : ''}"> ${row.hema || ""} </td>
+                <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.neu) ? 'text-danger-custom' : ''}"> ${row.neu || ""} </td>
+                 <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.lym) ? 'text-danger-custom' : ''}"> ${row.lym || ""} </td>
+                <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.mono) ? 'text-danger-custom' : ''}"> ${row.mono || ""} </td> 
+                <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.eos) ? 'text-danger-custom' : ''}"> ${row.eos || ""} </td>
+                 <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.bas) ? 'text-danger-custom' : ''}"> ${row.bas || ""} </td>
+                <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.plat) ? 'text-danger-custom' : ''}"> ${row.plat || ""} </td>
+                  <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.mcv) ? 'text-danger-custom' : ''}"> ${row.mcv || ""} </td>
                 <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.cbc) ? 'text-danger-custom' : ''}">
                   ${row.cbc || ""}
                 </td>
