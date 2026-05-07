@@ -462,14 +462,7 @@
         return text === "ผิดปกติ" || text.includes("H");
       }
     
-    function escapeHtml(value) {
-      return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
+
 
     function exportXCEL() {
       const table = document.getElementById("mainTable");
@@ -893,9 +886,9 @@ td {
                 <tr>
                   <td class="id-col">${row.xrayhn}</td>
                   <td class="text-start">${row.xrayname}</td>
-                  <td style="font-size: 0.6rem;>${row.xtayage}</td>
-                  <td style="font-size: 0.6rem;>${row.xraydep}</td>
-                  <td style="font-size: 0.6rem;>${row.xrayid}</td>
+                  <td style="font-size: 0.6rem;">${row.xtayage}</td>
+                  <td style="font-size: 0.6rem;">${row.xraydep}</td>
+                  <td style="font-size: 0.6rem;">${row.xrayid}</td>
                   <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.xrayresult) ? 'text-danger-custom' : ''}">
   ${row.xrayresult ? `${row.xrayresult} mg/dL` : ""}
 </td>
