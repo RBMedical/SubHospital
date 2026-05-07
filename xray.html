@@ -987,66 +987,146 @@ document.addEventListener("DOMContentLoaded", function () {
         cell.style.overflow = "hidden";
         cell.style.textOverflow = "ellipsis";
       }
-      function stylePrintableTable(table) {
-        const totalCols = table.querySelectorAll("thead th").length;
+     function stylePrintableTable(table) {
 
-        // reset style ก่อน
-        Array.from(table.querySelectorAll("th, td")).forEach(cell => {
-          cell.removeAttribute("style");
-          cell.style.border = "1px solid #9fb3bf";
-          cell.style.padding = "4px 5px";
-          cell.style.verticalAlign = "middle";
-          cell.style.textAlign = "center";
-          cell.style.lineHeight = "1.25";
-        });
+  table.style.width = "100%";
+  table.style.borderCollapse = "collapse";
+  table.style.tableLayout = "fixed";
 
-        // header style
-        Array.from(table.querySelectorAll("thead th")).forEach(cell => {
-          cell.style.background = "#dbeaf1";
-          cell.style.fontWeight = "700";
-          cell.style.fontSize = "9pt";
-        });
+  // 🔥 ลบ colgroup เดิม
+  const oldColgroup = table.querySelector("colgroup");
+  if (oldColgroup) {
+    oldColgroup.remove();
+  }
 
-        // 🔥 กำหนด % ใหม่ (ต้องอยู่หลัง reset)
-        const col1Width = 8;
-        const col2Width = 20;
-        const col14Width = 30;
-        const remain = 100 - col1Width - col2Width;
-        const otherWidth = remain / (totalCols - 2);
+  /*
+    layout ใหม่
 
-        const headers = table.querySelectorAll("thead th");
+    col1 = 5%
+    col2 = 15%
+    col3 = 5%
+    col4 = 15%
+    col5 = 10%
+    col6 = 10%
+    col7 = 10%
 
-        headers.forEach((th, i) => {
-          if (i === 0) th.style.width = col1Width + "%";
-          else if (i === 1) th.style.width = col2Width + "%";
-          else th.style.width = otherWidth + "%";
-        });
+    รวม = 70%
 
-        // 🔥 apply width ให้ td ด้วย (ตัวนี้คุณยังไม่ได้ทำ)
-        const rows = table.querySelectorAll("tbody tr");
+    col8 = เหลือทั้งหมด = 30%
+  */
 
-        rows.forEach(row => {
-          const cells = row.children;
+  const widths = [
+    "5%",   // 1
+    "15%",  // 2
+    "5%",   // 3
+    "15%",  // 4
+    "10%",  // 5
+    "10%",  // 6
+    "10%",  // 7
+    "30%"   // 8
+  ];
 
-          for (let i = 0; i < cells.length; i++) {
-            if (i === 0) cells[i].style.width = col1Width + "%";
-            else if (i === 1) cells[i].style.width = col2Width + "%";
-            else cells[i].style.width = otherWidth + "%";
-          }
-        });
+  // 🔥 ใช้ colgroup จะนิ่งกว่า width ปกติ
+  const colgroup = document.createElement("colgroup");
 
-        // 🔥 บังคับคอลัมน์ชื่อ
-        rows.forEach(row => {
-          const cell = row.children[1];
-          if (cell) {
-            cell.style.whiteSpace = "nowrap";
-            cell.style.overflow = "hidden";
-            cell.style.textOverflow = "ellipsis";
-            cell.style.textAlign = "left";
-          }
-        });
-      }
+  widths.forEach(width => {
 
+    const col = document.createElement("col");
+
+    col.style.width = width;
+
+    colgroup.appendChild(col);
+  });
+
+  table.prepend(colgroup);
+
+  // 🔥 style ทุก cell
+  Array.from(table.querySelectorAll("th, td")).forEach(cell => {
+
+    cell.removeAttribute("style");
+
+    cell.style.border = "1px solid #9fb3bf";
+
+    cell.style.padding = "3px 4px";
+
+    // 🔥 ขนาดตัวอักษรเท่าหน้าอื่น
+    cell.style.fontSize = "7pt";
+
+    cell.style.lineHeight = "1.15";
+
+    cell.style.boxSizing = "border-box";
+
+    cell.style.verticalAlign = "middle";
+
+    cell.style.textAlign = "center";
+
+    cell.style.wordBreak = "break-word";
+
+    cell.style.overflowWrap = "break-word";
+  });
+
+  // 🔥 HEADER
+  Array.from(table.querySelectorAll("thead th")).forEach(cell => {
+
+    cell.style.background = "#dbeaf1";
+
+    cell.style.fontWeight = "700";
+
+    cell.style.fontSize = "7pt";
+
+    cell.style.textAlign = "center";
+  });
+
+  // 🔥 BODY
+  table.querySelectorAll("tbody tr").forEach(row => {
+
+    // col 2
+    const col2 = row.children[1];
+
+    if (col2) {
+
+      col2.style.textAlign = "left";
+
+      col2.style.whiteSpace = "nowrap";
+
+      col2.style.overflow = "hidden";
+
+      col2.style.textOverflow = "ellipsis";
+
+      col2.style.fontSize = "6.8pt";
+    }
+
+    // col 4
+    const col4 = row.children[3];
+
+    if (col4) {
+
+      col4.style.textAlign = "left";
+
+      col4.style.fontSize = "6.8pt";
+
+      col4.style.lineHeight = "1.05";
+    }
+
+    // col 8
+    const col8 = row.children[7];
+
+    if (col8) {
+
+      col8.style.textAlign = "left";
+
+      col8.style.whiteSpace = "normal";
+
+      col8.style.fontSize = "6.5pt";
+
+      col8.style.lineHeight = "1.08";
+
+      col8.style.wordBreak = "break-word";
+
+      col8.style.overflowWrap = "break-word";
+    }
+  });
+}
 
     
    function buildPrintableReport() {
@@ -1179,14 +1259,17 @@ document.addEventListener("DOMContentLoaded", function () {
   table {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed;
+ 
   }
 
-  th, td {
-    border: 1px solid #999;
-    padding: 4px;
-    font-size: 10pt;
-  }
+ th,
+td {
+  border: 1px solid #999;
+  padding: 3px 4px;
+  font-size: 7pt;
+  line-height: 1.15;
+  box-sizing: border-box;
+}
 
   thead {
     display: table-header-group;
