@@ -885,10 +885,13 @@ td {
                 <tr>
                   <td class="id-col">${escapeHtml(row.xrayhn)}</td>
                   <td class="text-start">${escapeHtml(row.xrayname)}</td>
-                  <td>${escapeHtml(row.xrayage)}</td>
-                  <td>${escapeHtml(row.xraydep)}</td>
-                  <td>${escapeHtml(row.xrayid)}</td>
-                  <td>${row.xrayresult ? escapeHtml(row.xrayresult) + " mg/dL" : ""}</td>
+                  <td style="font-size: 0.6rem;>${escapeHtml(row.xrayage)}</td>
+                  <td style="font-size: 0.6rem;>${escapeHtml(row.xraydep)}</td>
+                  <td style="font-size: 0.6rem;>${escapeHtml(row.xrayid)}</td>
+                  <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.xrayresult) ? 'text-danger-custom' : ''}">
+  ${row.xrayresult ? `${row.result} mg/dL` : ""}
+</td>
+
                   <td class="text-start" > ${escapeHtml(row.xraysummary)}</td>
                 </tr>
               `);
