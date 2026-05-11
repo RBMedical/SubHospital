@@ -1304,8 +1304,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 found = true;
                 resultDiv1.innerHTML += `
                 <tr >
-                 <td class="text-center">${row.register || ""}</td>
-                <td class="text-start" >${row.name || ""}</td>
+                 <td style="font-size: 0.6rem;" class="text-center">${row.register || ""}</td>
+                <td style="font-size: 0.6rem;" class="text-start" >${row.name || ""}</td>
                
                  <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.bwbc) ? 'text-danger-custom' : ''}"> ${row.bwbc || ""} </td>
                 <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.hemo) ? 'text-danger-custom' : ''}"> ${row.hemo || ""} </td>
