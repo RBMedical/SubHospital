@@ -1,0 +1,92 @@
+
+
+@media(max-width: 576px){
+    .nav-item{
+        font-size: 0.50rem;
+    }
+    .table{
+        font-size: 0.50rem;  
+    }
+}
+.container-date{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#message {
+    display: none;
+   
+    position: fixed;
+   
+    height: 100%;
+ 
+    font-size: 2rem;
+   
+    width: 100%;
+   
+    background-color: rgba(0, 0, 0, 0.75);
+   
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    
+    z-index: 1000;
+  
+    border-radius: 10px;
+    z-index: 1000;
+}
+.media-div {
+    width: 80%; /* ค่าเริ่มต้น */
+    height: 300px;
+    background-color: lightcoral;
+    margin: auto;
+    text-align: center;
+    line-height: 300px; /* จัดข้อความให้อยู่ตรงกลางแนวตั้ง */
+}
+
+/* สำหรับหน้าจอขนาดเล็กกว่า 768px */
+@media (max-width: 768px) {
+    .media-div {
+        width: 100%; /* ขยายเต็มหน้าจอ */
+    }
+    #recieve{
+        display: none;
+    }
+    #message{
+        display: flex;  
+}
+
+/* สำหรับหน้าจอขนาดใหญ่กว่า 1200px */
+@media (min-width: 1200px) {
+    .media-div {
+        width: 50%; /* ย่อเมื่อหน้าจอใหญ่ขึ้น */
+    }
+}
+.modalrecieve {
+    display: none;
+      /* ซ่อน modal ไว้ก่อน จนกว่าจะถูกแสดง */
+      position: fixed;
+      /* ทำให้ modal อยู่บนสุดตลอดเวลา */
+      top: 50%;
+      /* จัดให้อยู่กลางหน้าจอ (แนวตั้ง) */
+      left: 50%;
+      /* จัดให้อยู่กลางหน้าจอ (แนวนอน) */
+      transform: translate(-50%, -50%);
+      /* ย้าย modal ให้ตรงกลางพอดี */
+      width: 30%;
+      /* กำหนดความกว้าง */
+      max-width: 800px;
+      /* จำกัดความกว้างสูงสุด */
+      padding: 20px;
+      /* ระยะห่างด้านในของ modal */
+
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      /* เงาของ modal */
+      z-index: 1000;
+      /* ทำให้ modal อยู่เหนือ element อื่นๆ */
+      border-radius: 10px;
+      /* มุมโค้งของ modal */
+      justify-content: center;
+    }
+
+  .icon-spin {
+    position: absolute;
+  }

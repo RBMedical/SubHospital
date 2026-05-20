@@ -1,0 +1,612 @@
+
+body{
+  max-height: 800px;
+}
+
+.b-example-divider {
+  width: 100%;
+  height: 4rem;
+  background-color: rgba(0, 0, 0, .1);
+  border: solid rgba(0, 0, 0, .15);
+  border-width: 1px 0;
+  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+}
+.main-container {
+  height: 100vh;
+  display: flex;
+  border: 2px solid #000;
+}
+
+
+.sidebar {
+  width: 20%;
+  border-right: 2px solid #000;
+  padding: 1rem;
+}
+
+.container-sm {
+  width: 100%;
+  min-height: 18cm;
+  max-height: 18cm;
+  
+ 
+}
+
+.top-bar {
+  height: 50%;
+  border-bottom: 2px solid #000;
+  padding: 1rem;
+}
+
+#headName, #dataName, #nameData{
+  min-width: 10cm;
+  max-width: 10cm;
+}
+
+#dataName{
+  align-items: start;
+}
+
+.btn 
+
+.btn-container {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.bordered {
+  border: 2px solid #000;
+}
+
+.nav-menu {
+  display: block;
+  color:rgb(2, 24, 2);
+  font-family: "sarabun";
+  line-height: 1.5;
+}
+.row{
+  min-height: 1000px;
+  max-height: 1000px;
+}
+
+
+.fl-table {
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: normal;
+  border: none;
+  background-color: #f8f8f8;
+  min-width: 100%;
+  max-width: 100%;
+  position: relative; 
+ 
+  
+ 
+}
+
+.fl-table td, .fl-table th {
+  text-align: center;
+  padding: 8px;
+}
+
+
+
+.fl-table tr {
+ 
+  border: 5px solid #f8f8f8;
+  border-radius: 10px solid #f8f8f8;
+  font-size: 12px;
+  font-family: "sarabun";
+  background-color: rgba(143, 225, 240, 0.966);
+}
+
+.fl-table td:first-child {
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.fl-table td:last-child {
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.table-container {
+  max-height: 500px;
+  overflow: auto;
+  border: 1px solid #ccc;
+}
+table thead th {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 1;
+}
+
+.nav-link.active {
+ background-color: lightsteelblue;
+}
+
+
+.midtext{
+  left: 50px;
+  line-height: 0.5;
+}
+
+.table-wrapper {
+  max-height: 400px;     /* ความสูงสูงสุดของตาราง */
+  overflow-y: auto;      /* ให้เลื่อนแค่แนวตั้ง */
+  overflow-x: auto;      /* ป้องกันตารางล้น */
+  position: relative;    /* สำคัญมากสำหรับ sticky */
+}
+
+.fl-table thead{
+
+    position: sticky;
+    
+    top: 0;
+ 
+    background-color: #DCDCDC;
+   
+    z-index: 10;
+   
+}
+
+.fl-table thead th {
+  color: #e9ecee;
+  height: 100%;
+  position: sticky;
+  border: none;
+  background-color: rgb(102, 104, 107);   
+  z-index: 4000; 
+                 
+  
+}
+
+.nav-link.active{
+  background-color:darkgrey;
+}
+
+
+.logotext{
+  color: darkorange;
+  font-family: "sarabun";
+  font-size: 1rem;
+}
+
+.modal,
+.modal-bg {
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.5);
+position: fixed;
+top: 0;
+left: 0;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.modal-page {
+z-index: 99;
+min-width: 400px;
+max-width: 400px;
+max-height: 30vw;
+overflow: scroll;
+background: #fff;
+border-radius: 15px;
+padding: 20px;
+}
+
+#downloadExcel,#downloadPDF {
+  height: 40px;
+  font-size: 0.75rem;
+  line-height: 0.9;
+}
+
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+
+.b-example-divider {
+  width: 100%;
+  height: 3rem;
+  background-color: rgba(0, 0, 0, .1);
+  border: solid rgba(0, 0, 0, .15);
+  border-width: 1px 0;
+  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+}
+
+.b-example-vr {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 100vh;
+}
+
+.bi {
+  vertical-align: -.125em;
+  fill: currentColor;
+}
+
+.nav-scroller {
+  position: relative;
+  z-index: 2;
+  height: 2.75rem;
+  overflow-y: hidden;
+}
+
+.nav-scroller .nav {
+  display: flex;
+  flex-wrap: nowrap;
+  padding-bottom: 1rem;
+  margin-top: -1px;
+  overflow-x: auto;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.current {
+  border-color: lightskyblue;
+  box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.3);
+  color:slategrey;
+}
+
+
+.b-example-divider {
+  width: 100%;
+  height: 4rem;
+  background-color: rgba(0, 0, 0, .1);
+  border: solid rgba(0, 0, 0, .15);
+  border-width: 1px 0;
+  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+}
+.main-container {
+  height: 100vh;
+  display: flex;
+  border: 2px solid #000;
+}
+
+
+.sidebar {
+  width: 20%;
+  border-right: 2px solid #000;
+  padding: 1rem;
+}
+
+.container-sm {
+  width: 100%;
+  min-height: 18cm;
+  max-height: 18cm;
+  
+ 
+}
+
+.top-bar {
+  height: 50%;
+  border-bottom: 2px solid #000;
+  padding: 1rem;
+}
+
+
+
+.btn-container {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.bordered {
+  border: 2px solid #000;
+}
+
+.nav-menu {
+  display: block;
+  color:rgb(2, 24, 2);
+  font-family: "sarabun";
+  line-height: 1.5;
+}
+.row{
+  min-height: 1000px;
+  max-height: 1000px;
+}
+
+
+.fl-table {
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: normal;
+  border: none;
+  background-color: #f8f8f8;
+  min-width: 100%;
+  max-width: 100%;
+  position: relative; 
+ 
+                                                                                                                                     
+ 
+}
+
+.fl-table td, .fl-table th {
+  text-align: center;
+  padding: 8px;
+}
+
+.fl-table tr {
+ 
+  border: 5px solid #f8f8f8;
+  border-radius: 10px solid #f8f8f8;
+  font-size: 12px;
+  font-family: "sarabun";
+  background-color: rgba(143, 225, 240, 0.966);
+}
+
+.fl-table td:first-child {
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.fl-table td:last-child {
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+
+.midtext{
+  left: 50px;
+  line-height: 0.5;
+}
+
+.table-wrapper {
+  max-height: 400px;     /* ความสูงสูงสุดของตาราง */
+  overflow-y: auto;      /* ให้เลื่อนแค่แนวตั้ง */
+  overflow-x: auto;      /* ป้องกันตารางล้น */
+  position: relative;    /* สำคัญมากสำหรับ sticky */
+}
+
+.fl-table thead{
+
+    position: sticky;
+    
+    top: 0;
+ 
+    background-color: #DCDCDC;
+   
+    z-index: 10;
+   
+}
+
+.fl-table thead th {
+  color: #e9ecee;
+  height: 100%;
+  position: sticky;
+  border: none;
+  background-color: rgb(102, 104, 107);   
+  z-index: 4000; 
+                 
+  
+}
+
+
+
+.logotext{
+  color: darkorange;
+  font-family: "sarabun";
+  font-size: 1rem;
+}
+
+.modal,
+.modal-bg {
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.5);
+position: fixed;
+top: 0;
+left: 0;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.modal-page {
+z-index: 99;
+min-width: 400px;
+max-width: 400px;
+max-height: 30vw;
+overflow: scroll;
+background: #fff;
+border-radius: 15px;
+padding: 20px;
+}
+
+
+
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+
+.b-example-divider {
+  width: 100%;
+  height: 3rem;
+  background-color: rgba(0, 0, 0, .1);
+  border: solid rgba(0, 0, 0, .15);
+  border-width: 1px 0;
+  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+}
+
+.b-example-vr {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 100vh;
+}
+
+.bi {
+  vertical-align: -.125em;
+  fill: currentColor;
+}
+
+.nav-scroller {
+  position: relative;
+  z-index: 2;
+  height: 2.75rem;
+  overflow-y: hidden;
+}
+
+.nav-scroller .nav {
+  display: flex;
+  flex-wrap: nowrap;
+  padding-bottom: 1rem;
+  margin-top: -1px;
+  overflow-x: auto;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.btn-bd-primary {
+  --bd-violet-bg: #712cf9;
+  --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+  --bs-btn-font-weight: 600;
+  --bs-btn-color: var(--bs-white);
+  --bs-btn-bg: var(--bd-violet-bg);
+  --bs-btn-border-color: var(--bd-violet-bg);
+  --bs-btn-hover-color: var(--bs-white);
+  --bs-btn-hover-bg: #6528e0;
+  --bs-btn-hover-border-color: #6528e0;
+  --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+  --bs-btn-active-color: var(--bs-btn-hover-color);
+  --bs-btn-active-bg: #5a23c8;
+  --bs-btn-active-border-color: #5a23c8;
+}
+
+.bd-mode-toggle {
+  z-index: 1500;
+}
+
+.bd-mode-toggle .bi {
+  width: 1em;
+  height: 1em;
+}
+
+.bd-mode-toggle .dropdown-menu .active .bi {
+  display: block !important;
+}
+#downloadExcel, #downloadPDF {
+  max-height: 40px;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  color: white;
+}
+
+.container-head {
+  background-color: #f22;
+  text-align: center;
+  padding: 15px;
+  font-weight: bold;
+}
+
+.container-button {
+  background-color: #00aeef;
+  text-align: center;
+  padding: 15px;
+  font-weight: bold;
+}
+
+.container-menu {
+  background-color: #2ecc71;
+  width: 300px;
+  height: 100%;
+  float: left;
+  text-align: center;
+  padding-top: 20px;
+  font-weight: bold;
+  position: absolute;
+  top: 100px; /* พอดีกับหัว */
+  bottom: 50px; /* เว้น footer */
+}
+
+.container-table {
+  
+  margin-left: 120px;
+  margin-top: 10px;
+  margin-right: 10px;
+  padding: 50px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.container-footer {
+
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+.rowcontent{
+  display: flex;
+  justify-content: space-between;
+  min-height: 100%;
+
+}
+
+.container-left{
+  width: 30%;
+
+  font-family: sarabun;
+}
+
+.container-right{
+  width: 70%;
+
+  display: block;
+}
+
+.containerbutton{
+  display: flex;
+  justify-content: space-between;
+}
+.containertable{
+  min-height: 100%;
+}
+#importBtn {
+  border-radius: 10px;
+}
+.cerve{
+  border-color: dimgrey;
+  box-shadow: 0 .5em 1.5em rgba(0, 0, 0, .1);
+ background-color: rgb(72, 86, 99);
+ min-height: 800px;
+ max-height: 800px;
+}

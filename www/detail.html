@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>R&B Medical</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="8.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700;900&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="animate.min.css" rel="stylesheet">
+    <link href="owl.carousel.min.css" rel="stylesheet">
+    <link href="tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="style.css" rel="stylesheet">
+</head>
+<style>
+     #floating-img {
+    position: fixed;
+    bottom: 50px;
+    /* ปรับตำแหน่งแนวตั้ง */
+    right: 10px;
+    /* ปรับตำแหน่งแนวนอน */
+    width: 100px;
+    height: 100px;
+    right: 30px;
+    background: rgba(247, 246, 246, 0.1);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 9999;
+    /* ให้ไอคอนอยู่ด้านบน */
+  }
+      .nav-logo {
+            width: 50px;
+
+     .page-headers {
+    background: url(https://img2.pic.in.th/pic/065dca9c28b2bab87fc4238e7756a620.png) top center no-repeat;
+    background-size: cover;
+    text-shadow: 0 0 30px rgba(0, 0, 0, .1);
+}
+        }
+
+        .navbar-toggler {
+            border: none;
+            background-color: transparent;
+            margin-left: auto;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url('data:image/svg+xml;charset=UTF8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="black"%3E%3Cpath stroke="rgba%280, 0, 0, 0.7%29" stroke-width="3" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"/%3E%3C/svg%3E');
+        }
+</style>
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+
+  
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0 wow fadeIn" data-wow-delay="0.1s">
+        <img src="https://img5.pic.in.th/file/secure-sv1/8c27b7b1c06a8f089.png" class="nav-logo">
+            <h1 class="fs-4" style="color:darkgreen">R&B Medical Laboratory</h1>
+            <button class="navbar-toggler d-md-none me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+       
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="index.html" class="nav-item nav-link">หน้าหลัก</a>
+               
+                <a href="home.html" class="nav-item nav-link">ผลตรวจสุขภาพออนไลน์</a>
+                <a href="price.html" class="nav-item nav-link">อัตราค่าบริการ</a>
+                 <a href="package.html" class="nav-item nav-link">ข้อเสนอพิเศษ</a>
+                  <a href="blog.html" class="nav-item nav-link">ประกาศ/บทความ</a>
+                <a href="contact.html" class="nav-item nav-link active">ติดต่อเรา</a>
+                <a href="login.html" class="nav-item nav-link text-secndary">สำหรับเจ้าหน้าที่</a>
+                </div>
+              
+    </nav>
+    <!-- Navbar End -->
+
+   <style>
+    .thumbnail-img {
+      width: 100%;
+      height: auto;
+      border: 2px solid #000;
+      padding: 10px;
+      text-align: center;
+    }
+    .responsive-img {
+      width: 100%;
+      height: auto;
+      border: 2px solid #000;
+      padding: 30px;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    .section-heading {
+      font-weight: bold;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .container-group{
+      display: flex;
+    }
+
+    .container-imng{
+      display: 30%;
+    }
+
+    .container-text{
+      display: 60%;
+    }
+
+  </style>
+
+<body class="container py-4">
+
+  <!-- ส่วนหัวรูปภาพ -->
+  <div class="responsive-img mb-4">image responsive</div>
+
+  <!-- บทนำ -->
+  <h5 class="text-center section-heading">การตรวจสุขภาพประจำปี</h5>
+  <p>
+    การดูแลสุขภาพของพนักงานถือเป็นสิทธิขั้นพื้นฐานที่นายจ้างควรจัดให้ ตามที่ <strong>กฎกระทรวงกำหนดมาตรฐานในการบริหารและการจัดการด้านความปลอดภัย อาชีวอนามัย และสภาพแวดล้อมในการทำงาน พ.ศ. 2549</strong> ซึ่งออกตามพระราชบัญญัติความปลอดภัยฯ ได้ระบุให้นายจ้างมีหน้าที่จัดให้มีการตรวจสุขภาพพนักงานประจำปี โดยเฉพาะผู้ที่ทำงานในสภาพแวดล้อมที่มีความเสี่ยง เช่น สารเคมี ฝุ่นละออง หรือเสียงดัง
+  </p>
+  <p>
+    นอกเหนือจากการปฏิบัติตามกฎหมาย หลายองค์กรยังจัดให้มีการตรวจสุขภาพประจำปีสำหรับพนักงานทุกคน เพื่อส่งเสริมสุขภาพ สร้างความมั่นใจ และพัฒนาคุณภาพชีวิตในที่ทำงาน
+  </p>
+
+  <!-- ประโยชน์ของการตรวจสุขภาพ -->
+  <div class="container-group">
+    <div class="container-img">
+       <img class="thumbnail-img" src="">
+    </div>
+  
+    <div class="container-text">
+      <h6 class="section-heading">ประโยชน์ของการตรวจสุขภาพประจำปี</h6>
+      <ul>
+        <li>ค้นหาโรคตั้งแต่ระยะเริ่มต้น เพื่อการรักษาที่ทันท่วงที</li>
+        <li>ส่งเสริมการมีสุขภาพที่ดีของพนักงานในระยะยาว</li>
+        <li>ลดจำนวนวันลาป่วย และเพิ่มประสิทธิภาพการทำงาน</li>
+        <li>สร้างภาพลักษณ์ที่ดีให้กับองค์กร</li>
+      </ul>
+    </div>
+</div>
+  <!-- รายการตรวจสุขภาพที่สำคัญ -->
+  <div class="container-group">
+ <div class="container-text">
+      <h6 class="section-heading">รายการตรวจสุขภาพประจำปีที่สำคัญ</h6>
+      <ul>
+        <li>ตรวจร่างกายทั่วไป (ชั่งน้ำหนัก, วัดส่วนสูง, ความดันโลหิต)</li>
+        <li>ตรวจสายตา และการได้ยิน</li>
+        <li>ตรวจเลือด (น้ำตาล, ไขมัน, ตับ, ไต)</li>
+        <li>ตรวจปัสสาวะ</li>
+        <li>เอกซเรย์ปอด</li>
+        <li>ตรวจคลื่นไฟฟ้าหัวใจ (สำหรับผู้มีอายุ 35 ปีขึ้นไป)</li>
+        <li>ตรวจคัดกรองมะเร็งที่เหมาะสมกับอายุและเพศ</li>
+      </ul>
+    </div>
+   <div class="container-img">
+       <img class="thumbnail-img" src="">
+    </div>
+  </div>  
+
+  <!-- ขั้นตอนการตรวจสุขภาพ -->
+  <div class="row align-items-center my-5">
+    <div class="col-md-6 thumbnail-img">Image thumbnail</div>
+    <div class="col-md-6">
+      <h6 class="section-heading">ขั้นตอนการตรวจสุขภาพประจำปี</h6>
+      <ol>
+        <li><strong>แจ้งกำหนดการ:</strong> HR แจ้งวัน เวลา และสถานที่ล่วงหน้า</li>
+        <li><strong>เตรียมตัวก่อนตรวจ:</strong> งดอาหาร/น้ำ 8-12 ชั่วโมงก่อนตรวจ</li>
+        <li><strong>ลงทะเบียน:</strong> รับบัตรคิว และตรวจตามรายการ</li>
+        <li><strong>รับผลตรวจ:</strong> รับคำแนะนำจากแพทย์</li>
+        <li><strong>วิเคราะห์ผลรวม:</strong> HR ใช้ข้อมูลวางแผนส่งเสริมสุขภาพในองค์กร</li>
+      </ol>
+    </div>
+  </div>
+
+
+
+
+
+ 
+
+                <div class="container-fluid bg-secondary text-light footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
+       
+                    <div class="container">
+                        <div class="copyright">
+                            <div class="row">
+                                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                                    &copy; <a class="border-bottom" href="#">อาร์ แอนด์ บี</a>, คลินิคเทคนิคการแพทย์.
+                                </div>
+                                <div class="col-md-6 text-center text-md-end">
+                                  <a href="https://lin.ee/6KvgXbZ"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" height="36" border="0"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer End -->
+             <a id="floating-img" href="https://lin.ee/6KvgXbZ">
+      <div style="cursor: pointer;" class="nav-profile-cart">
+        <img src="https://img2.pic.in.th/pic/admin-contact-1.png" style="width: 80px; height: 80px;">
+       
+      </div>
+    </a>
+            
+              
+            
+            
+                <!-- JavaScript Libraries -->
+                <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="wow.min.js"></script>
+                <script src="easing.min.js"></script>
+                <script src="waypoints.min.js"></script>
+                <script src="counterup.min.js"></script>
+                <script src="owl.carousel.min.js"></script>
+                <script src="moment.min.js"></script>
+                <script src="moment-timezone.min.js"></script>
+                <script src="tempusdominus-bootstrap-4.min.js"></script>
+            
+                <!-- Template Javascript -->
+                <script src="main.js"></script>
+</body>
+
+</html>
