@@ -920,6 +920,14 @@ document.addEventListener("DOMContentLoaded", function () {
           cell.style.wordBreak = "break-word";
           cell.style.overflowWrap = "break-word";
         });
+        // 🔥 ทำค่าที่ผิดปกติเป็นสีแดงใน PDF
+  Array.from(table.querySelectorAll("td")).forEach(cell => {
+  if (cell.classList.contains("text-danger-custom")) {
+    cell.style.color = "#d50000";
+    cell.style.fontWeight = "700";
+    cell.style.backgroundColor = "#ffe5e5";
+  }
+});
 
         // header style
         Array.from(table.querySelectorAll("thead th")).forEach((cell, i) => {
