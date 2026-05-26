@@ -159,12 +159,34 @@
         font-size: .8rem;
       }
 
-      .noprint,
-      .custom-overlay,
-      .modal-waiting {
-        display: none !important;
-      }
+     @media print {
 
+  .noprint,
+  .modal-waiting {
+    display: none !important;
+  }
+
+  /* 🔥 แสดง modal ตอนพิมพ์ */
+  .custom-overlay {
+    display: block !important;
+    position: static !important;
+    background: white !important;
+    padding: 0 !important;
+    margin-top: 20px;
+  }
+
+  .custom-modal {
+    width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    border: 1px solid #ccc;
+  }
+
+  .btn-close {
+    display: none !important;
+  }
+}
       .result-layout {
         display: block;
       }
@@ -833,8 +855,17 @@ function loadAbnormal() {
     });
 }
     function printResult() {
-      window.print();
-    }
+
+  // 🔥 เปิด modal ทั้งหมดก่อนพิมพ์
+  document.getElementById("cbcOverlay").style.display = "flex";
+  document.getElementById("abnormalOverlay").style.display = "flex";
+
+  window.print();
+
+  // 🔥 ซ่อนกลับหลังพิมพ์
+  document.getElementById("cbcOverlay").style.display = "none";
+  document.getElementById("abnormalOverlay").style.display = "none";
+}
 
     function openCbc() {
       document.getElementById("cbcOverlay").style.display = "flex";
