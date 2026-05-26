@@ -1021,6 +1021,14 @@ document.addEventListener("DOMContentLoaded", function () {
           cell.style.fontSize = "6.6pt";
           cell.style.lineHeight = "1.05";
         });
+        // 🔥 ทำค่าที่ผิดปกติเป็นสีแดงใน PDF
+Array.from(table.querySelectorAll("td")).forEach(cell => {
+  if (cell.classList.contains("text-danger-custom")) {
+    cell.style.color = "#d50000";
+    cell.style.fontWeight = "700";
+    cell.style.backgroundColor = "#ffe5e5";
+  }
+});
 
         /*
           ปรับความกว้างแบบยืดหยุ่นสำหรับตาราง UA 15 คอลัมน์:
