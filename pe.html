@@ -1061,6 +1061,14 @@ document.addEventListener("DOMContentLoaded", function () {
             cell.style.maxWidth = widths[i] + "%";
           }
         });
+        // 🔥 ทำค่าที่ผิดปกติเป็นสีแดงใน PDF
+Array.from(table.querySelectorAll("td")).forEach(cell => {
+  if (cell.classList.contains("text-danger-custom")) {
+    cell.style.color = "#d50000";
+    cell.style.fontWeight = "700";
+    cell.style.backgroundColor = "#ffe5e5";
+  }
+});
 
         Array.from(table.querySelectorAll("tbody tr")).forEach(row => {
           Array.from(row.children).forEach((cell, i) => {
