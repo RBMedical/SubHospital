@@ -288,7 +288,7 @@
 }
 
     #cbcOverlay,
-    #urineOverlay {
+    #urineOverlay, #abnormalOverlay {
   page-break-before: always;
 }
    
@@ -359,23 +359,7 @@
     </div>
   </div>
 
-   <!-- Abnormal MODAL -->
-  <div id="abnormalOverlay" class="custom-overlay">
-    <div class="custom-modal">
-      <div class="modal-header d-flex justify-content-between align-items-center">
-        <div class="fw-bold">รายละเอียดผลผิดปกติ</div>
-        <button type="button" class="btn-close" onclick="closeAbnormal()"></button>
-      </div>
-      <div class="modal-body">
-        <div class="responsive-table-wrap">
-         <div id="abnormalResult"></div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <div style="font-size: 0.85rem;" id="cbcSummary"></div>
-      </div>
-    </div>
-  </div>
+
 
   <!-- URINE MODAL -->
   <div id="urineOverlay" class="custom-overlay">
@@ -397,6 +381,23 @@
             <tbody id="urineBody"></tbody>
           </table>
         </div>
+      </div>
+    </div>
+  </div>
+     <!-- Abnormal MODAL -->
+  <div id="abnormalOverlay" class="custom-overlay">
+    <div class="custom-modal">
+      <div class="modal-header d-flex justify-content-between align-items-center">
+        <div class="fw-bold">รายละเอียดผลผิดปกติ</div>
+        <button type="button" class="btn-close" onclick="closeAbnormal()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="responsive-table-wrap">
+         <div id="abnormalResult"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div style="font-size: 0.85rem;" id="cbcSummary"></div>
       </div>
     </div>
   </div>
