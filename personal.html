@@ -403,7 +403,7 @@
   </div>
 
   <script>
-    const BASE_URL = "https://script.google.com/macros/s/AKfycbzEH-UnhJBcoet_Oumz6nyAble_MHH11HHvMEQUTk_a9iLXnNXDBgNj7FsAGcMJlToUMw/exec";
+    const BASE_URL = "https://script.google.com/macros/s/AKfycbyIzHq9lsoSHvVVzbvHGXMA0249-FSL0rckXakBPDLWesHg08vvcb0aCeQRRpw4q9DYZg/exec";
 
     let currentUser = null;
     let currentRegister = "";
@@ -663,6 +663,11 @@
                     <td>- Creatinin</td>
                     <td class="text-center ${resultClass(foundUser.crer)}">${safe(foundUser.crer)}</td>
                     <td class="text-center ${resultClass(foundUser.crer)}">${safe(foundUser.crev)}</td>
+                  </tr>
+                   <tr>
+                    <td>- อัตราการกรองไต(eGFR)</td>
+                    <td class="text-center ${resultClass(foundUser.egfrr)}">${safe(foundUser.egfrr)}</td>
+                    <td class="text-center ${resultClass(foundUser.egfrr)}">${safe(foundUser.egfrv)}</td>
                   </tr>
                   <tr>
                     <td class="fw-bold">กรดยูริค/เก๊า</td>
