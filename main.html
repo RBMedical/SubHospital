@@ -131,7 +131,7 @@
   </div>
 
  <script>
-  const BASE_URL = "https://script.google.com/macros/s/AKfycbyu4Kmme23JgjjgkjisdrCOHzRM3y7uevSvn_GnBw-Q_2wiVZEhQD0uAYSlPJHLhNfRKw/exec";
+  const BASE_URL = "https://script.google.com/macros/s/AKfycbz0oHT7y46CFyf3ekKf-3ZGGOMtfCEh_ZQqRg0KuZD9YaMybALX2h6Jxl_0WgT5phvniA/exec";
 
   function showLoading(message = "กำลังโหลดข้อมูล...") {
     const box = document.getElementById("loadingBox");
@@ -159,47 +159,57 @@
   }
 
   function loadDropdownData() {
-    showLoading("กำลังโหลดรายชื่อผู้ใช้...");
+  showLoading("กำลังโหลดรายชื่อผู้ใช้...");
 
-    fetchJson(BASE_URL + "?type=userdetail")
-      .then(data => {
-        const dropdown = document.getElementById("dynamicDropdown");
-        dropdown.innerHTML = "";
+  fetchJson(BASE_URL + "?type=userdetail")
+    .then(data => {
+      const dropdown = document.getElementById("dynamicDropdown");
+      dropdown.innerHTML = "";
 
-        if (!Array.isArray(data) || data.length === 0) {
-          dropdown.innerHTML = `<option value="">ไม่พบข้อมูล</option>`;
-          hideLoading();
-          return;
-        }
-
-        data.forEach(row => {
-          const username = String(row.username || "").trim();
-          if (username !== "") {
-            const option = document.createElement("option");
-            option.value = username;
-            option.textContent = username;
-            dropdown.appendChild(option);
-          }
-        });
-
-        if (dropdown.options.length === 0) {
-          dropdown.innerHTML = `<option value="">ไม่พบข้อมูล</option>`;
-        }
-
+      if (!Array.isArray(data) || data.length === 0) {
+        dropdown.innerHTML = `<option value="">ไม่พบข้อมูล</option>`;
         hideLoading();
-      })
-      .catch(error => {
-        console.error("Error fetching userdetail:", error);
+        return;
+      }
 
-        const dropdown = document.getElementById("dynamicDropdown");
-        if (dropdown) {
-          dropdown.innerHTML = `<option value="">โหลดข้อมูลไม่สำเร็จ</option>`;
+      data.forEach(row => {
+
+        const username = String(row.username || "").trim();
+        const type = String(row.type || "").trim();
+
+        // 🔥 โหลดเฉพาะ type = B
+        if (username !== "" && type === "B") {
+
+          const option = document.createElement("option");
+
+          option.value = username;
+          option.textContent = username;
+
+          dropdown.appendChild(option);
         }
-
-        hideLoading();
-        alert("เกิดข้อผิดพลาดในการโหลดข้อมูลผู้ใช้");
       });
-  }
+
+      if (dropdown.options.length === 0) {
+        dropdown.innerHTML = `<option value="">ไม่พบข้อมูล</option>`;
+      }
+
+      hideLoading();
+    })
+    .catch(error => {
+
+      console.error("Error fetching userdetail:", error);
+
+      const dropdown = document.getElementById("dynamicDropdown");
+
+      if (dropdown) {
+        dropdown.innerHTML = `<option value="">โหลดข้อมูลไม่สำเร็จ</option>`;
+      }
+
+      hideLoading();
+
+      alert("เกิดข้อผิดพลาดในการโหลดข้อมูลผู้ใช้");
+    });
+}
 
   function checkCredentials() {
     const dropdown = document.getElementById("dynamicDropdown");
