@@ -40,19 +40,24 @@
     .result-layout {
       display: flex;
       gap: 16px;
-      align-items: stretch;
-      width: 100%;
+      align-items: flex-start;
     }
 
     .result-left,
     .result-right {
-      flex: 1;
-      min-width: 0;
       background: #fff;
       border: 1px solid #d9dee3;
       border-radius: 12px;
       padding: 14px;
       box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    }
+
+    .result-left {
+      width: 50%;
+    }
+
+    .result-right {
+      width: 50%;
     }
 
     .line-sep {
@@ -200,44 +205,35 @@
     }
 
     @media (max-width: 768px) {
-
       body {
         font-size: 0.85rem;
       }
 
-      .container {
-        max-width: 100% !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-      }
-
-      .page-wrap {
-        padding: 0 !important;
-      }
-
       .result-layout {
         flex-direction: column;
-        gap: 0;
       }
 
       .result-left,
       .result-right {
-        width: 100% !important;
-        border-radius: 0;
-        border-left: 0;
-        border-right: 0;
-        margin: 0;
-        box-shadow: none;
+        width: 100%;
       }
 
-      .result-right {
-        margin-top: 10px;
+      .nav.nav-pills {
+        gap: 8px;
+      }
+
+      .nav-item.input-box {
+        width: 100%;
+      }
+
+      .nav-item.input-box input,
+      .nav-item.input-box button {
+        width: 100%;
       }
 
       .custom-modal {
-        width: 100vw;
-        max-height: 100vh;
-        border-radius: 0;
+        width: 96vw;
+        max-height: 92vh;
       }
 
       #urinetable,
@@ -407,7 +403,7 @@
   </div>
 
   <script>
-    const BASE_URL = "https://script.google.com/macros/s/AKfycbz0oHT7y46CFyf3ekKf-3ZGGOMtfCEh_ZQqRg0KuZD9YaMybALX2h6Jxl_0WgT5phvniA/exec";
+    const BASE_URL = "https://script.google.com/macros/s/AKfycbzEH-UnhJBcoet_Oumz6nyAble_MHH11HHvMEQUTk_a9iLXnNXDBgNj7FsAGcMJlToUMw/exec";
 
     let currentUser = null;
     let currentRegister = "";
@@ -504,8 +500,6 @@
 
     function renderMainResult(foundUser) {
       return `
-      <div class="result-layout">
-
        <div class="result-left">
 
   <div class="d-flex align-items-center gap-2 mb-2">
@@ -539,7 +533,7 @@
                 <div class="col-auto fw-bold" style="font-size: 0.75rem;">แผนก :</div>
                 <div class="col-auto" style="font-size: 0.75rem;">${safe(foundUser.major)}</div>
                 <div class="col-auto fw-bold" style="font-size: 0.75rem;">สาขา :</div>
-                <div class="col-auto" style="font-size: 0.75rem;">${safe(foundUser.bechor)}</div>
+                <div class="col-auto" style="font-size: 0.75rem;">${safe(foundUser.branch)}</div>
                 <div class="col-auto fw-bold" style="font-size: 0.75rem;">ห้อง :</div>
                 <div class="col-auto" style="font-size: 0.75rem;">${safe(foundUser.room)}</div>
                 <div class="col-12">
@@ -677,11 +671,6 @@
                     <td>- Creatinin</td>
                     <td class="text-center ${resultClass(foundUser.crer)}">${safe(foundUser.crer)}</td>
                     <td class="text-center ${resultClass(foundUser.crer)}">${safe(foundUser.crev)}</td>
-                  </tr>
-                    <tr>
-                    <td>- อัตราการกรองไต(eGFR)</td>
-                    <td class="text-center ${resultClass(foundUser.egfrr)}">${safe(foundUser.egfrr)}</td>
-                    <td class="text-center ${resultClass(foundUser.egfrr)}">${safe(foundUser.egfrv)}</td>
                   </tr>
                   <tr>
                     <td class="fw-bold">กรดยูริค/เก๊า</td>
