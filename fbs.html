@@ -452,7 +452,7 @@
   <div id="pdfReport" class="pdf-only"></div>
 
   <script>
-    const BASE_URL = "https://script.google.com/macros/s/AKfycbzjWbSNd-NFE9dBQPQRfh2gw4qKfE_bGtjqHDptI-PYA3d3M-A9bcxetvPPvv0tKX5_6A/exec";
+    const BASE_URL = "https://script.google.com/macros/s/AKfycbzWL018ZY35QaHpt-E26L55o4sNxw1Xdh0daZzE-w30LSfxAsMdgDOSBI2SFULYnBiIKA/exec";
 
      function isAbnormal(value) {
         if (!value) return false;
@@ -870,7 +870,7 @@ td, th {
 
       showLoading();
 
-      fetchJson(BASE_URL + "?type=main")
+      fetchJson(BASE_URL + "?app=fbs&type=main")
         .then(data => {
           if (!Array.isArray(data) || data.length === 0) {
             if (resultBody) {
