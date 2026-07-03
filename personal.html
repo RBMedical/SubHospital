@@ -403,7 +403,7 @@
   </div>
 
   <script>
-    const BASE_URL = "https://script.google.com/macros/s/AKfycbz0oHT7y46CFyf3ekKf-3ZGGOMtfCEh_ZQqRg0KuZD9YaMybALX2h6Jxl_0WgT5phvniA/exec";
+    const BASE_URL = "https://script.google.com/macros/s/AKfycbzWL018ZY35QaHpt-E26L55o4sNxw1Xdh0daZzE-w30LSfxAsMdgDOSBI2SFULYnBiIKA/exec";
 
     let currentUser = null;
     let currentRegister = "";
@@ -456,7 +456,7 @@
 
       showWaiting();
 
-      fetchJson(BASE_URL + "?type=main")
+      fetchJson(BASE_URL + "?app=spe&type=main")
         .then(data => {
           const resultDiv1 = document.getElementById("result");
           resultDiv1.innerHTML = "";
@@ -801,7 +801,7 @@
         return Promise.resolve();
       }
 
-      return fetchJson(BASE_URL + "?type=outlab")
+      return fetchJson(BASE_URL + "?app=spe&type=outlab")
         .then(data => {
           const resultDiv2 = document.getElementById("outlab");
           resultDiv2.innerHTML = "";
@@ -854,7 +854,7 @@ function loadAbnormal() {
   openAbnormal();
 
   const url =
-    "https://script.google.com/macros/s/AKfycbyHWY154L5zhgXAaZC8M6Iis1mnCG7oV2SY3T-M0Pm4uCrLvUXDxzzJmTsfOykT58Uq/exec?hn=" +
+    "https://script.google.com/macros/s/AKfycbzWL018ZY35QaHpt-E26L55o4sNxw1Xdh0daZzE-w30LSfxAsMdgDOSBI2SFULYnBiIKA/exec?app=onlinecheck&hn=" +
     encodeURIComponent(hn) +
     "&t=" +
     new Date().getTime();
