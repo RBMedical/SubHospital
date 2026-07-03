@@ -1025,9 +1025,9 @@ document.addEventListener("DOMContentLoaded", function () {
 </div>
 
 <script>
-const GAS_URL = "https://script.google.com/macros/s/AKfycbw5NJkIYjArCw0yFu91j6Qd6n1v_UesWH4AO_SkkK9NdgoqiGgy_J_qO6HzKQw1D2kJtg/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbzWL018ZY35QaHpt-E26L55o4sNxw1Xdh0daZzE-w30LSfxAsMdgDOSBI2SFULYnBiIKA/exec";
 
-const ABNORMAL_URL = "https://script.google.com/macros/s/AKfycbymEWp73vARNy80POBX7bH_quFwrAS6Y61FhiXyhYoFz0jLs56y3ae7OFs2r3iz-UVZ2w/exec";
+const ABNORMAL_URL = "https://script.google.com/macros/s/AKfycbzWL018ZY35QaHpt-E26L55o4sNxw1Xdh0daZzE-w30LSfxAsMdgDOSBI2SFULYnBiIKA/exec";
 
 let myChart = null;
 
@@ -1089,7 +1089,7 @@ function loadData() {
   const script = document.createElement("script");
 
   script.src = GAS_URL
-    + "?id=" + encodeURIComponent(selectedValue)
+    + "?app=table&id=" + encodeURIComponent(selectedValue)
     + "&callback=handleData"
     + "&t=" + Date.now();
 
@@ -1113,7 +1113,7 @@ function loadAbnormalCount() {
 
   fetch(
     ABNORMAL_URL
-    + "?selectedValue=" + encodeURIComponent(selectedValue)
+    + "?app=follow&selectedValue=" + encodeURIComponent(selectedValue)
     + "&t=" + Date.now()
   )
     .then(res => res.json())
