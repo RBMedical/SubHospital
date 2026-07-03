@@ -2,6 +2,7 @@
 <html lang="th">
 
 <head>
+  <script src="AppScript.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -856,10 +857,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   XLSX.writeFile(workbook, "รายงานผลตรวจสุขภาพ.xlsx");
 }
-      const BASE_URL = "https://script.google.com/macros/s/AKfycbwNu0pefTCfScPkrW9SQ0_x6zrT6In9uHVxJ8DbG2hHwU4OXYM3OIPxpbsCBJuQH49_aQ/exec";
-
-
-      function getPrintableTable() {
+function getPrintableTable() {
         return document.getElementById("mainTable") || document.querySelector(".table.table-result");
       }
       function getPrintableTitle() {
@@ -1201,7 +1199,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         showLoading();
 
-        fetchJson(BASE_URL + "?type=main")
+        fetchJson(BASE_URL + "?app=hdl&type=main")
           .then(data => {
             console.log("Data received from API:", data);
 

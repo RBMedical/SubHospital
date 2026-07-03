@@ -2,6 +2,7 @@
 <html lang="th">
 
 <head>
+  <script src="AppScript.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -953,10 +954,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   XLSX.writeFile(workbook, "รายงานผลตรวจสุขภาพ.xlsx");
 }
-      const BASE_URL = "https://script.google.com/macros/s/AKfycbyhr65s1ESyprK3kZh3_T3GAASZHcWV5UTSzuNvO5N6F0ILOEl4jbD3xjT9af5v9fEz/exec";
-
-
-      function getPrintableTable() {
+function getPrintableTable() {
         return document.getElementById("mainTable") || document.querySelector(".table.table-result");
       }
       function getPrintableTitle() {
@@ -1366,7 +1364,7 @@ td {
 
         showLoading();
 
-        fetchJson(BASE_URL + "?type=main")
+        fetchJson(BASE_URL + "?app=xray&type=main")
           .then(data => {
             console.log("Data received from API:", data);
 

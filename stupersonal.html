@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+  <script src="AppScript.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="manifest" href="/manifest.json">
@@ -403,9 +404,7 @@
   </div>
 
   <script>
-    const BASE_URL = "https://script.google.com/macros/s/AKfycbwwV8e-PuIR3ARJpQbstyAGFuJEUyA63ZiAbO8YNDuRBXSqfSE7F0fOzh-GlEOKiAAZ/exec";
-
-    let currentUser = null;
+let currentUser = null;
     let currentRegister = "";
 
     function setDatetime() {
@@ -456,7 +455,7 @@
 
       showWaiting();
 
-      fetchJson(BASE_URL + "?type=main")
+      fetchJson(BASE_URL + "?app=spe&type=main")
         .then(data => {
           const resultDiv1 = document.getElementById("result");
           resultDiv1.innerHTML = "";
@@ -804,7 +803,7 @@
         return Promise.resolve();
       }
 
-      return fetchJson(BASE_URL + "?type=outlab")
+      return fetchJson(BASE_URL + "?app=spe&type=outlab")
         .then(data => {
           const resultDiv2 = document.getElementById("outlab");
           resultDiv2.innerHTML = "";
@@ -857,7 +856,7 @@ function loadAbnormal() {
   openAbnormal();
 
   const url =
-    "https://script.google.com/macros/s/AKfycbyHWY154L5zhgXAaZC8M6Iis1mnCG7oV2SY3T-M0Pm4uCrLvUXDxzzJmTsfOykT58Uq/exec?hn=" +
+    "https://script.google.com/macros/s/AKfycbzWL018ZY35QaHpt-E26L55o4sNxw1Xdh0daZzE-w30LSfxAsMdgDOSBI2SFULYnBiIKA/exec?app=onlinecheck&hn=" +
     encodeURIComponent(hn) +
     "&t=" +
     new Date().getTime();
