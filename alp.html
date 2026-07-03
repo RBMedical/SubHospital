@@ -2,6 +2,7 @@
 <html lang="th">
 
 <head>
+  <script src="AppScript.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -848,10 +849,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   XLSX.writeFile(workbook, "รายงานผลตรวจสุขภาพ.xlsx");
 }
-      const BASE_URL = "https://script.google.com/macros/s/AKfycbzWL018ZY35QaHpt-E26L55o4sNxw1Xdh0daZzE-w30LSfxAsMdgDOSBI2SFULYnBiIKA/exec";
-
-
-      function getPrintableTable() {
+function getPrintableTable() {
         return document.getElementById("mainTable") || document.querySelector(".table.table-result");
       }
       function getPrintableTitle() {

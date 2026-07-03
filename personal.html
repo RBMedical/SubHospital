@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+  <script src="AppScript.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="manifest" href="/manifest.json">
@@ -328,7 +329,7 @@
         </div>
       </div>
 
-      <div id="result" class="result-layout"></div>
+      <div id="result"></div>
     </div>
   </div>
 
@@ -403,9 +404,7 @@
   </div>
 
   <script>
-    const BASE_URL = "https://script.google.com/macros/s/AKfycbzWL018ZY35QaHpt-E26L55o4sNxw1Xdh0daZzE-w30LSfxAsMdgDOSBI2SFULYnBiIKA/exec";
-
-    let currentUser = null;
+let currentUser = null;
     let currentRegister = "";
 
     function setDatetime() {

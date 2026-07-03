@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+  <script src="AppScript.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="manifest" href="/manifest.json">
@@ -131,9 +132,7 @@
   </div>
 
  <script>
-  const BASE_URL = "https://script.google.com/macros/s/AKfycbzWL018ZY35QaHpt-E26L55o4sNxw1Xdh0daZzE-w30LSfxAsMdgDOSBI2SFULYnBiIKA/exec";
-
-  function showLoading(message = "กำลังโหลดข้อมูล...") {
+function showLoading(message = "กำลังโหลดข้อมูล...") {
     const box = document.getElementById("loadingBox");
     if (box) {
       box.innerText = message;
