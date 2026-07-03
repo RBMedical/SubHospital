@@ -131,7 +131,7 @@
   </div>
 
  <script>
-  const BASE_URL = "https://script.google.com/macros/s/AKfycbz0oHT7y46CFyf3ekKf-3ZGGOMtfCEh_ZQqRg0KuZD9YaMybALX2h6Jxl_0WgT5phvniA/exec";
+  const BASE_URL = "https://script.google.com/macros/s/AKfycbzWL018ZY35QaHpt-E26L55o4sNxw1Xdh0daZzE-w30LSfxAsMdgDOSBI2SFULYnBiIKA/exec";
 
   function showLoading(message = "กำลังโหลดข้อมูล...") {
     const box = document.getElementById("loadingBox");
@@ -161,7 +161,7 @@
   function loadDropdownData() {
   showLoading("กำลังโหลดรายชื่อผู้ใช้...");
 
-  fetchJson(BASE_URL + "?type=userdetail")
+  fetchJson(BASE_URL + "?app=spe&type=userdetail")
     .then(data => {
       const dropdown = document.getElementById("dynamicDropdown");
       dropdown.innerHTML = "";
@@ -230,7 +230,7 @@
 
     showLoading("กำลังตรวจสอบข้อมูล...");
 
-    fetchJson(BASE_URL + "?type=userdetail")
+    fetchJson(BASE_URL + "?app=spe&type=userdetail")
       .then(users => {
         if (!Array.isArray(users)) {
           throw new Error("รูปแบบข้อมูลผู้ใช้ไม่ถูกต้อง");
