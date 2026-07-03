@@ -259,18 +259,18 @@
       background: #f7fbfa;
     }
 
-    .table td.text-danger,
-    .table td.text-body-secondary {
+    .table td.text-danger:not(:empty),
+    .table td.text-body-secondary:not(:empty) {
       font-weight: 700;
       border-radius: 8px;
     }
 
-    .table td.text-danger {
+    .table td.text-danger:not(:empty) {
       color: var(--danger) !important;
       background: var(--danger-tint);
     }
 
-    .table td.text-body-secondary {
+    .table td.text-body-secondary:not(:empty) {
       color: var(--teal-700) !important;
     }
 
@@ -447,18 +447,31 @@
       }
 
       .container {
-        padding-left: 10px;
-        padding-right: 10px;
+        padding-left: 8px;
+        padding-right: 8px;
       }
 
       .info-card {
-        padding: 14px;
+        padding: 12px;
+      }
+
+      /* ตารางในการ์ดชนขอบจอเต็มความกว้าง (bleed ออกนอก padding การ์ด) */
+      .info-card .table-responsive {
+        margin-left: -12px;
+        margin-right: -12px;
+        width: calc(100% + 24px);
+      }
+
+      .info-card .table-responsive .table {
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
       }
 
       .table-sm-custom td,
       .table-sm-custom th {
-        font-size: 0.76rem;
-        padding: .38rem;
+        font-size: 0.72rem;
+        padding: .32rem .28rem;
       }
 
       #urinetable,
