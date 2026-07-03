@@ -990,7 +990,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   XLSX.writeFile(workbook, "รายงานผลตรวจสุขภาพ.xlsx");
 }
-      const BASE_URL = "https://script.google.com/macros/s/AKfycbxogsTkcEj4d_2a0ES02I02hjxsy8_kqWV27j01JAHZxKE-Dtf-fIMsuCSfUyO-HZto/exec";
+      const BASE_URL = "https://script.google.com/macros/s/AKfycbzWL018ZY35QaHpt-E26L55o4sNxw1Xdh0daZzE-w30LSfxAsMdgDOSBI2SFULYnBiIKA/exec";
 
 
       function getPrintableTable() {
@@ -1320,7 +1320,7 @@ td, th {
 
         showLoading();
 
-        fetchJson(BASE_URL + "?type=main")
+        fetchJson(BASE_URL + "?app=legback&type=main")
           .then(data => {
             console.log("Data received from API:", data);
 
