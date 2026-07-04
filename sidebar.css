@@ -1,0 +1,42 @@
+/* ==========================================================================
+   sidebar.css — บังคับให้ sidebar / โลโก้ / เมนู มีขนาดเท่ากันทุกหน้า
+   โหลดเป็นไฟล์สุดท้ายก่อน </head> เพื่อให้ค่าพวกนี้ชนะ CSS เดิมในแต่ละไฟล์เสมอ
+   (แก้ปัญหาบางไฟล์มี .logo-box height ไม่เท่ากัน ทำให้โลโก้/หัวข้อขนาดไม่ตรงกัน)
+   ========================================================================== */
+
+.sidebar {
+  width: 20% !important;
+}
+
+.logo-box {
+  width: 100% !important;
+  height: 80px !important;
+}
+
+.logo-box img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+.menu {
+  font-size: 0.75rem !important;
+}
+
+/* มือถือ/จอแคบ: บังคับ breakpoint เดียวกันทุกไฟล์ (เดิมแต่ละไฟล์ใช้ 768/900/992px
+   หรือบางไฟล์ไม่มี override เลย ทำให้ sidebar บีบแคบผิดปกติบนมือถือ) */
+@media (max-width: 900px) {
+  .sidebar {
+    width: 100% !important;
+    position: relative !important;
+    height: auto !important;
+    max-height: none !important;
+    min-width: 0 !important;
+  }
+
+  .print-area {
+    width: 100% !important;
+    margin-left: 0 !important;
+    height: auto !important;
+  }
+}
