@@ -2,6 +2,7 @@
 <html lang="th">
 
 <head>
+  <link rel="stylesheet" href="transition.css">
   <script src="AppScript.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,10 +24,9 @@
       margin: 0;
       background-image: url("pic/CheckUP.png");
     }
-     #selectedValue ,#fullname {
+ #selectedValue ,#fullname {
     font-family: sarabun;
   }
-
     /* Layout */
     .wrapper {
       display: flex;
@@ -183,8 +183,8 @@
     }
 
     .logo-box {
-      width: 60%;
-      height: 80px;
+      width: 100%;
+      height: 120px;
 
 
       display: flex;
@@ -762,16 +762,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     <!-- Sidebar -->
    <div class="sidebar">
-    <div id="fullname" class="fs-4 ms-2 mt-2"></div>
+    <div id="fullname" class="fs-2 ms-2 mt-2 mb-3"></div>
     <div class="logo-box">
       <img src="pic/Logo.png" alt="logo">
     </div>
 
-      <div class="fs-6 ms-2" style="font-family: sarabun;">รายงานผลตรวจสุขภาพประจำปี</div>
+      <div class="fs-6 ms-2 mt-2 mb-1">รายงานผลตรวจสุขภาพประจำปี</div>
 
-      <div id="selectedValue" class="ms-2 fs-6 fw-bold noprint"></div>
+      <div id="selectedValue" class="ms-2 mb-5 fs-6 fw-bold noprint"></div>
       <div class="b-example-divider"></div>
-     <div id="dynamicMenu" class="menu mt-1"></div>
+     <div id="dynamicMenu" class="menu mt-5"></div>
     </div>
 
     <!-- Content -->
@@ -784,7 +784,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <!-- ซ้ายสุด -->
          <div class="nav-title">
                 <p class="nav-kicker">Low-Density Lipoprotein (LDL)</p>
-                <h1  class="fs-4">ผลตรวจหาปริมาณไขมันไม่ดีในเลือด </h1>
+                <h1  class="fs-4">ผลตรวจหาปริมาณไขมันเสียในเลือด</h1>
                
               </div>
           <!-- ขวาสุด -->
@@ -817,7 +817,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <tr>
             <th scope="col" class="text-center" style="min-width: 95px; max-width: 95px;">HN</th>
             <th scope="col" class="text-center" style="min-width: 200px; max-width: 200px;">ชื่อ นามสกุล</th>
-             <th scope="col" class="text-center" style="min-width: 47px; max-width: 40px; font-size: 0.6rem;">ชั้นปี</th>
+            <th scope="col" class="text-center" style="min-width: 47px; max-width: 40px; font-size: 0.6rem;">ชั้นปี</th>
             
             <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px; font-size: 0.6rem;">แผนก</th>
             
@@ -825,9 +825,9 @@ document.addEventListener("DOMContentLoaded", function () {
             
             <th scope="col" class="text-center" style="min-width: 47px; max-width: 40px; font-size: 0.6rem;">ห้อง</th>
             <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px; font-size: 0.6rem;">อายุ</th>
-            
-            <th scope="col" class="text-center" style="min-width: 47px; max-width: 47px; font-size: 0.6rem;">ผลตรวจ</th>
-            <th scope="col" class="text-center" style="min-width: 100px; max-width: 100px; font-size: 0.6rem;">ผลสรุป</th>
+            >
+            <th scope="col" class="text-center" style="min-width: 80px; max-width: 80px; font-size: 0.6rem;">ผลตรวจ</th>
+            <th scope="col" class="text-center" style="font-size: 0.6rem;">ผลสรุป</th>
            
            
             
@@ -1157,14 +1157,14 @@ function getPrintableTable() {
 
         return text === "ผิดปกติ" || text.includes("สูง");
       }
-       function isAbnormal(value) {
+      
+        function isAbnormal(value) {
         if (!value) return false;
 
         const text = String(value).trim();
 
         return text === "ผิดปกติ" || text.includes("H");
       }
-
 
       function loadAllRecords() {
         const resultDiv1 = document.getElementById("cbcresult");
@@ -1225,13 +1225,13 @@ function getPrintableTable() {
                 <tr >
                  <td class="id-col" style="font-size: 0.60rem;">${row.hn || ""}</td>
                    <td class="text-start" style="font-size: 0.60rem;">${row.name || ""}</td>
-                   <td class="text-center" style="font-size: 0.60rem;">${row.year || ""}</td>
+                    <td class="text-center" style="font-size: 0.60rem;">${row.year || ""}</td>
                      <td class="text-center" style="font-size: 0.60rem;">${row.major || ""}</td>
                       <td class="text-center" style="font-size: 0.60rem;">${row.bechor || ""}</td>
                        <td class="text-center" style="font-size: 0.60rem;">${row.room || ""}</td>
                   <td class="text-center" style="font-size: 0.60rem;">${row.age || ""}</td>
-                 
-                 <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.result) ? 'text-danger-custom' : ''}">
+               
+                  <td style="font-size: 0.6rem;" class="text-center ${isAbnormal(row.result) ? 'text-danger-custom' : ''}">
   ${row.result ? `${row.result} mg/dL` : ""}
 </td>
                   <td class="text-start" style="font-size: 0.60rem;">${row.summary || ""}</td>
@@ -1300,7 +1300,6 @@ const menuData = [
     ]
   }
 ];
-
 
 function createMenu(items) {
   const ul = document.createElement("ul");
