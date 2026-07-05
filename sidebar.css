@@ -18,7 +18,7 @@
 
 /* ---------- SIDEBAR CONTAINER ---------- */
 .sidebar {
-  width: 20% !important;
+  width: 15% !important;
   background: var(--sb-white) !important;
   color: var(--sb-ink-900) !important;
   border-right: 1px solid var(--sb-line) !important;
