@@ -1327,6 +1327,7 @@ const menuData = [
 
 function createMenu(items) {
   const ul = document.createElement("ul");
+  const openGroups = [];
 
   items.forEach(item => {
     const li = document.createElement("li");
@@ -1349,12 +1350,25 @@ function createMenu(items) {
         childMenu.classList.add("open");
       }
 
-      label.onclick = function () {
-        childMenu.classList.toggle("open");
+      const group = { childMenu: childMenu, icon: icon };
+      openGroups.push(group);
 
-        if (childMenu.classList.contains("open")) {
+      label.onclick = function () {
+        const willOpen = !childMenu.classList.contains("open");
+
+        // ปิด dynamic menu อื่นในระดับเดียวกันทั้งหมดก่อน (accordion)
+        openGroups.forEach(function (g) {
+          if (g !== group) {
+            g.childMenu.classList.remove("open");
+            g.icon.textContent = "+";
+          }
+        });
+
+        if (willOpen) {
+          childMenu.classList.add("open");
           icon.textContent = "−";
         } else {
+          childMenu.classList.remove("open");
           icon.textContent = "+";
         }
       };
@@ -1374,6 +1388,7 @@ li.appendChild(a);
 
   return ul;
 }
+
 
 document.addEventListener("DOMContentLoaded", function () {
   const menuBox = document.getElementById("dynamicMenu");

@@ -990,6 +990,7 @@ td, th {
 ];
     function createMenu(items) {
       const ul = document.createElement("ul");
+      const openGroups = [];
 
       items.forEach(item => {
         const li = document.createElement("li");
@@ -1012,9 +1013,21 @@ td, th {
             childMenu.classList.add("open");
           }
 
+          const group = { childMenu: childMenu, icon: icon };
+          openGroups.push(group);
+
           label.onclick = function () {
-            childMenu.classList.toggle("open");
-            icon.textContent = childMenu.classList.contains("open") ? "−" : "+";
+            const willOpen = !childMenu.classList.contains("open");
+
+            openGroups.forEach(function (g) {
+              if (g !== group) {
+                g.childMenu.classList.remove("open");
+                g.icon.textContent = "+";
+              }
+            });
+
+            childMenu.classList.toggle("open", willOpen);
+            icon.textContent = willOpen ? "−" : "+";
           };
 
           li.appendChild(label);
@@ -1031,6 +1044,7 @@ td, th {
 
       return ul;
     }
+
 
     document.addEventListener("DOMContentLoaded", function () {
       const menuBox = document.getElementById("dynamicMenu");
