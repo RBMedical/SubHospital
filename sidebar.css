@@ -22,7 +22,7 @@
   background: var(--sb-white) !important;
   color: var(--sb-ink-900) !important;
   border-right: 1px solid var(--sb-line) !important;
-  box-shadow: 2px 0 14px rgba(11, 61, 58, .05) !important;
+  box-shadow: 2px 0 18px rgba(11, 61, 58, .05) !important;
   padding: 22px 16px !important;
 }
 
