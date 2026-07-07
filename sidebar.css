@@ -209,8 +209,16 @@
 }
 
 /* ---------- พื้นที่เนื้อหาข้าง sidebar ---------- */
-.print-area {
+/* ใช้ .container-md.print-area (2 คลาส) ให้ specificity เท่ากับกฎเดิมในไฟล์
+   ที่ตั้ง margin-left เป็นค่าต่างๆ กัน (20%, 260px, 400px ฯลฯ) ไม่งั้นระยะห่างจะไม่เท่ากันทุกไฟล์
+   บังคับระยะห่างจาก sidebar (กว้าง 20%) ให้เหลือเท่ากับ 10mm พอดีทุกไฟล์ */
+.print-area,
+.container-md.print-area {
   background: #f4f7f8 !important;
+  max-width: none !important;
+  margin-left: calc(20% + 10mm) !important;
+  margin-right: 0 !important;
+  width: calc(80% - 10mm) !important;
 }
 
 /* ---------- กรอบ header หัวข้อรายงาน (navbar) + เส้นแบ่งก่อนกลุ่มไอคอน ---------- */
@@ -264,7 +272,8 @@
     border-bottom: 1px solid var(--sb-line) !important;
   }
 
-  .print-area {
+  .print-area,
+  .container-md.print-area {
     width: 100% !important;
     margin-left: 0 !important;
     height: auto !important;
