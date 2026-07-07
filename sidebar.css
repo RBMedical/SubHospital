@@ -214,13 +214,17 @@
 }
 
 /* ---------- กรอบ header หัวข้อรายงาน (navbar) + เส้นแบ่งก่อนกลุ่มไอคอน ---------- */
-.navbar {
+/* ใช้ .print-area .navbar เพื่อให้ specificity เท่ากับกฎเดิมในไฟล์ (.print-area > .navbar)
+   ที่ตั้ง border-radius: 0 !important ไว้ ไม่งั้นมุมจะไม่โค้งเพราะกฎเดิมชนะ */
+.navbar,
+.print-area .navbar {
   background: var(--sb-white) !important;
   border: 1px solid var(--sb-header-dark) !important;
-  border-left: 4px solid var(--sb-teal-600) !important;
-  border-radius: 8px !important;
+  border-left: 4px solid var(--sb-header-dark) !important;
+  border-radius: 10px !important;
   padding: 8px 16px !important;
   box-shadow: 0 2px 8px rgba(11, 61, 58, .05) !important;
+  overflow: hidden !important;
 }
 
 .navbar .nav-title {
