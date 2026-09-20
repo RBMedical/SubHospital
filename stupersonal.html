@@ -802,6 +802,9 @@ let currentUser = null;
               <div class="doctor-note">
                 <span class="fw-bold">ความเห็นแพทย์ :</span> ${safe(foundUser.doctor)}
               </div>
+               <div class="doctor-note">
+                <span class="fw-bold">แพทย์ผู้ตรวจ :</span> ${safe(foundUser.doctorcomment)}
+              </div>
         </div>
 
         </div>
@@ -1073,7 +1076,7 @@ function loadAbnormal() {
   openAbnormal();
 
   const url =
-    "https://script.google.com/macros/s/AKfycbzWL018ZY35QaHpt-E26L55o4sNxw1Xdh0daZzE-w30LSfxAsMdgDOSBI2SFULYnBiIKA/exec?app=onlinecheck&hn=" +
+    "https://script.google.com/macros/s/AKfycbynlmBKboUfxocYFIH_pBJjtCGGUZqNr-iz_S4mcEJipbjJsbv84iAYDL5XQyEfchU_/exec" +
     encodeURIComponent(hn) +
     "&t=" +
     new Date().getTime();
